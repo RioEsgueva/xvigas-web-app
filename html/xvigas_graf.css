@@ -1,0 +1,104 @@
+.graf_svg_linea{
+  stroke: rgb(200,80,20);
+  stroke-width: 2px;
+}
+.graf_svg_poligono{
+  stroke: rgb(200,80,20);
+  fill: rgb(255,200,0);
+  stroke-width: 2px;
+}
+.graf_svg_viga{
+  fill: #000;
+  stroke: none;
+}
+.graf_svg_cp{
+  fill: none;
+  stroke: green;
+  stroke-width: 2px;
+}
+.graf_svg_cc{
+  fill: rgb(255,200,0);
+  fill-opacity:0.5;
+  stroke: rgb(255,130,10);
+  stroke-width: 1px;
+}
+.graf_svg_cv{
+  fill: rgb(0,200,255);
+  fill-opacity:0.5;
+  stroke: rgb(0,134,255);
+  stroke-width: 1px;
+}
+
+
+
+.graf_svg_func_trazo{
+  stroke-width:4;
+  stroke-linecap:round;
+  fill: none;
+}
+.graf_svg_func_salto{
+  stroke-width:1.5;
+  stroke-linecap:round;
+  fill: none;
+}
+.graf_svg_func_crt_borde{
+  stroke: green;
+}
+.graf_svg_func_flc_borde{
+  stroke: red;
+}
+.graf_svg_func_gir_borde{
+  stroke: yellow;
+}
+.graf_svg_func_def_borde{
+  stroke: blue;
+}
+
+.graf_svg_func_relleno{
+  stroke: none;
+  fill-opacity:0.5;
+  stroke: none;
+}
+.graf_svg_func_crt_rell{
+  fill: green;
+}
+.graf_svg_func_flc_rell{
+  fill: red;
+}
+.graf_svg_func_gir_rell{
+  fill: yellow;
+}
+.graf_svg_func_def_rell{
+  fill: blue;
+}
+.graf_teoria{
+  stroke-width:1;
+  stroke-linecap:round;
+  fill: none;
+  stroke: red;
+}
+.gorda{
+  stroke: #040;
+  stroke-width:3;
+}
+.equivalente{
+  opacity: 0.35;
+}
+.eq_rotl {
+  background-color: rgba(40, 140, 0, 0.2);
+}
+.eq_crpt {
+  background-color: rgba(0, 200, 0, 0.2);
+}
+.eq_mmpt {
+  background-color: rgba(100, 00, 100, 0.2);
+}
+.eq_crct {
+  background-color: rgba(0, 0, 255, 0.2);
+}
+.eq_crcv {
+  background-color: rgba(0, 40, 205, 0.2);
+}
+.eq_crcc {
+  background-color: rgba(200, 40, 0, 0.2);
+}

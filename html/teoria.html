@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="Windows-1252" />
+ <title>XVIGAS - Teoría de cálculo de vigas</title>
+ <!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
+ <link rel="stylesheet" href="xvigas_a.css" type="text/css" />
+ <link rel="stylesheet" href="xvigas_graf.css" type="text/css" />
+ <link rel="icon" type="image/x-icon" href="xvigas.ico" />
+ <link rel="apple-touch-icon" href="xvigas_ios.png" />
+ <meta name="description" content="Teoría de cálculo de vigas" />
+ <meta name="keywords" content="Mecánica,vigas,cálculo,isostática,carga" />
+ <meta name="author" content="pwnage2apps" />
+</head>
+
+<body>
+<p class="volver"><span class="volver_f"><a href="xvigas.html">&larr; Volver a XVIGAS</a></span></p>
+<h1><span class="letra1">C</span>álculo de <span class="letra1">v</span>igas</h1>
+
+<i>Sección en construcción</i>
+
+<br>
+<iframe data-aa='58066' src='//ad.a-ads.com/58066?size=468x60' scrolling='no' style='width:468px; height:60px; 
+border:0px; padding:0;overflow:hidden' allowtransparency='true'></iframe>
+<br>
+
+<p>El cálculo se realiza siguiendo varios pasos que dependen del tipo de viga que se va a calcular.</p>
+
+
+<h2>Vigas isostáticas</h2>
+<p>Las vigas isostáticas son aquellas que se pueden resolver con las ecuaciones de la estática, en el caso de las vigas son estas dos ecuaciones:</p>
+<p>Estas ecuaciones significan:</p>
+<ul><li><div class="form ancho5">&#931;F<sub>V</sub> = 0</div>La viga no se cae hacia abajo ni hacia arriba, ya que las fuerzas (verticales) están compensadas.</li>
+<li><div class="form ancho5">&#931;M = 0</div>La viga tampoco empieza a dar vueltas, ya que los momentos producidos por esas fuerzas y los momentos que pueda haber en la viga también están compensados.</li></ul>
+<h3>Vigas simples con un empotramiento</h3>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="300px">
+<rect x="25" y="149" width="550" height="2" class="graf_svg_viga" />
+<line x1="25" y1="135" x2="25" y2="165" class="graf_svg_linea" />
+<line x1="15" y1="145" x2="25" y2="135" class="graf_svg_linea" />
+<line x1="15" y1="155" x2="25" y2="145" class="graf_svg_linea" />
+<line x1="15" y1="165" x2="25" y2="155" class="graf_svg_linea" />
+<rect x="410.5" y="10" width="54" height="140" class="graf_svg_cc" />
+<line x1="300" y1="10" x2="300" y2="150" class="graf_svg_cp" />
+<polyline points="310,135 300,150 290,135" class="graf_svg_cp" />
+<path d="M 162.5,130 A 20,20 0 1 1 142.5,150" stroke="violet" fill="none" stroke-width="3.8" />
+<polyline points="172.5,120 162.5,130 172.5,140" stroke="violet" fill="none" stroke-width="3.8" />
+
+<text x="200" y="275">7.5</text>
+<line x1="437.5" y1="180" x2="437.5" y2="290" class="graf_teoria" />
+<line x1="25" y1="180" x2="25" y2="290" class="graf_teoria" />
+<line x1="437.5" y1="280" x2="25" y2="280" class="graf_teoria" />
+<polyline points="35,270 25,280 35,290" class="graf_teoria" />
+<polyline points="427.5,270 437.5,280 427.5,290" class="graf_teoria" />
+
+<text x="418" y="165">8-7=1</text>
+<polyline points="415.5,165 410.5,170 415.5,175" class="graf_teoria" />
+<polyline points="459.5,165 464.5,170 459.5,175" class="graf_teoria" />
+<line x1="410.5" y1="170" x2="464.5" y2="170" class="graf_teoria" />
+
+<text x="505" y="75">2</text>
+<polyline points="495,15 500,10 505,15" class="graf_teoria" />
+<polyline points="495,145 500,150 505,145" class="graf_teoria" />
+<line x1="500" y1="10" x2="500" y2="150" class="graf_teoria" />
+
+<text x="150" y="245">5</text>
+<line x1="300" y1="180" x2="300" y2="260" class="graf_teoria" />
+<line x1="300" y1="250" x2="25" y2="250" class="graf_teoria" />
+<polyline points="35,240 25,250 35,260" class="graf_teoria" />
+<polyline points="290,240 300,250 290,260" class="graf_teoria" />
+
+<text x="85" y="215">2.5</text>
+<line x1="162.5" y1="180" x2="162.5" y2="230" class="graf_teoria" />
+<line x1="162.5" y1="220" x2="25" y2="220" class="graf_teoria" />
+<polyline points="35,210 25,220 35,230" class="graf_teoria" />
+<polyline points="152.5,210 162.5,220 152.5,230" class="graf_teoria" />
+
+
+<text x="155" y="115">3</text>
+<text x="305" y="75">2</text>
+</svg>
+
+<p>En este caso calcular la reacción del empotramiento es sencillo, basta con calcular la suma de todas las fuerzas producidas y sus respectivos momentos sobre este empotramiento, su reacción son los valores opuestos.</p>
+<div class="form">&#931; F = 0 = F<sub>emptr.</sub> + cargas<br /></div>
+<div class="form">&#931; M = 0 = M<sub>emptr.</sub> + momentos + cargas × distancia</div>
+<!--<div class="form">&#931; F = 0 = &minus; F<sub>emptr.</sub> + <span class="eq_crpt">2 <sub>(carga puntual)</sub></span> + <span class="eq_crcc">2 <sub>(carga continua)</sub> × (8-7)<sub>(ancho c. cont.)</sub></span><br /></div>
+<div class="form">&#931; M = 0 = &minus; M<sub>emptr.</sub> &minus; <span class="eq_mmpt">3 <sub>(momento puntual)</sub></span> + <span class="eq_crpt">2 <sub>(carga puntual)</sub> × 5 <sub>(distancia)</sub></span> + <span class="eq_crcc">2 <sub>(carga continua)</sub> × (8-7)<sub>(ancho c. cont.)</sub> × 7.5 <sub>(distancia)</sub></span></div>-->
+<p>Despejando las incógnitas:</p>
+<div class="form">F<sub>(emptr.)</sub> = <span class="eq_crpt">2 <sub>(carga puntual)</sub></span> + <span class="eq_crcc">2 <sub>(carga continua)</sub> × (8-7)<sub>(ancho c. cont.)</sub></span> = 2 + 2 = <b>4</b><br /></div>
+<div class="form">M<sub>(emptr.)</sub> = &minus; <span class="eq_mmpt">3 <sub>(momento puntual)</sub></span> +  <span class="eq_crpt">2 <sub>(carga puntual)</sub> × 5 <sub>(distancia)</sub></span> + <span class="eq_crcc">2 <sub>(carga continua)</sub> × (8-7)<sub>(ancho c. cont.)</sub> × 7.5 <sub>(distancia)</sub></span> = &minus; 3 + 10 + 15 = <b>22</b></div>
+
+<ul>
+<li>En los momentos puntuales sólo hay que calcular su contribución al momento, sumándolos símplemente, sin multiplicar por su distancia.</li>
+<li>En las cargas puntuales hay que calcular su contribución a la fuerza (sumándo su maginitud) y al momento, multiplicando su magnitud por la distancia al empotramiento.</li>
+<li>En el caso de las cargas distribuídas constantes hay que calcularlas como una carga puntual actuando sobre su centro de gravedad (baricentro) y con la magnitud equivalente que corresponda a la extensión de la carga multiplicada por la magnitud.</li>
+<li>En el caso de las cargas distribuidas variables (trapezoidales) hay que dividirlas en un triángulo y un rectángulo (si una de las magnitudes es cero no hay parte rectangular). Posteriormente la parte rectangular se calcula como una carga distribuída constante y la parte triangular de forma similar, pero actuando la carga puntual equivalente a 1/3 de la zona de mayor magnitud, y calculando la magnitud equivalente como el área de un triángulo, es decir, la mitad de la extensión por la altura.</li>
+</ul>
+
+
+
+
+<h3>Vigas simples con dos apoyos</h3>
+<p>En estas vigas las reacciones se reparten entre los dos apoyos de forma que el sumatorio de fuerzas y de momentos sea cero. En princpio existiría un sistema de ecuaciones con una ecuación de fuerzas y otra de momentos (o dos ecuaciones de momentos), pero si se calculan los momentos en los apoyos se obtienen dos ecuaciones independientes con una única incógina, la reacción del otro apoyo. Esto es mucho más fácil de resolver.</p>
+<div class="form">M<sub>(Apoyo 1)</sub> = 0 = &minus;F<sub>(Apoyo 2)</sub> × (posición del apoyo 2 &minus; pos. del apoyo 1) + (magnitud de cada carga) × (pos. de cada carga &minus; pos. del apoyo 1) + (momentos)</div>
+<div class="form">M<sub>(Apoyo 2)</sub> = 0 = &minus;F<sub>(Apoyo 1)</sub> × (posición del apoyo 1 &minus; pos. del apoyo 2) + (magnitud de cada carga) × (pos. de cada carga &minus; pos. del apoyo 2) + (momentos)</div>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="300px">
+<rect x="25" y="149" width="550" height="2" class="graf_svg_viga" />
+<polygon points="80,150,90,160,70,160" class="graf_svg_poligono" />
+<circle cx="73px" cy="164px" r="3px" class="graf_svg_poligono" />
+<circle cx="87px" cy="164px" r="3px" class="graf_svg_poligono" />
+<polygon points="520,150,530,160,510,160" class="graf_svg_poligono" />
+<circle cx="513px" cy="164px" r="3px" class="graf_svg_poligono" />
+<circle cx="527px" cy="164px" r="3px" class="graf_svg_poligono" />
+<line x1="245" y1="10" x2="245" y2="150" class="graf_svg_cp" />
+<polyline points="255,135 245,150 235,135" class="graf_svg_cp" />
+
+<line x1="80" y1="180" x2="80" y2="280" class="graf_teoria" />
+<line x1="245" y1="180" x2="245" y2="250" class="graf_teoria" />
+<line x1="245" y1="230" x2="80" y2="230" class="graf_teoria" />
+<polyline points="90,220 80,230 90,240" class="graf_teoria" />
+<polyline points="235,220 245,230 235,240" class="graf_teoria" />
+
+<line x1="80" y1="270" x2="520" y2="270" class="graf_teoria" />
+<polyline points="90,260 80,270 90,280" class="graf_teoria" />
+<polyline points="510,260 520,270 510,280" class="graf_teoria" />
+<line x1="520" y1="180" x2="520" y2="280" class="graf_teoria" />
+
+ <path d="M 355,130 A 20,20 0 1 1 335,150" stroke="violet" fill="none" stroke-width="3.8" />
+  <polyline points="365,120 355,130 365,140" stroke="violet" fill="none" stroke-width="3.8" />
+</svg>
+<p>Despejando...</p>
+<div class="form"><div class="form_fila"><div class="fracc">F<sub>(Apoyo 2)</sub> = &nbsp;</div><div class="fracc"><div class="numer">(magnitud de cada carga) × (pos. de cada carga &minus; pos. del apoyo 1) + (momentos)</div><div class="denom">(posición del apoyo 2 &minus; pos. del apoyo 1)</div></div></div></div>
+<div class="form"><div class="form_fila"><div class="fracc">F<sub>(Apoyo 1)</sub> = &nbsp;</div><div class="fracc"><div class="numer">(magnitud de cada carga) × (pos. de cada carga &minus; pos. del apoyo 2) + (momentos)</div><div class="denom">(posición del apoyo 1 &minus; pos. del apoyo 2)</div></div></div></div>
+
+<p>En este ejemplo tendríamos...</p>
+<div class="form"><div class="form_fila"><div class="fracc">F<sub>(Apoyo 2)</sub> = &nbsp;</div><div class="fracc"><div class="numer">3 × (4 &minus; 1) + (5)</div><div class="denom">9 &minus; 1</div></div><div class="fracc">&nbsp; = &nbsp;</div><div class="fracc"><div class="numer">9 + 5 </div><div class="denom">8</div></div><div class="fracc">&nbsp; = <b>1.75</b></div></div></div></div>
+<div class="form"><div class="form_fila"><div class="fracc">F<sub>(Apoyo 1)</sub> = &nbsp;</div><div class="fracc"><div class="numer">3 × (4 &minus; 9) + (5)</div><div class="denom">1 &minus; 9</div></div><div class="fracc">&nbsp; = &nbsp;</div><div class="fracc"><div class="numer">&minus; 15 + 5 </div><div class="denom">&minus; 8</div></div><div class="fracc">&nbsp; = <b>1.25</b></div></div></div></div>
+
+
+<p>Se puede comprobar si se ha cometido algún error sumando el resultado de los apoyos y comprobando si coincide con la carga total (3 en este caso), ya que la suma de fuerzas verticales debe ser cero.</p>
+
+<h3>Vigas compuestas</h3>
+<p>Las rótulas tranmiten esfuerzo cortante pero no flector, su efecto es como si hubiera varias subvigas apoyándose unas sobre otras. Por eso a la hora de calcularlas hay que dividirlas primero por las rótulas, dejando varias subvigas que posteriormente se resuelven de una en una. A la hora de calcular estas subvigas hay que tener en cuenta que una rótula puede comportarse como un apoyo, y una vez se conoce su valor hay que sumarlo como una carga puntual en la viga de al lado donde <i>estaría apoyada</i>. Primero hay que calcular las subvigas que sólo tengan dos incógnitas, y seguir con el resto.</p>
+<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="300px">
+<rect x="25" y="149" width="550" height="2" class="graf_svg_viga" />
+ <line x1="25" y1="135" x2="25" y2="165" class="graf_svg_linea" />
+ <line x1="15" y1="145" x2="25" y2="135" class="graf_svg_linea" />
+ <line x1="15" y1="155" x2="25" y2="145" class="graf_svg_linea" />
+ <line x1="15" y1="165" x2="25" y2="155" class="graf_svg_linea" />
+ <circle cx="135px" cy="150px" r="5px" class="graf_svg_poligono" />
+ <polygon points="245,150,255,160,235,160" class="graf_svg_poligono" />
+ <circle cx="238px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="252px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="355px" cy="150px" r="5px" class="graf_svg_poligono" />
+ <polygon points="465,150,475,160,455,160" class="graf_svg_poligono" />
+ <circle cx="458px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="472px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <rect x="300.5" y="80" width="219" height="70" class="graf_svg_cc" />
+ <line x1="190" y1="10" x2="190" y2="150" class="graf_svg_cp" />
+ <polyline points="200,135 190,150 180,135" class="graf_svg_cp" />
+
+<line x1="135" y1="20" x2="135" y2="280" class="graf_teoria" />
+<line x1="355" y1="20" x2="355" y2="280" class="graf_teoria" />
+</svg>
+
+
+<p>La viga al dividirla quedaría así:</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="300px">
+<g transform="translate(0 79)">
+ <rect x="25" y="149" width="110" height="2" class="graf_svg_viga" />
+ <line x1="25" y1="135" x2="25" y2="165" class="graf_svg_linea" />
+ <line x1="15" y1="145" x2="25" y2="135" class="graf_svg_linea" />
+ <line x1="15" y1="155" x2="25" y2="145" class="graf_svg_linea" />
+ <line x1="15" y1="165" x2="25" y2="155" class="graf_svg_linea" />
+ <circle cx="135px" cy="150px" r="5px" class="graf_svg_poligono" />
+</g>
+<g transform="translate(0 30)">
+ <rect x="135" y="149" width="220.5" height="2" class="graf_svg_viga" />
+ <circle cx="135px" cy="150px" r="5px" class="graf_svg_poligono" />
+ <polygon points="245,150,255,160,235,160" class="graf_svg_poligono" />
+ <circle cx="238px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="252px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="355px" cy="150px" r="5px" class="graf_svg_poligono" />
+ <rect x="300.5" y="80" width="54" height="70" class="graf_svg_cc" />
+ <line x1="190" y1="10" x2="190" y2="150" class="graf_svg_cp" />
+ <polyline points="200,135 190,150 180,135" class="graf_svg_cp" />
+</g>
+<g transform="translate(0 -79)">
+ <rect x="355.5" y="149" width="219.5" height="2" class="graf_svg_viga" />
+ <polygon points="465,150,475,160,455,160" class="graf_svg_poligono" />
+ <circle cx="458px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="472px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="355px" cy="150px" r="5px" class="graf_svg_poligono" />
+ <rect x="355.5" y="80" width="164" height="70" class="graf_svg_cc" />
+</g>
+</svg>
+
+
+<p>Y se calcularía así:</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="300px">
+<g transform="translate(0 120)">
+ <text x="100" y="175">3</text>
+ <rect x="25" y="149" width="110" height="2" class="graf_svg_viga" />
+ <line x1="25" y1="135" x2="25" y2="165" class="graf_svg_linea" />
+ <line x1="15" y1="145" x2="25" y2="135" class="graf_svg_linea" />
+ <line x1="15" y1="155" x2="25" y2="145" class="graf_svg_linea" />
+ <line x1="15" y1="165" x2="25" y2="155" class="graf_svg_linea" />
+ <circle cx="135px" cy="150px" r="5px" class="graf_svg_poligono" />
+ <line x1="135" y1="100" x2="135" y2="150" class="graf_teoria gorda" />
+ <polyline points="125,135 135,150 145,135" class="graf_teoria gorda" />
+</g>
+<g transform="translate(0 35)">
+ <text x="250" y="190">2</text>
+ <rect x="135" y="149" width="220.5" height="2" class="graf_svg_viga" />
+ <polygon points="135,150,145,160,125,160" class="graf_svg_poligono equivalente" />
+ <circle cx="128px" cy="164px" r="3px" class="graf_svg_poligono equivalente" />
+ <circle cx="142px" cy="164px" r="3px" class="graf_svg_poligono equivalente" />
+ <!--<circle cx="135px" cy="150px" r="5px" class="graf_svg_poligono" />-->
+ <polygon points="245,150,255,160,235,160" class="graf_svg_poligono" />
+ <circle cx="238px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="252px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="355px" cy="150px" r="5px" class="graf_svg_poligono" />
+ <rect x="300.5" y="80" width="54" height="70" class="graf_svg_cc" />
+ <line x1="190" y1="10" x2="190" y2="150" class="graf_svg_cp" />
+ <polyline points="200,135 190,150 180,135" class="graf_svg_cp" />
+ <line x1="355" y1="100" x2="355" y2="150" class="graf_teoria gorda" />
+ <polyline points="345,135 355,150 365,135" class="graf_teoria gorda" />
+</g>
+<g transform="translate(0 -79)">
+ <text x="450" y="190">1</text>
+ <rect x="355.5" y="149" width="219.5" height="2" class="graf_svg_viga" />
+ <polygon points="355,150,365,160,345,160" class="graf_svg_poligono equivalente" />
+ <circle cx="348px" cy="164px" r="3px" class="graf_svg_poligono equivalente" />
+ <circle cx="362px" cy="164px" r="3px" class="graf_svg_poligono equivalente" />
+ <!--<circle cx="355px" cy="150px" r="5px" class="graf_svg_poligono" />-->
+ <polygon points="465,150,475,160,455,160" class="graf_svg_poligono" />
+ <circle cx="458px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="472px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <rect x="355.5" y="80" width="164" height="70" class="graf_svg_cc" />
+</g>
+</svg>
+
+
+
+
+<h2>Vigas hiperestáticas</h2>
+<p>En este caso las ecuaciones de la estática no pueden determinar por si solas las fuerzas que actúan sobre una viga.</p>
+
+</body>
+</html>

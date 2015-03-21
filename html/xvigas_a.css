@@ -1,0 +1,83 @@
+body {
+  font-family: Arial;
+  background-color: #d5f0ff;
+  color:#502130;
+  font-size: 1.0em;
+  font-weight: 500;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+h1 {
+  text-align: center;
+  font-family: Comic Sans MS;
+  color:#ffe120;
+  font-size: 4em;
+  font-weight: 900;
+  text-shadow: 0px 0px 8px #FF0000;
+  position: relative;
+  left: 0.25em;
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+.letra1 {
+  color:#ffc120;
+}
+
+h2 {
+  color:#502130;
+  font-size: 2em;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+h3 {
+  color:#502130;
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+li {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+.volver {
+  text-align: left;
+  font-size: 1.5em;
+  text-decoration: none;
+}
+.volver_f {
+  background-color: #acf;
+}
+
+
+
+.ancho5 {
+  width: 5em;
+}
+.form {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  background-color: #aee;
+}
+.form_fila {
+  display: table-row;
+}
+.fracc {
+  margin-left: 0.3em;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+.numer {
+  text-align: center;
+}
+.denom {
+  text-align: center;
+  border-width: 1px;
+  border-style: solid none none none;
+}

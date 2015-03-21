@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="Windows-1252" />
+ <title>XVIGAS - Ayuda</title>
+ <!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
+ <link rel="stylesheet" href="xvigas_a.css" type="text/css" />
+ <link rel="stylesheet" href="xvigas_graf.css" type="text/css" />
+ <link rel="icon" type="image/x-icon" href="xvigas.ico" />
+ <link rel="apple-touch-icon" href="xvigas_ios.png" />
+ <meta name="description" content="Ayuda para XVIGAS">
+ <meta name="keywords" content="Mecánica,vigas,cálculo,isostática,carga">
+ <meta name="author" content="pwnage2apps">
+</head>
+
+<body>
+<p class="volver"><span class="volver_f"><a href="xvigas.html">&larr; Volver a XVIGAS</a></span></p>
+<h1><span class="letra1">A</span>yuda para <span class="letra1">X</span>VIGAS</h1>
+
+<p>XVIGAS web app es una aplicación web gratuita financiada a partir de la publicidad que permite resolver vigas de ejercicicios y problemas. XVIGAS para la web está basado en la versión 0.2f del programa que ya existía para Windows. La principal ventaja de XVIGAS Web app es que funciona en cualquier sistema operativo, incluyendo dispositivos móviles como teléfonos inteligentes y tabletas electrónicas.</p>
+
+<p>El requisito es tener un navegador web compatible con HTML5 y CSS3 (cualquier navegador actualizado podrá funcionar). No hacen falta instalar complementos adicionales. Los datos se procesan en el ordenador, no se envía información a través de Internet, con lo que la aplicación puede funcionar fuera de línea (offline).</p>
+
+
+<br>
+<iframe data-aa='58066' src='//ad.a-ads.com/58066?size=468x60' scrolling='no' style='width:468px; height:60px; border:0px; padding:0;overflow:hidden' allowtransparency='true'></iframe>
+<br>
+
+
+<h2>Unidades</h2>
+<p>XVIGAS funciona sin problemas con cualquier sistema de unidades siempre que todos los datos estén en las mismas unidades. Por ejemplo, si la elasticidad y los descensos se miden con pulgadas, la longitud de la viga debería estar también en pulgadas. En el sistema métrico es igual, si la longitud de la viga se mide en metros no se deben introducir los descensos en milímetros sino también en metros.</p>
+
+<h2>Criterio de signos</h2>
+<p>Las reacciones en empotramientos y apoyos tienen signo positivo cuando se producen en estos sentidos:</p>
+<svg xmlns="http://www.w3.org/2000/svg" width="600px" height="300px">
+<rect x="25" y="149" width="550" height="2" class="graf_svg_viga" />
+ <line x1="25" y1="135" x2="25" y2="165" class="graf_svg_linea" />
+ <line x1="15" y1="145" x2="25" y2="135" class="graf_svg_linea" />
+ <line x1="15" y1="155" x2="25" y2="145" class="graf_svg_linea" />
+ <line x1="15" y1="165" x2="25" y2="155" class="graf_svg_linea" />
+ <line x1="575" y1="135" x2="575" y2="165" class="graf_svg_linea" />
+ <line x1="585" y1="145" x2="575" y2="135" class="graf_svg_linea" />
+ <line x1="585" y1="155" x2="575" y2="145" class="graf_svg_linea" />
+ <line x1="585" y1="165" x2="575" y2="155" class="graf_svg_linea" />
+ <polygon points="300,150,310,160,290,160" class="graf_svg_poligono" />
+ <circle cx="293px" cy="164px" r="3px" class="graf_svg_poligono" />
+ <circle cx="307px" cy="164px" r="3px" class="graf_svg_poligono" />
+
+ <line x1="300" y1="200" x2="300" y2="100" class="graf_teoria" />
+ <polyline points="290,110 300,100 310,110" class="graf_teoria" />
+ <line x1="25" y1="200" x2="25" y2="100" class="graf_teoria" />
+ <polyline points="15,110 25,100 35,110" class="graf_teoria" />
+ <line x1="575" y1="200" x2="575" y2="100" class="graf_teoria" />
+ <polyline points="565,110 575,100 585,110" class="graf_teoria" />
+
+ <path d="M 25,130 A 20,20 0 1 1 5,150" class="graf_teoria" />
+ <polyline points="35,120 25,130 35,140" class="graf_teoria" />
+ <path d="M 595,150 A 20,20 0 1 1 575,130" class="graf_teoria" />
+ <polyline points="565,140 575,130 565,120" class="graf_teoria" />
+</svg>
+
+
+<h2>Datos generales</h2>
+<p>Primero se introduce la longitud de la viga (un valor positivo). Este dato debe estar en el sistema de unidades elegido.</p>
+
+<p>La elasticidad y la inercia son datos que no son imprescindibles para el cálculo, si se dejan en blanco se calculan como si valieran 1.</p>
+
+
+<h2>Tipo de viga</h2>
+<p>Existen varios tipos de viga según la configuración de los apoyos, empotramientos y rótulas que tengan. Esto se selecciona mediante la lista de tipos de viga. En el caso de las vigas compuestas (d, e, f y g) se abre un segunda lista con varias combinaciones de apoyos y rótulas.</p>
+
+<h2>Apoyos</h2>
+<p>El recuadro de los apoyos es diferente según el tipo de viga o incluso puede no estar presente (vigas sin apoyos).</p>
+
+<h3>Vigas isostáticas (simples o compuestas)</h3>
+<p>En las vigas que tienen un número fijo de apoyos y rótulas aparece una lista con entradas de texto donde se introducen los datos de estos elementos. Se debe respetar el orden de los apoyos. Los apoyos pueden tener un desplazamiento vertical, que es positivo si es hacia arriba. Este desplazamiento no es tenido en cuenta en el cálculo de fuerzas, sólo en las deformaciones.</p>
+
+<h3>Vigas hiperestáticas</h3>
+<p>Los tipos de vigas con un número de apoyos variable (las hiperestáticas) tienen un diálogo diferente, donde primero se introduce la posición y el descenso de un apoyo y se pulsa en la marca verde para introducirlo en la lista inferior, pudiéndose añadir tantos apoyos como sean necearios. Para eliminar los apoyos hay que pulsar en la marca roja de la lista que corresponda al apoyo a eliminar.</p>
+
+<h2>Cargas</h2>
+<p>Las cargas se introducen de forma similar a los apoyos en vigas hiperestáticas, primero se introduce la posición y la magnitud y luego se pulsa la marca verde para introducir cada carga. Se pueden eliminar cargas de la lista haciendo clic en el botón rojo para eliminar. Las cargas introducidas se actualizan en el esquema de cargas y elementos.</p>
+
+<p>Si al introducir una carga esta no aparece, tal vez sea porque contenga datos no válidos. La posición debe estar entre 0 y la longitud de la viga. La magnitud no puede ser nula, salvo en las cargas trapezoidales, que en uno de los lados pueden valer 0 si el otro lado es distinto.</p>
+
+<h2>Calcular</h2>
+<p>Finalmente se pulsa en calcular para mostrar el resultado del cálculo. <b>Atención:</b> aún no está implementada la validación de los datos, si se introducen datos no válidos (como dos apoyos juntos) el cálculo podría ser erróneo.</p>
+
+<p>La escala de los gráficos se toma del mayor valor presente en la viga, de forma que siempre se ocupa el máximo espacio disponible. Hay que tener cuidado de que una viga con unas cargas diferentes puede parecer que tiene el mismo nivel de deformación que otra con menos cargas si no se tiene en cuenta que las vigas usan escalas diferentes.</p>
+
+<p>El formulario final permite obtener los valores en cualquier punto de la viga. En los puntos donde se produce un salto en las funciones se puede obtener el valor por la derecha marcando esa casilla.</p>
+
+<h2>Notas adicionales</h2>
+<p>Los resultados pueden diferir ligeramente respecto a XVIGAS para Windows, ya que cálculos se realizan con coma flotante y precisión de 64 bits y en la aplicación para Windows son 32.</p>
+
+</body>
+</html>

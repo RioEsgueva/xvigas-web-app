@@ -1,0 +1,453 @@
+body {
+  font-family: Arial;
+  background-color: #d5f0ff;
+  color:#502130;
+  font-size: 1.0em;
+  font-weight: 500;
+  text-align: center;
+}
+
+.aviso_vertical {
+  background-color: #f88;
+  display: none;
+  margin: 0em;
+}
+
+h1 {
+  font-size: 8em;
+  font-weight: 900;
+  /*position: relative;
+  left: 0.25em;*/
+  margin-top: 0.3em;
+  margin-bottom: 0em;
+}
+
+.letra1 {
+  color:#ffc120;
+}
+
+.logo_txt {
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  color:#ffe120; //#f1ff10;
+  text-shadow: 0px 0px 10px #F00;
+}
+
+.beta_webapp {
+  font-size: 1.25em;
+  font-weight: 900;
+  margin-top: -1em;
+  margin-bottom: 2em;
+  /*position: relative;
+  top: -6.4em;
+  left: -6em;*/
+}
+
+h1 img{
+  margin: 0em 0.25em;
+  position: relative;
+  top: 0.125em;
+}
+
+h2 {
+  color:#502130;
+  font-size: 2em;
+}
+
+/*h2::first-letter {
+  color:#702130;
+}*/
+
+h3 {
+  font-size: 1.5em;
+  margin-top: 3em;
+  margin-bottom: 0.75em;
+}
+
+h4 {
+  margin-top: 3em;
+  margin-bottom: 0.75em;
+}
+
+
+
+
+nav ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+nav li{
+  display: inline;
+  background: #efe0c5;
+  margin: 0.125em;
+  padding: 0.5em;
+  font-weight: 900;
+}
+nav a{
+  color:#502130;
+  text-decoration: none;
+}
+nav a:hover{
+  color:#502130;
+  text-decoration: underline;
+}
+
+.inicio{
+  margin: 2em;
+}
+
+.inicio a{
+  color:#502130;
+  text-decoration: none;
+  background-color: rgba(0, 0, 255, 0.1);
+}
+.inicio a:hover{
+  background-color: rgba(0, 0, 255, 0.2);
+  text-decoration: underline;
+}
+
+
+
+/*.longitud_vigas {
+  width: 80%;
+  margin-right: 0.5em;
+  padding-top: 0.4em;
+  text-align: left;
+  background: #efe0c5;
+}*/
+
+th{
+  width: 7em;
+}
+
+.const{
+  width: 10em;
+}
+td{
+  background: #efe0c5;
+}
+
+table {
+  margin-left:auto; 
+  margin-right:auto;
+}
+
+.tabla_tipo_vigas {
+  display: table;
+  margin-left:auto; 
+  margin-right:auto;
+}
+.fila_tipo_vigas  {
+  display: table-row;
+}
+.celda_tipo_vigas_radio {
+  display: table-cell;
+  width: 2.5em;
+  height: 2em;
+}
+.celda_tipo_vigas_label {
+  display: table-cell;
+  height: 2em;
+  text-align:left;
+}
+
+
+.cont_texto{
+  margin-left: 1em;
+  position: relative;
+  top: -0.5em;
+}
+.cont_dibujos{
+  display: table-row;
+}
+.dibujos {
+  display: table-cell;
+  width: 20px;
+  height: 35px;
+}
+.viga {
+  background: url(xvigas_sprites.png) -60px 0px;
+}
+.appy {
+  background: url(xvigas_sprites.png) -20px 0px;
+}
+.empI {
+  background: url(xvigas_sprites.png) -00px 0px;
+}
+.empD {
+  background: url(xvigas_sprites.png) -80px 0px;
+}
+.rotl {
+  background: url(xvigas_sprites.png) -40px 0px;
+}
+.simpl {
+  color:#060;
+}
+.comps {
+  color:#700;
+}
+.hiper {
+  color:#008;
+}
+.sub{
+  color:#024;
+}
+
+
+/* http://www.pixy.cz/blogg/clanky/css-fieldsetandlabels.html */
+input[type="radio"]{
+  width: 1em;
+  height: 1em;
+  text-align: right;
+  font-size: 1.25em;
+}
+input[type="text"]{
+  /*  border: none; */
+  width: 4em;
+  height: 1em;
+  text-align: right;
+  font-size: 1.25em;
+  background-color: rgba(255, 255, 255, 0.6);
+  /* background: #fff0d580; */
+}
+
+input:disabled{
+  display: none;
+}
+
+
+
+fieldset {
+  border: none;
+  background: #fff0d5;
+  text-align: left;
+  padding: 1em;
+  width: 50em;
+  margin-left: auto; 
+  margin-right: auto;
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+legend {
+  padding: 0.2em 0.5em;
+  border: none;
+  background: #efe0c5;
+  /*color:green;
+  font-size:90%;*/
+  text-align:right;
+  font-weight: 600;
+}
+
+
+/* http://www.granneman.com/webdev/coding/css/centertables/
+https://stackoverflow.com/questions/702181/replace-html-table-with-divs/12406522#12406522?newreg=ba81c6af06724bc888a28e4fd6f003a8 */
+.tabla_form_2filas {
+  display: table;
+  margin-left:auto; 
+  margin-right:auto;
+  border: 2px;
+}
+.fila_form_2filas  {
+  display: table-row;
+}
+
+.form_txt, .form_txt {
+  display: table-cell;
+  width: 6em;
+  height: 2em;
+  padding: 0px 10px 0px 0px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.form_num, .form_btn {
+  display: table-cell;
+  font-weight: 600;
+  width: 3em;
+  height: 2em;
+  margin: 0.125em;
+}
+
+.form_res {
+  display: table-cell;
+  width: 8em;
+  height: 2em;
+  padding: 0px 10px 0px 0px;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* http://webdesignfromscratch.com/html-css/css-inheritance-cascade/
+http://www.alanwood.net/unicode/geometric_shapes.html */
+
+.form_cargas_punt {
+  background: #77d9a5;
+}
+.form_moment_punt {
+  background: #eebaee;
+}
+.form_cargas_rep {
+  background: #ffebb9; /* eab984 */
+}
+.form_cargas_var {
+  background: #94dcff;
+}
+.form_app_var {
+  background: #eab984;
+}
+.form_dar_valores {
+  background: #efe0c5;
+}
+.lapicero {
+  font-size: 2em;
+  text-align: right;
+  /*position: relative;
+  left: 0.5em;*/
+}
+
+
+.h3_cp {
+  color: green;
+  font-size: 2em;
+  font-weight: 900;
+}
+.h3_mp {
+  color: violet;
+  font-size: 2em;
+  font-weight: 900;
+}
+.h3_cc {
+  color: rgb(255,200,0);
+  font-size: 2em;
+  font-weight: 900;
+}
+.h3_cv {
+  color: rgb(0,134,255);
+  font-size: 2em;
+  font-weight: 900;
+}
+.h3_app {
+  color: #eab984;
+  font-size: 2em;
+  font-weight: 900;
+}
+
+
+
+
+/*
+.btn botones de añadir y quitar cargas.
+.nueva en verde para la marca "v".
+.quitar para la ×.
+*/
+
+.btn {
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 2em;
+  position: relative;
+  top: 0.15em;
+}
+
+.nueva {
+  color: #3b3;
+}
+
+.nueva:hover {
+  color: #7f7;
+}
+
+.quitar {
+  color: #cf0000;
+}
+
+.quitar:hover {
+  color: #ff0000;
+}
+
+.btn_calcular {
+  color: #cf0000;
+  background: #84c8eb;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 3em;
+  padding: 0.25em;
+}
+
+.btn_calcular:hover {
+  color: #ff0000;
+  background: #3498db;
+  text-decoration: none;
+}
+
+@media (max-width: 960px) {
+  .logotipo {
+     width: 96px;
+     height: 96px;
+  }
+  h1 {
+    font-size: 6em;
+  }
+  fieldset {
+    width: 48em;
+  }
+}
+
+@media (max-width: 820px) {
+  fieldset {
+    padding: 0.5em;
+    font-size: 0.9em;
+    width: 44em;
+  }
+}
+
+@media (max-width: 670px) {
+  .logotipo {
+     width: 64px;
+     height: 64px;
+  }
+  h1 {
+    font-size: 4em;
+  }
+  .beta_webapp {
+    font-size: 1em;
+    margin-top: -0.75em;
+    margin-bottom: 1em;
+  }
+  .logo_txt {
+    text-shadow: 0px 0px 5px #F00;
+  }
+  fieldset {
+    padding: 0.5em;
+    width: 46em;
+    font-size: 0.75em;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 440px) {
+  .logotipo {
+     width: 48px;
+     height: 48px;
+  }
+  h1 {
+    font-size: 3em;
+  }
+  .beta_webapp {
+    font-size: 0.75em;
+  }
+  .logo_txt {
+    text-shadow: 0px 0px 3px #F00;
+  }
+  .aviso_vertical {
+    display: block;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+  }
+}
