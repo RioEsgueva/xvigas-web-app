@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+ <meta charset="Windows-1252" />
+ <title>XVIGAS - Web app</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <script src="xvigas.js"></script>
+ <link rel="stylesheet" href="xvigas.css" type="text/css" />
+ <link rel="stylesheet" href="xvigas_graf.css" type="text/css" />
+ <link rel="icon" type="image/x-icon" href="xvigas.ico" />
+ <link rel="apple-touch-icon" href="xvigas_ios.png" />
+ <meta name="description" content="Aplicación gratuita para ejercicos de cálculo de vigas">
+ <meta name="keywords" content="Mecánica,vigas,cálculo,isostática,carga">
+ <meta name="author" content="pwnage2apps">
+</head>
+
+<body onload="actualizar_gui_tipo();vista_previa()">
+<header>
+<div class="aviso_vertical">Si visitas XVIGAS web appp desde un teléfono móvil es recomendable situarlo en posición horizontal.</div>
+   <h1 class="logo_txt"><img src="xvigas_128.png" class="logotipo" height="128" width="128" alt="Logotipo de XVIGAS" /><span class="letra1">X</span>VIGAS</h1>
+  <p class="beta_webapp logo_txt">WEBAPP &nbsp;&nbsp;&nbsp; (beta)</p>
+ <nav><ul>
+  <li><a href="fuente.html">Acerca de...</a></li>
+  <li><a href="ayuda.html">Ayuda</a></li>
+  <li><a href="teoria.html">Teoría</a></li>
+ </ul></nav>
+ <p class="inicio">Aplicación web gratuita (con publicidad) de aprendizaje de cálculo de vigas.<!--<br>Basada en XVIGAS para Windows. Licencia GPL v3, puede bajar el código fuente <a href="fuente.html">aquí.</a>--><br>Esta página usa galletas (<i>cookies</i>) para mostrar la publicidad, más información <a href="../galletas.html">aquí.</a></p>
+</header>
+
+<iframe data-aa='58066' src='//ad.a-ads.com/58066?size=468x60' scrolling='no' style='width:468px; height:60px; border:0px; padding:0;overflow:hidden' allowtransparency='true'></iframe>
+
+<h2>Datos de la viga</h2>
+  <form name="datos_viga">
+    <fieldset data-role="controlgroup">
+      <legend>Longitud y características:</legend><div class="tabla_tipo_vigas">
+      <table><tr><td>Longitud:</td><td><input name="longitud" id="longitud" placeholder="Text input" value="10" type="text" pattern="\d+((,|.)\d{0,15})?" onchange="vista_previa()" /></td></tr>
+      <tr><td>Elasticidad:</td><td><input name="elasticidad" id="elasticidad" placeholder="Text input" value="10" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
+      <tr><td>Inercia:</td><td><input name="inercia" id="inercia" placeholder="Text input" value="10" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr></table>
+    </div></fieldset>
+  </form>
+  <form name="tipo_viga">
+    <fieldset data-role="controlgroup">
+      <legend>Tipo de viga:</legend><div class="tabla_tipo_vigas">
+      <label><input id="radio_choice_tipo_viga_2a" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" checked="checked" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span></span><span class="cont_texto simpl">a - Dos apoyos</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2b" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span></span><span class="cont_texto simpl">b - Empotrada a la izquierda (sin apoyos)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2c" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto simpl">c - Empotrada a la derecha (sin apoyos)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2d" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos rotl"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span></span><span class="cont_texto comps">d - Empotrada a la izquierda con varios apoyos y rótulas (elegir subtipo &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2e" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos rotl"></span><span class="dibujos empD"></span></span><span class="cont_texto comps">e - Empotrada a la derecha con varios apoyos y rótulas (elegir subtipo &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2f" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos rotl"></span><span class="dibujos appy"></span></span><span class="cont_texto comps">f - Sin empotramientos y con varios apoyos y rótulas (elegir subtipo &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2g" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos rotl"></span><span class="dibujos viga"></span><span class="dibujos rotl"></span><span class="dibujos empD"></span></span><span class="cont_texto comps">g - Empotrada a los dos lados con varios apoyos y rótulas (elegir subtipo &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2h" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span></span><span class="cont_texto hiper">h - Empotrada a la izquierda con varios apoyos y rótulas (hiperestática)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2i" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto hiper">i - Empotrada a la derecha con varios apoyos (hiperestática)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2j" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span></span><span class="cont_texto hiper">j - Sin empotramientos y con varios apoyos (hiperestática)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2k" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto hiper">k - Empotrada a los dos lados con varios apoyos (hiperestática)</span></label>
+    </div></fieldset>
+  </form>
+  <div id="div_subtipo_viga"> <form name="subtipo_viga">
+    <fieldset data-role="controlgroup">
+      <legend>Subtipo de viga (sólo para d, e, f y g):</legend><div class="tabla_tipo_vigas">
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2a" type="radio" onClick="actualizar_gui_tipo();vista_previa()" checked="checked" /><span id="label_subtipo_viga_2a">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2b" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2b">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2c" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2c">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2d" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2d">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2e" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2e">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2f" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2f">-</span></label><div id="div_subtipo_viga_2g">
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2g" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2g">-</span></label></div>
+    </div></fieldset>
+  </form></div>
+  <div id="gui_apoyos_general">
+  <h2>Posición de los apoyos</h2>
+    <div id="gui_apoyos_fijos">
+      <form name="txt_apoyos">
+        <div class="tabla_form_2filas form_app_var">
+          <div class="fila_form_2filas">
+            <div class="form_num"></div>
+            <div class="form_txt"><b>Posición</b></div>
+            <div class="form_txt"><b>Altura</b></div>
+          </div>
+        <div class="fila_form_2filas" id="apoyos_fila_0"><div class="form_txt"><span id="etiqueta_distancia_horz_0">Apoyo 1:</span></div>
+        <div class="form_txt"><input name="apoyo" value="1" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_1"><div class="form_txt"><span id="etiqueta_distancia_horz_1">Apoyo 2:</span></div>
+        <div class="form_txt"><input name="apoyo" value="9" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_2"><div class="form_txt"><span id="etiqueta_distancia_horz_2">Apoyo 3:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_3"><div class="form_txt"><span id="etiqueta_distancia_horz_3">Apoyo 4:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_4"><div class="form_txt"><span id="etiqueta_distancia_horz_4">Apoyo 5:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_5"><div class="form_txt"><span id="etiqueta_distancia_horz_5">Apoyo 6:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+      </div>
+      </form>
+    </div>
+    <div id="gui_apoyos_variables">
+      <form name="frm_apoyos" onsubmit="intro_apoyo_nuevo(); return false;">
+        <div class="tabla_form_2filas form_app_var">
+          <div class="fila_form_2filas">
+            <div class="form_num"></div>
+            <div class="form_txt"><b>Posición</b></div>
+            <div class="form_txt"><b>Descenso</b></div>
+            <div class="form_num"></div>
+          </div>
+          <div class="fila_form_2filas">
+            <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+            <div class="form_txt"><input name="number_apoyo_pos_x" id="number_apoyo_pos_x" value="0" type="text" pattern="\d+((,|.)\d{0,15})?" /></div>
+            <div class="form_txt"><input name="number_apoyo_pos_y" id="number_apoyo_pos_y" value="0" type="text" pattern="-?\d+((,|.)\d{0,15})?" /></div>
+            <div class="form_num"><a class="btn nueva" href="#" onclick="intro_apoyo_nuevo();vista_previa();return false;">+</a></div>
+          </div>
+        </div>
+        <div class="tabla_form_2filas" id="lista_apoyos"></div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+<h2>Cargas</h2>
+
+<h3><span class="h3_cp">&#11015;</span>Cargas puntuales</h3>
+  <form name="frm_cargas_puntuales" onsubmit="intro_carga_puntual_nueva();vista_previa(); return false;">
+    <div class="tabla_form_2filas form_cargas_punt">
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_txt"><b>Magnitud</b></div>
+        <div class="form_txt"><b>Posición</b></div>
+        <div class="form_num"></div>
+      </div>
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_txt">
+            <input name="number_carga_puntual_mag" pattern="-?\d+((,|.)\d{0,15})?" id="number_carga_puntual_mag" type="text" value="1" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_puntual_pos" pattern="\d+((,|.)\d{0,15})?" id="number_carga_puntual_pos" type="text" value="0" />
+          </div>
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="intro_carga_puntual_nueva();vista_previa();return false;"><b>&#10004;</b></a>
+          </div>
+      </div>
+    </div>
+    <div class="tabla_form_2filas" id="lista_cargas_puntuales">
+    </div>
+  </form>
+
+
+
+
+<h3><span class="h3_mp">&#10227;</span>Momentos puntuales</h3>
+  <form name="frm_momentos_puntuales" onsubmit="intro_momento_puntual_nuevo();vista_previa(); return false;">
+    <div class="tabla_form_2filas form_moment_punt">
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_txt"><b>Magnitud</b></div>
+        <div class="form_txt"><b>Posición</b></div>
+        <div class="form_num"></div>
+      </div>
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_txt">
+            <input name="number_momento_puntual_mag" pattern="-?\d+((,|.)\d{0,15})?" id="number_momento_puntual_mag" type="text" value="1" />
+          </div>
+          <div class="form_txt">
+            <input name="number_momento_puntual_pos" pattern="\d+((,|.)\d{0,15})?" id="number_momento_puntual_pos" type="text" value="0" />
+          </div>
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="intro_momento_puntual_nuevo();vista_previa();return false;"><b>&#10004;</b></a>
+          </div>
+      </div>
+    </div>
+    <div class="tabla_form_2filas" id="lista_momentos_puntuales">
+    </div>
+  </form>
+
+
+
+
+<h3><span class="h3_cc">&#9724;</span>Cargas repartidas constantes</h3>
+  <form name="frm_cargas_continuas" onsubmit="intro_carga_continua_nueva();vista_previa(); return false;">
+    <div class="tabla_form_2filas form_cargas_rep">
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_txt"><b>Magnitud</b></div>
+        <div class="form_txt"><b>Posición inicio</b></div>
+        <div class="form_txt"><b>Posición fin</b></div>
+        <div class="form_num"></div>
+      </div>
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_txt">
+            <input name="number_carga_continua_mag" pattern="-?\d+((,|.)\d{0,15})?" id="number_carga_continua_mag" type="text" value="1" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_continua_pos_A" pattern="\d+((,|.)\d{0,15})?" id="number_carga_continua_pos_A" type="text" value="0" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_continua_pos_B" pattern="\d+((,|.)\d{0,15})?" id="number_carga_continua_pos_B" type="text" value="1" />
+          </div>
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="intro_carga_continua_nueva();vista_previa();return false;"><b>&#10004;</b></a>
+          </div>
+      </div>
+    </div>
+    <div class="tabla_form_2filas" id="lista_cargas_continuas">
+    </div>
+  </form>
+
+
+
+
+
+
+
+<h3><span class="h3_cv">&#9698;</span>Cargas repartidas trapezoidales</h3>
+  <form name="frm_cargas_variables" onsubmit="intro_carga_variable_nueva();vista_previa(); return false;">
+    <div class="tabla_form_2filas form_cargas_var">
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_txt"><b>Magnitud inicio</b></div>
+        <div class="form_txt"><b>Magnitud fin</b></div>
+        <div class="form_txt"><b>Posición inicio</b></div>
+        <div class="form_txt"><b>Posición fin</b></div>
+        <div class="form_num"></div>
+      </div>
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_txt">
+            <input name="number_carga_variable_mag_A" pattern="-?\d+((,|.)\d{0,15})?" id="number_carga_variable_mag_A" type="text" value="0" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_variable_mag_B" pattern="-?\d+((,|.)\d{0,15})?" id="number_carga_variable_mag_B" type="text" value="1" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_variable_pos_A" pattern="\d+((,|.)\d{0,15})?" id="number_carga_variable_pos_A" type="text" value="0" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_variable_pos_B" pattern="\d+((,|.)\d{0,15})?" id="number_carga_variable_pos_B" type="text" value="1" />
+          </div>
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="intro_carga_variable_nueva();vista_previa();return false;"><b>&#10004;</b></a>
+          </div>
+      </div>
+    </div>
+    <div class="tabla_form_2filas" id="lista_cargas_variables">
+    </div>
+  </form>
+
+
+
+<h2>Esquema de cargas y elementos</h2>
+<div id="vista_previa">
+</div>
+
+
+
+
+
+<hr>
+<h2>Resultados</h2>
+<p><a class="btn_calcular" href="#" onclick="calcular(); return false;"><b>Calcular</b></a></p>
+
+  <div id="resultado">Cálculo no realizado, pulse 'Calcular' para proceder a realizarlo.
+  </div>
+  <div id="zona_resultados">
+  <!-- <h3>Datos</h3>
+   <div id="res_datos"><span>Cálculo no realizado</span>
+  </div>-->
+  <h3>Reacciones en apoyos</h3>
+  <div id="res_apoyos"><span>Cálculo no realizado</span>
+  </div>
+  <h3>Gráficos</h3>
+  <h4>Cortantes</h4>
+  <div id="res_graf_crt"><span>Cálculo no realizado</span>
+  </div>
+  <h4>Flectores</h4>
+  <div id="res_graf_flc"><span>Cálculo no realizado</span>
+  </div>
+  <h4>Giros</h4>
+  <div id="res_graf_gir"><span>Cálculo no realizado</span>
+  </div>
+  <h4>Deformada</h4>
+  <div id="res_graf_def"><span>Cálculo no realizado</span>
+  </div>
+  <h3>Campos</h3>
+  <div id="res_campos"><span>Cálculo no realizado</span>
+  </div>
+  <h3>Funciones</h3>
+  <div id="res_funciones"><span>Cálculo no realizado</span>
+  </div>
+  <h3>Valores en extremos de campos</h3>
+  <div id="res_valores"><span>Cálculo no realizado</span>
+  </div>
+  <h3>Valores máximos</h3>
+  <div id="res_maxmin"><span>Cálculo no realizado</span>
+  </div>
+  <h3>Cálculo intermedio</h3>
+  <div id="calc_int"><span>Cálculo no realizado</span>
+  </div>
+  <h3>Consultar resultados por puntos</h3>
+  <div id="dar_valores">
+  <form name="frm_dar_valores" onsubmit="dar_valor_punto();return false;">
+    <div class="tabla_form_2filas form_dar_valores" id="div_dar_valores">
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_res">Distancia:</div>
+          <div class="form_res">
+            <input name="dar_valores_distancia" id="dar_valores_distancia" type="text" value="" pattern="\d+((,|.)\d{0,15})?" />
+          </div>
+          <div class="form_res">
+            <label><input type="checkbox" name="simb" id="dar_valores_derecha" value="" />derecha</label>
+          </div>
+          <!--<div class="form_res">
+            <label><input type="checkbox" name="simb" id="dar_valores_inercia" value="" />Inercia. simbólica</label>
+          </div>
+          <div class="form_res">
+            <label><input type="checkbox" name="simb" id="dar_valores_elasticidad" value="" />Elast. simbólica</label>
+          </div>-->
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="dar_valor_punto();return false;"><b>Consultar</b></a><!--&#10004;-->
+          </div>
+      </div>
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_res"><b>Cortante</b></div>
+        <div class="form_res"><b>Flector</b></div>
+        <div class="form_res"><b>Giro</b></div>
+        <div class="form_res"><b>Flecha</b></div>
+      </div>
+    </div>
+    <!--<div class="tabla_form_2filas" id="lista_cargas_variables">
+    </div>-->
+  </form>
+  </div><!--Fin dar valores-->
+  </div><!-- Fin del trozo que debe desaparecer cuando no hay cálculo.-->
+
+
+<hr>
+  <footer>
+   <p>XVIGAS - Web app · Licencia GPLv3 · 2015 · pwnage2apps<br>
+Donaciones Bitcoin: 195CBoywruk4pfMDSp1Nr1yCojqf8jxZaC<br>
+   Contacto: <ul><li>Bitmessage: BM-2cT6X8N1us2jqkknP1AnjcHcCsZf5szUHY</li><li>Correo electrónico: Siento tener que escribirlo así, pero quiero evitar el correo basura. En el medio va la arroba, antes de ella va el texto "pwnage", el dígito DOS (en número, no en letras) y luego "APP" en minúsculas, y finalmente una S minúscula. Después de la arroba va lo mismo que hay antes pero añadiendo un punto, la plabra "ESY" en minúscula, y la extensión de España "ES" separada con otro punto. Si tienes dudas mira la dirección de esta página. Siento tener que ponerlo así, pero no tengo otro remedio si quiero evitar el correo basura y mantener una cierta accesibilidad.</li></ul>
+<p>Agradecimiento: <a href="http://www.hostinger.es/" target="_blank"><img src="http://www.hostinger.es/banners/es/hostinger-80x15-powered-1.gif" alt="Hosting Web" width="80" height="15" /></a></p>
+  </footer>
+</body>
+</html>

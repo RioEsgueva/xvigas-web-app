@@ -31,8 +31,11 @@ function bb(){
 
 // Constantes
 var num_letras = ['a','b','c','d','e','f','g','h','i','j','k'];
+// Número de apoyos. -1 significa que el número es variable.
 var num_apoyos_tipos = [[2],[0],[0],[2,4,4,6,6,6,6],[2,4,4,6,6,6,6],[4,4,6,6,6,6],[2,4,4,6,6,6,6],[-1],[-1],[-1],[-1]];
-var empotramientos_tipos = [[0],[1],[2],[1],[2],[0],[3],[1],[2],[0],[3]]; /* 1 izq, 2 der, 3 a los dos lados, 0 ninguno. */
+// Tipo de empotramientos de la viga. 1 izquierda, 2 derecha, 3 a los dos lados, 0 ninguno.
+var empotramientos_tipos = [[0],[1],[2],[1],[2],[0],[3],[1],[2],[0],[3]];
+// Aquí se almacena que elementos son apoyos y cuales rótulas. 1 apoyo, 2 no hay ni róutlas ni apoyos, 0 rótula.
 var apoyos_rotulas = [
 [[1,1]],
 [[2]],[[2]],
@@ -41,10 +44,12 @@ var apoyos_rotulas = [
 [[1,1,0,1],[1,0,1,1],[1,1,0,0,1,1],[1,0,1,1,0,1],[1,1,0,1,0,1],[1,0,1,0,1,1]],
 [[0,0],[0,0,1,0],[0,1,0,0],[0,0,1,1,0,0],[0,1,0,0,1,0],[0,0,1,0,1,0],[0,1,0,1,0,0]],
 [[1]],[[1]],[[1]],[[1]]
-]; /* 1 apoyo, 2 no hay ni róutlas ni apoyos, 0 rótula */
+];
 
 // Procesos a llevar a cabo para las vigas compuestas
-// [tipo-3][subtipo][índice del proceso][corte izq, corte der, apoyo izq, apoyo der, carga izq, carga der]
+// [tipo-3][subtipo][índice del proceso][corte izq, corte der, apoyo izq, apoyo der, carga izq, carga der, num tramo]
+// El cálculo de cada tramo se lleva a cabo según los valores de esta matriz.
+// "tipo-3" significa que hay que restar 3 al tipo, ya que aquí sólo hay vígas compuestas.
 var resolver_comp = [[
  [[0,2,0,1,-1,-1,0]],
  [[2,4,2,3,-1,-1,1],[0,2,0,1,-1,2,0]],
@@ -79,8 +84,9 @@ var resolver_comp = [[
 ]]; // Me llego por aquí
 
 
-// Procesos a llevar a cabo para las vigas compuestas para calcular las constantes
+// Procesos a llevar a cabo para las vigas compuestas para calcular las constantes de integración
 // [tipo-3][subtipo][índice del proceso][corte izq, corte der, apoyo izq, apoyo der]
+// "tipo-3" significa que hay que restar 3 al tipo, ya que aquí sólo hay vígas compuestas.
 var constantes_comp = [[
  [[0,2,0,1]],
  [[0,2,0,1],[2,4,2,3]],
@@ -120,6 +126,9 @@ var colores_letras = ["crt", "flc", "gir", "def"]; /* Para gráficos, son los tex
 
 // Creacción de la interfaz de usuario:
 var iconos_string = ["rotl","appy","empI","empD","viga","nada"];
+// Esquema para mostrar los dibujos de las vigas compuestas en el diálogo para elegir el subtipo.
+// 5 significa espacio en blanco, 4 trozo sin elemento, 3 empotramiento a la derecha, 2 a la izquierda,
+// 1 apoyo y 0 rótula. Para aceder al valor hay que restar 3 al tipo ya que aquí solo aparecen las vigas compuestas.
 var iconos_esquema = [
 [[2,0,1,4,5,5,5],[2,0,1,0,1,4,5],[2,0,0,1,1,4,5],[2,0,1,0,1,0,1],[2,0,0,1,1,0,1],[2,0,1,0,0,1,1],[2,0,0,1,0,1,1]],
 [[5,5,5,4,1,0,3],[5,4,1,0,1,0,3],[5,4,1,1,0,0,3],[1,0,1,0,1,0,3],[1,0,1,1,0,0,3],[1,1,0,0,1,0,3],[1,1,0,1,0,0,3]],
@@ -146,60 +155,23 @@ var arr_lista_apoyos_pos_y = new Array();
 
 
  /* Para calcular resultados de puntos en concreto final */
-var num_consultas = 0;
-var max_crt_js, max_flc_js, max_gir_js, max_def_js;
-var func_js;
-/*var dcmp_js = new Array();
-var flc0_js = new Array();
-var flc1_js = new Array();
-var flc2_js = new Array();
-var flc3_js = new Array();
-var crt0_js = new Array();
-var crt1_js = new Array();
-var crt2_js = new Array();
-var gir0_js = new Array();
-var gir1_js = new Array();
-var gir2_js = new Array();
-var gir3_js = new Array();
-var gir4_js = new Array();
-var def0_js = new Array();
-var def1_js = new Array();
-var def2_js = new Array();
-var def3_js = new Array();
-var def4_js = new Array();
-var def5_js = new Array();*/
+var num_consultas = 0; // Número de entradas en la lista de consultas, para saber cuánto borrar.
+var max_crt_js, max_flc_js, max_gir_js, max_def_js; // Valores máximos, se almacenan para formatear los datos de salida.
+var func_js; // Funciones de cortantes, flectores, giros y flechas.
+// Funciona así: func_js[cortantes, flectores, giros y flechas][número de campo][grado del polinomio]
 
 
 // Sustituye el valor en un polinomio de grado 5
-// Recibe el valor a sustituir y los coecifientes del polinomio, siendo va el término independiente y vf el de grado 5.
+// Recibe el valor a sustituir y el polinomio en un único vector de cualquier longitud
 // Devuelve el valor obtenido.
-function sustituir(sustituto,  va,  vb,  vc,  vd,  ve,  vf){
- var tmp = 0;
- tmp+=vf; tmp*=sustituto;
- tmp+=ve; tmp*=sustituto;
- tmp+=vd; tmp*=sustituto;
- tmp+=vc; tmp*=sustituto;
- tmp+=vb; tmp*=sustituto;
- tmp+=va; return tmp;
-}
-
-function sustituir_b(sustituto,  polinomio, cte_gir, cte_def){
+function sustituir_b(sustituto,  polinomio){ //, cte_gir, cte_def
  var grado = polinomio.length - 1;
- //alert("grado"+grado);
  valor = 0;
  for(var i = grado; i>0; i--){ // Modo Horner
   valor += polinomio[i];
   valor *= sustituto;
  }
- var ctes = 0;
- if(arguments.length > 2){ // Añadir constante de giro
-  ctes = cte_gir;
- }
- if(arguments.length == 4){ // Añadir constante de deformación
-  ctes *= sustituto;
-  ctes += cte_def;
- }
- return valor + polinomio[0] + ctes;
+ return valor + polinomio[0];
 }
 
 
@@ -208,10 +180,8 @@ function sustituir_b(sustituto,  polinomio, cte_gir, cte_def){
 //   también recibe la función de deformación, el número de campos y el vector con sus posiciones.
 // Devuelve un vector con la constante de giro y la de deformación para ese trozo de viga (o la viga entera).
 function sacar_constantes(dist_a,  dist_b,  alturaA,  alturaB, def, dcmp){
- var tmpa = campo_distancia(dist_a, dcmp) - 1;
- var tmpb = campo_distancia(dist_b, dcmp) - 1;
- //var vb = sustituir(dist_b, def[tmpb][0], def[tmpb][1], def[tmpb][2], def[tmpb][3], def[tmpb][4], def[tmpb][5]) - alturaB;
- //var va = sustituir(dist_a, def[tmpa][0], def[tmpa][1], def[tmpa][2], def[tmpa][3], def[tmpa][4], def[tmpa][5]) - alturaA;
+ var tmpa = campo_distancia(dist_a, dcmp);
+ var tmpb = campo_distancia(dist_b, dcmp);
  var va = sustituir_b(dist_a, def[tmpa]) - alturaA;
  var vb = sustituir_b(dist_b, def[tmpb]) - alturaB;
  var tgir= -(vb - va) / (dist_b - dist_a);
@@ -250,6 +220,7 @@ function escribir_matriz(matrif, vectof, nombres){
 // Resuelve un sistema de ecuaciones de varios polinomios
 // Recibe la el tamaño de la matriz de coecifientes (tam_matriz_calculo), la matriz (matrif), y el vector con los coecifientes (vectof).
 // Devuelve un vector con los resultados de resolver ese sistema de ecuaciones.
+// Tal vez sea mejorable pero no quiero modificarla por el momento.
 function resolver_sis_ecuac(matrif, vectof){
 //alert("texto-" + vectof[0] + " " + matrif[0][0]);
 var tam_matriz_calculo = vectof.length;
@@ -324,7 +295,6 @@ var tam = tam_matriz_calculo;
 
 
 //Da el campo donde cae una cota a partir de la distancia a la que se encuentra.
-//No se el motivo, pero devuelve el siguiente y luego hay que restar 1, quizás convenga corregirlo para simplificar el código.
 function campo_distancia(dist, dcmp){
  var i = 1;
  var ncmp=dcmp.lenght - 1;
@@ -335,11 +305,11 @@ function campo_distancia(dist, dcmp){
    i++;
   }
  }
- return i;
+ return i - 1;
 }
 
 
-// Valida ladistancia en entre 0 y la longitud. Devuelve 1 en caso de ser válida y 0 si no lo es.
+// Valida la distancia en entre 0 y la longitud. Devuelve 1 en caso de ser válida y 0 si no lo es.
 function validar_distancia(lng, distancia){
  if(!isFinite(distancia)) return 0;
  if(isNaN(distancia)) return 0;
@@ -374,9 +344,7 @@ function leer_viga_y_apoyos(lng){
    apoyos_y.push(parseFloat(document.txt_apoyos.despl[i].value));
   }
  }
-
  return [tipo, subtipo, apoyos_d, apoyos_y];
-
 }
 
 
@@ -426,9 +394,11 @@ function max_cargas(mcp, mmp, mcc, acv, bcv){
 
 
 // Funciones para dibujar gráficos
+// Actualmente sólo dibujan en un rectángulo de 600×300 píxeles.
 
 
-// Dibujar apoyos
+// Dibujar apoyos, rótulas, empotramientos...
+// Estas funciones reciben la posición (si es necesario) y devuelven una cadena de texto con el código SVG corresondiente.
 
 
 //   El apoyo fijo es un triángulo con tres rayas inclinadas debajo
@@ -457,18 +427,20 @@ function rotula_svg(dist, lng){
  return " <circle cx=\"" + dist + "px\" cy=\"150px\" r=\"5px\" class=\"graf_svg_poligono\" />\n";
 }
 
+// Empotramiento izquierdo
 function empizq_svg(){
  var texto = " <line x1=\"25\" y1=\"135\" x2=\"25\" y2=\"165\" class=\"graf_svg_linea\" />\n <line x1=\"15\" y1=\"145\" x2=\"25\" y2=\"135\" class=\"graf_svg_linea\" />\n <line x1=\"15\" y1=\"155\" x2=\"25\" y2=\"145\" class=\"graf_svg_linea\" />\n <line x1=\"15\" y1=\"165\" x2=\"25\" y2=\"155\" class=\"graf_svg_linea\" />\n";
  return texto;
 }
 
+// Empotramiento derecho
 function empder_svg(){
  var texto = " <line x1=\"575\" y1=\"135\" x2=\"575\" y2=\"165\" class=\"graf_svg_linea\" />\n <line x1=\"585\" y1=\"145\" x2=\"575\" y2=\"135\" class=\"graf_svg_linea\" />\n <line x1=\"585\" y1=\"155\" x2=\"575\" y2=\"145\" class=\"graf_svg_linea\" />\n <line x1=\"585\" y1=\"165\" x2=\"575\" y2=\"155\" class=\"graf_svg_linea\" />\n";
  return texto;
 }
 
 
-
+// Esta función llama a las anteriores para dibujar los elementos.
 function dibujarelem_svg(lng, modo, submodo, apoyos_d){
  var texto = "";
  if(empotramientos_tipos[modo] == 1 || empotramientos_tipos[modo] == 3){
@@ -497,7 +469,10 @@ function dibujarelem_svg(lng, modo, submodo, apoyos_d){
 
 
 
-
+// Esta función hace el dibujo de la viga con sus cargas.
+// Recibe el tipo de viga, longitud, posiciones de apoyos, cargas...
+// No se que hacía "grafgraf", pero lo he dejado como dibujar escalas iguales, algo que siempre está activado ahora mismo.
+// Devuelve una cadena de texto con el código SVG correspondiente.
 function graficar_svg(lng, tipo, subtipo, apoyos_d, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, grafgraf){
  var coordx, coordy, coordx2, coordy2; // float
  var i;
@@ -563,6 +538,10 @@ function graficar_svg(lng, tipo, subtipo, apoyos_d, mcp, dcp, mmp, dmp, mcc, icc
 }
 
 
+// Esta función dibuja los gráficos de funciones.
+// Recibe datos de la viga (apoyos, longitud...), el color a usar (clase CSS) y la función.
+// Las partes lineasles las dibuja con un único trazo, las no lineales con muchos trazos pequeños.
+// Los saltos los dibuja con línea más fina.
 function dibujar_graf_svg(lng, tipo, subtipo, apoyos_num, apoyos_d, ncmp, dcmp, valor_tope, semitransparente, escala, inicial, ultimo, color, func){ //, f0, f1, f2, f3, f4, f5
  var dibujo_viga = "<rect x=\"25\" y=\"149\" width=\"550\" height=\"2\" class=\"graf_svg_viga\" />\n";
  var alto = 150;
@@ -645,7 +624,8 @@ function dibujar_graf_svg(lng, tipo, subtipo, apoyos_num, apoyos_d, ncmp, dcmp, 
  texto_linea = texto_linea + "  <line x1=\"" + ultimoX + "\" y1=\"" + ultimoY + "\" x2=\"" + fin_de_linea + "\" y2=\"" + 150 + "\" class=\"graf_svg_func_" + colores + "_borde graf_svg_func_salto\" />\n";
  // Cierre del relleno
  texto_relleno = texto_relleno + " 575," + coordy2 + " 575,150\" class=\"graf_svg_func_" + colores + "_rell graf_svg_func_relleno\" />\n";
- /*if(color == 'r'){
+/* Código para marcar la sección con mayor momento.
+ if(color == 'r'){
   if(flc_pos_graf == 'i')
    coordy2 = 150 - (der_f[ncmp-1] * -140 / valor_tope);
   else
@@ -663,69 +643,27 @@ function dibujar_graf_svg(lng, tipo, subtipo, apoyos_num, apoyos_d, ncmp, dcmp, 
 
 
 
-
+// Dibujar gráficos.
 
 function graf(lng, tipo, subtipo, apoyos_d, dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d, max_abs_c, max_abs_m, max_abs_g, max_abs_d){
- // alert("paso por aquí");
- // var dibujo_viga = "<rect x=\"25\" y=\"149\" width=\"550\" height=\"2\" fill=\"black\" opacity=\"1\" />\n";
- // alert("asf" + max_abs_m);
-
  var apoyos_num = apoyos_d.length;
  var ncmp = dcmp.length - 1;
- /*var vect_temp0 = new Array(ncmp);
- var vect_temp1 = new Array(ncmp);
- var vect_temp2 = new Array(ncmp);
- var vect_temp3 = new Array(ncmp);
- var vect_temp4 = new Array(ncmp);
- var vect_temp5 = new Array(ncmp);
- var vect_temp = new Array(ncmp);
- for(i=0;i<ncmp;i++){
-  vect_temp[i] = new Array(6);
- }*/
+
  var valor_tope = Math.abs(max_abs_c);
- /*for(i=0;i<ncmp;i++){//Cargar datos en los vectores temporales
-  vect_temp0[i]= -crt[i][0]; vect_temp1[i]= -crt[i][1];
-  vect_temp2[i]= -crt[i][2]; vect_temp3[i]=0;
-  vect_temp4[i]=0; vect_temp5[i]=0;
-  vect_temp[i][0]= -crt[i][0];   vect_temp[i][1]= -crt[i][1];
-  vect_temp[i][2]= -crt[i][2];   vect_temp[i][3]= 0;
-  vect_temp[i][4]=0;   vect_temp[i][5]=0;
- }*/
  inicio= -izq_c[0]; final= -der_c[ncmp-1];
  var crt_grafico_dibujado = dibujar_graf_svg(lng, tipo, subtipo, apoyos_num, apoyos_d, ncmp, dcmp, valor_tope, 1, 1, inicio, final, 0, crt); //, vect_temp0, vect_temp1, vect_temp2, vect_temp3, vect_temp4, vect_temp5
-
  var texto_crt = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600px\" height=\"300px\">\n" + crt_grafico_dibujado + "</svg>";
  document.getElementById('res_graf_crt').innerHTML = texto_crt;
 
-
-
-
  valor_tope = Math.abs(max_abs_m);
- /*for(i=0;i<ncmp;i++){//Cargar datos en los vectores temporales
-  vect_temp0[i]= -flc[i][0]; vect_temp1[i]= -flc[i][1];
-  vect_temp2[i]= -flc[i][2]; vect_temp3[i]= -flc[i][3];
-  vect_temp4[i]=0; vect_temp5[i]=0;
-  vect_temp[i][0]= -flc[i][0];   vect_temp[i][1]= -flc[i][1];
-  vect_temp[i][2]= -flc[i][2];   vect_temp[i][3]= -flc[i][3];
-  vect_temp[i][4]=0;   vect_temp[i][5]=0;
- }*/
  inicio= -izq_f[0]; final= -der_f[ncmp-1];
  var flc_grafico_dibujado = dibujar_graf_svg(lng, tipo, subtipo, apoyos_num, apoyos_d, ncmp, dcmp, valor_tope, 1, 1, inicio, final, 1, flc); //, vect_temp0, vect_temp1, vect_temp2, vect_temp3, vect_temp4, vect_temp5
-
  var texto_flc = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600px\" height=\"300px\">\n" + flc_grafico_dibujado + "</svg>";
  document.getElementById('res_graf_flc').innerHTML = texto_flc;
 
-
- //var gir_const = gir.slice();
  valor_tope = Math.abs(max_abs_g);
  var gir_const = new Array(ncmp);
  for(i=0;i<ncmp;i++){//Cargar datos en los vectores temporales
-  /*vect_temp0[i]= gir[i][0] + ctes_gir[i]; vect_temp1[i]= gir[i][1];
-  vect_temp2[i]= gir[i][2]; vect_temp3[i]= gir[i][3];
-  vect_temp4[i]= gir[i][4]; vect_temp5[i]=0;
-  vect_temp[i][0]= gir[i][0] + ctes_gir[i];   vect_temp[i][1]= gir[i][1];
-  vect_temp[i][2]= gir[i][2];   vect_temp[i][3]= gir[i][3];
-  vect_temp[i][4]= gir[i][4];   vect_temp[i][5]=0;*/
   gir_const[i] = new Array(5);
   gir_const[i][0] = gir[i][0] + ctes_gir[i];
   gir_const[i][1] = gir[i][1];
@@ -735,27 +673,12 @@ function graf(lng, tipo, subtipo, apoyos_d, dcmp, crt, flc, gir, def, ctes_gir, 
  }
  inicio= izq_g[0]; final= der_g[ncmp-1];
  var gir_grafico_dibujado = dibujar_graf_svg(lng, tipo, subtipo, apoyos_num, apoyos_d, ncmp, dcmp, valor_tope, 1, 1, inicio, final, 2, gir_const); //, vect_temp0, vect_temp1, vect_temp2, vect_temp3, vect_temp4, vect_temp5
-
  var texto_gir = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600px\" height=\"300px\">\n" + gir_grafico_dibujado + "</svg>";
  document.getElementById('res_graf_gir').innerHTML = texto_gir;
 
-
-
-
-
- /*alert("AAA func_js[2][num_campo][0]" + func_js[2][0][0] + " " + func_js[4][0]);
- var def_const = def.slice();
- alert("BBB func_js[2][num_campo][0]" + func_js[2][0][0] + " " + func_js[4][0]);*/
- var def_const = new Array(ncmp);
-
  valor_tope = Math.abs(max_abs_d);
+ var def_const = new Array(ncmp);
  for(i=0;i<ncmp;i++){//Cargar datos en los vectores temporales
-  /*vect_temp0[i]= def[i][0] + ctes_def[i]; vect_temp1[i]= def[i][1] + ctes_gir[i]; //
-  vect_temp2[i]= def[i][2]; vect_temp3[i]= def[i][3];
-  vect_temp4[i]= def[i][4]; vect_temp5[i]= def[i][5];
-  vect_temp[i][0]= def[i][0];   vect_temp[i][1]= def[i][1] + ctes_gir[i]; //
-  vect_temp[i][2]= def[i][2];   vect_temp[i][3]= def[i][3];
-  vect_temp[i][4]= def[i][4];   vect_temp[i][5]= def[i][5];*/
   def_const[i] = new Array(6);
   def_const[i][0] = def[i][0] + ctes_def[i];
   def_const[i][1] = def[i][1] + ctes_gir[i];
@@ -766,22 +689,8 @@ function graf(lng, tipo, subtipo, apoyos_d, dcmp, crt, flc, gir, def, ctes_gir, 
  }
  inicio= izq_d[0]; final= der_d[ncmp-1];
  var def_grafico_dibujado = dibujar_graf_svg(lng, tipo, subtipo, apoyos_num, apoyos_d, ncmp, dcmp, valor_tope, 1, 1, inicio, final, 3, def_const); //, vect_temp0, vect_temp1, vect_temp2, vect_temp3, vect_temp4, vect_temp5
-
  var texto_def = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600px\" height=\"300px\">\n" + def_grafico_dibujado + "</svg>";
  document.getElementById('res_graf_def').innerHTML = texto_def;
-
-
-
-
-
-
- /*for(i=0;i<ncmp;i++){//Cargar datos en los vectores temporales
-  vect_temp[i][0]= -flc[i][0];   vect_temp[i][1]= -flc[i][1];
-  vect_temp[i][2]= -flc[i][2];   vect_temp[i][3]= -flc[i][3];
-  vect_temp[i][4]=0;   vect_temp[i][5]=0;
-  inicio= -izq_f[0]; final= -der_f[ncmp-1];
- }*/
-//fff(1)
 }
 
 
@@ -794,6 +703,8 @@ function graf(lng, tipo, subtipo, apoyos_d, dcmp, crt, flc, gir, def, ctes_gir, 
 
 
 // Función que obtiene máximos y mínimos
+// Recibe las funciones y los valores en los extremos de los campos.
+// Devuelve los máximos y devuelve muchos datos por pantalla: funciones, máximos...
 function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d, ei){
  var maxc_m=0; var maxc=0; var cmp_c_max=0;
  var minc_m=0; var minc=0; var cmp_c_min=0;
@@ -876,7 +787,6 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
     if(tmpa>dcmp[i] && tmpa<dcmp[i+1]){
      /*cero_crt[nc_crt]=tmpa;
      nc_crt++;*/
-     //tmpb=sustituir(tmpa, flc[i][0] ,flc[i][1] , flc[i][2] , flc[i][3],0,0 );
      tmpb=sustituir_b(tmpa, flc[i]);
      if(tmpb>maxm_m){
       maxm_m=tmpb;
@@ -899,7 +809,6 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
      if(tmpa<dcmp[i+1] && tmpa>dcmp[i]){
       /*cero_crt[nc_crt]=tmpa;
       nc_crt++;*/
-      //tmpb=sustituir(tmpa, flc[i][0] ,flc[i][1] , flc[i][2] , flc[i][3] ,0,0);
       tmpb=sustituir_b(tmpa, flc[i]);
       if(tmpb>maxm_m){
        maxm_m=tmpb;
@@ -923,7 +832,6 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
      if(tmpa<dcmp[i+1] && tmpa>dcmp[i]){
       /*cero_crt[nc_crt]=tmpa;
       nc_crt++;*/
-      //tmpb=sustituir(tmpa, flc[i][0] ,flc[i][1] , flc[i][2] , flc[i][3],0,0 );
       tmpb=sustituir_b(tmpa, flc[i]);
       if(tmpb>maxm_m){
        maxm_m=tmpb;
@@ -939,7 +847,6 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
      // Caso -  (en la raiz cuadrada, que tiene +/-)
      tmpa=(-crt[i][1]-tmp)/(2*crt[i][2]);
      if(tmpa<dcmp[i+1] && tmpa>dcmp[i]){
-      //tmpb=sustituir(tmpa, flc[i][0] ,flc[i][1] , flc[i][2] , flc[i][3] ,0,0);
       tmpb=sustituir_b(tmpa, flc[i]);
       if(tmpb>maxm_m){
        maxm_m=tmpb;
@@ -964,7 +871,6 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
   if(crt[i][2]!=0){ // Si la función tiene un valor de a distinto de cero.
    tmpa=-crt[i][1]/(crt[i][2]*2);// Se iguala la derivada a cero y se despeja X para obtener el punto de corte.
    if(tmpa<dcmp[i+1] && tmpa>dcmp[i]){ // Se comprueba si ese punto está en el campo de estudio.
-    //tmpb=sustituir(tmpa,crt[i][0],crt[i][1],crt[i][2],0,0,0); // Se saca el valor
     tmpb=sustituir_b(tmpa,crt[i]); // Se saca el valor
     if(tmpb>maxc_m){ // Si es mayor que el máximo, es un máximo
      maxc_m=tmpb;
@@ -1033,9 +939,8 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
  var num_elast_inerc = 0; // No necesario
  var posic_lineas_peq = tam_divisiones * 0.5;  //Tamaño de cada división e iniciación
  for(i=0;i<divisiones;i++){
-  var j = campo_distancia(posic_lineas_peq, dcmp) - 1;
-  //var temporal3= sustituir(posic_lineas_peq,gir[j][0]+ctes_gir[j],gir[j][1],gir[j][2],gir[j][3],gir[j][4],0);
-  var temporal3 = sustituir_b(posic_lineas_peq, gir[j], ctes_gir[j]);
+  var j = campo_distancia(posic_lineas_peq, dcmp);
+  var temporal3 = sustituir_b(posic_lineas_peq, gir[j]) + ctes_gir[j];
   if(Math.abs(max_abs_g) < Math.abs(temporal3)){
    max_abs_g = temporal3;
    max_abs_g_dist = posic_lineas_peq;
@@ -1048,9 +953,8 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
  //  mind_m=der_d[i]; mind=dcmp[i+1]; cmp_d_min=i;
  posic_lineas_peq = tam_divisiones * 0.5;  //Tamaño de cada división e iniciación
  for(i=0;i<divisiones;i++){
-  var j = campo_distancia(posic_lineas_peq, dcmp)-1;
-  //var temporal3 = sustituir(posic_lineas_peq,def[j][0]+ctes_def[j],def[j][1]+ctes_gir[j],def[j][2],def[j][3],def[j][4],def[j][5]);
-  var temporal3 = sustituir_b(posic_lineas_peq, def[j], ctes_gir[j], ctes_def[j]);
+  var j = campo_distancia(posic_lineas_peq, dcmp);
+  var temporal3 = sustituir_b(posic_lineas_peq, def[j]) + sustituir_b(posic_lineas_peq, [ctes_def[j], ctes_gir[j]]);
   if(Math.abs(max_abs_d) < Math.abs(temporal3)){
    max_abs_d = temporal3;
    max_abs_d_dist = posic_lineas_peq;
@@ -1093,6 +997,7 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
  document.getElementById('res_funciones').innerHTML = texto;
 
 
+// Valores en los extremos de cada campo.
  var izq_g_ei = new Array(ncmp);
  var der_g_ei = new Array(ncmp);
  var izq_d_ei = new Array(ncmp);
@@ -1148,18 +1053,10 @@ function val_ext(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, ei){ // Se dan va
   der_c[i] = sustituir_b(dcmp[i+1], crt[i]);
   izq_f[i] = sustituir_b(dcmp[i], flc[i]);
   der_f[i] = sustituir_b(dcmp[i+1], flc[i]);
-  izq_g[i] = sustituir_b(dcmp[i], gir[i], ctes_gir[i]);
-  der_g[i] = sustituir_b(dcmp[i+1], gir[i], ctes_gir[i]);
-  izq_d[i] = sustituir_b(dcmp[i], def[i], ctes_gir[i], ctes_def[i]);
-  der_d[i] = sustituir_b(dcmp[i+1], def[i], ctes_gir[i], ctes_def[i]);
-  /*izq_c[i] = sustituir(dcmp[i], crt[i][0], crt[i][1], crt[i][2], 0, 0, 0);
-  der_c[i] = sustituir(dcmp[i+1], crt[i][0], crt[i][1], crt[i][2], 0, 0, 0);
-  izq_f[i] = sustituir(dcmp[i], flc[i][0], flc[i][1], flc[i][2], flc[i][3], 0, 0);
-  der_f[i] = sustituir(dcmp[i+1], flc[i][0], flc[i][1], flc[i][2], flc[i][3], 0, 0);
-  izq_g[i] = sustituir(dcmp[i], gir[i][0] + ctes_gir[i], gir[i][1], gir[i][2], gir[i][3], gir[i][4], 0);
-  der_g[i] = sustituir(dcmp[i+1], gir[i][0] + ctes_gir[i], gir[i][1], gir[i][2], gir[i][3], gir[i][4], 0);
-  izq_d[i] = sustituir(dcmp[i], def[i][0] + ctes_def[i], def[i][1] + ctes_gir[i], def[i][2], def[i][3], def[i][4], def[i][5]);
-  der_d[i] = sustituir(dcmp[i+1], def[i][0] + ctes_def[i], def[i][1] + ctes_gir[i], def[i][2], def[i][3], def[i][4], def[i][5]);*/
+  izq_g[i] = sustituir_b(dcmp[i], gir[i]) + ctes_gir[i]; // No olvidar las constantes.
+  der_g[i] = sustituir_b(dcmp[i+1], gir[i]) + ctes_gir[i]; // En la deformación se compone un vector con las dos constantes.
+  izq_d[i] = sustituir_b(dcmp[i], def[i]) + sustituir_b(dcmp[i], [ctes_def[i], ctes_gir[i]]);
+  der_d[i] = sustituir_b(dcmp[i+1], def[i]) + sustituir_b(dcmp[i+1], [ctes_def[i], ctes_gir[i]]);
  }
  return [izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d];
 }
@@ -1194,22 +1091,10 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
  var largo , factor , tmp, va, vb;//Menos mal que aceptó los comentarios con doble barra
  var i ,j,tmpa,tmpb;//TEMAZO: Darude - Sandstorm
  var sumarEMPTR, sumarA, sumarB, sumarC, sumarD, sumarE, sumarF, sumarAPPS;
- //FILE *arch;
  sumarEMPTR=0; //sumarA=0; sumarB=0; sumarC=0; sumarD=0; sumarE=0; sumarF=0; sumarAPPS=0;
- //sumar_apoyo = new Array(dapp.length);
- /*var sumar_apoyo;
- if(tipo < 7){
-  sumar_apoyo = apoyos_rotulas[tipo][subtipo];
- }else{
-  sumar_apoyo = new Array();
-  for(i in dapp){
-   sumar_apoyo.push(1);
-  }
- }*/
  var sumarEMPTR = (empotramientos_tipos[tipo] == 1 || empotramientos_tipos[tipo] == 3) ? 1 : 0;
  //alert("empotramientos_tipos[tipo][subtipo]" + empotramientos_tipos[tipo][subtipo]);
  //var num_apoyos = dapp.length;
- // Innececesario en JavaScript
  for(i=0;i<ncmp;i++){//Se pone a cero todo, y luego se va sumando cada cosa
   crt[i][0]=0;  crt[i][1]=0;  crt[i][2]=0;          ctes_gir[i]=0; ctes_def[i]=0;
   flc[i][0]=0;  flc[i][1]=0;  flc[i][2]=0;  flc[i][3]=0;
@@ -1217,90 +1102,6 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
   def[i][0]=0;  def[i][1]=0;  def[i][2]=0;  def[i][3]=0;  def[i][4]=0;  def[i][5]=0;
  }
 
- /*switch(tipo){
-  case 0:
-   sumar_apoyo[0] = 1; sumar_apoyo[1] = 1;
-  break;
-  case 1:
-   sumarEMPTR=1;
-  break;
-  case 3://  ||---o---+----o---+----o---+
-   sumarEMPTR=1;
-   switch(subtipo){
-    case 0:
-     sumar_apoyo[1] = 1; break;
-    case 1:
-     sumar_apoyo[1] = 1; sumar_apoyo[3] = 1; break;
-    case 2:
-     sumar_apoyo[2] = 1; sumar_apoyo[3] = 1; break;
-    case 3:
-     sumar_apoyo[1] = 1; sumar_apoyo[3] = 1; sumar_apoyo[5] = 1; break;
-    case 4:
-     sumar_apoyo[2] = 1; sumar_apoyo[3] = 1; sumar_apoyo[5] = 1; break;
-    case 5:
-     sumar_apoyo[1] = 1; sumar_apoyo[4] = 1; sumar_apoyo[5] = 1; break;
-    case 6:
-     sumar_apoyo[2] = 1; sumar_apoyo[4] = 1; sumar_apoyo[5] = 1; break;
-   }
-  break;
-  case 4://    +---o----+----0------||
-   sumar_apoyo[0] = 1;
-   switch(subtipo){
-    case 1:
-     sumar_apoyo[2] = 1; break;
-    case 2:
-     sumar_apoyo[1] = 1; break;
-    case 3:
-     sumar_apoyo[2] = 1; sumar_apoyo[4] = 1; break;
-    case 4:
-     sumar_apoyo[2] = 1; sumar_apoyo[3] = 1; break;
-    case 5:
-     sumar_apoyo[1] = 1; sumar_apoyo[4] = 1; break;
-    case 6:
-     sumar_apoyo[1] = 1; sumar_apoyo[3] = 1; break;
-   }
-  break;
-  case 5:
-   sumar_apoyo[0] = 1;//TEMAZO: Corona - This is the rhythm of the night
-   switch(subtipo){
-    case 0:
-     sumar_apoyo[1] = 1; sumar_apoyo[3] = 1; break;
-    case 1:
-     sumar_apoyo[2] = 1; sumar_apoyo[3] = 1; break;
-    case 2:
-     sumar_apoyo[1] = 1; sumar_apoyo[4] = 1; sumar_apoyo[5] = 1; break;
-    case 3:
-     sumar_apoyo[2] = 1; sumar_apoyo[3] = 1; sumar_apoyo[5] = 1; break;
-    case 4:
-     sumar_apoyo[1] = 1; sumar_apoyo[3] = 1; sumar_apoyo[5] = 1; break;
-    case 5:
-     sumar_apoyo[2] = 1; sumar_apoyo[4] = 1; sumar_apoyo[5] = 1; break;
-   }
-  break;
-  case 6://Las biempotradas isostáticas
-   sumarEMPTR=1;//TEMAZO: Corona - This is the rhythm of the night
-   switch(subtipo){
-    case 1:
-     sumar_apoyo[2] = 1; break;
-    case 2:
-     sumar_apoyo[1] = 1; break;
-    case 3:
-     sumar_apoyo[2] = 1;  sumar_apoyo[3] = 1; break;
-    case 4:
-     sumar_apoyo[1] = 1;  sumar_apoyo[4] = 1; break;
-    case 5:
-     sumar_apoyo[2] = 1;  sumar_apoyo[4] = 1; break;
-    case 6:
-     sumar_apoyo[1] = 1;  sumar_apoyo[3] = 1; break;
-   }
-  break;
-  case 7: case 10://Hiperestáticas
-   sumarEMPTR = 1;
-  case 8: case 9:
-   sumarAPPS = 1;
-  break;
- }*/
- //alert("num_apoyos_tipos[tipo][subtipo] " + num_apoyos_tipos[tipo][subtipo]);
  for(i=0; i<ncmp; i++){
   for(j in dapp){
    //if(sumarAPPS || sumar_apoyo[j]){//apoyos_rotulas
@@ -1324,28 +1125,6 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
    flc[i][0]-=memptr;    gir[i][1]-=memptr;
    def[i][2]-=memptr/2;
   }
-  //var sumar = [sumarA, sumarB, sumarC, sumarD, sumarE, sumarF];
-  /*var sumar = [0,0,0,0,0,0];
-  if(sumarA) sumar[0] = 1;
-  if(sumarB) sumar[1] = 1;
-  if(sumarC) sumar[2] = 1;
-  if(sumarD) sumar[3] = 1;
-  if(sumarE) sumar[4] = 1;
-  if(sumarF) sumar[5] = 1;
-  for(j in dapp){ // Aquí falla
-   if(sumar[j]){
-    if(dapp[j] < dcmp[i+1]){
-     crt[i][0] += mapp[j];     flc[i][1] += mapp[j];
-     gir[i][2] += mapp[j] / 2; def[i][3] += mapp[j] / 6;
-     factor = mapp[j] * dapp[j]; flc[i][0] -= factor;
-     gir[i][1] -= factor;  def[i][2] -= factor/2;
-     factor *= dapp[j] / 2;    gir[i][0] += factor;
-     def[i][1] += factor;  def[i][0] -= factor * dapp[j] / 3;
-    }
-   }
-  }*/
- //alert("pwn" + dcp[0]);
-// alert ("Prueba " + i);
   //Cargas puntuales
   for(j in dcp){
    if(dcp[j] < dcmp[i+1]){
@@ -1387,7 +1166,7 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
     flc[i][2]-=factor/2;
     def[i][4]-=factor/24;
     factor*=tmp;
-    crt[i][0]+=factor;// sprintf(temp,"%f %f %f",crt[i][2],crt[i][1],crt[i][0]);
+    crt[i][0]+=factor;
     flc[i][1]+=factor;
     factor/=2;
     gir[i][2]+=factor;
@@ -1503,24 +1282,6 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
     def[i][1]+=factor;
     gir[i][0]+=factor;
     def[i][0]-=factor*tmp/5;
-    /*crt[i][2]+=factor;
-    flc[i][3]+=factor/3;
-    gir[i][4]+=factor/12;
-    def[i][5]+=factor/60;
-    crt[i][1]-=factor*tmp*2;
-    flc[i][2]-=factor*tmp;
-    gir[i][3]-=factor*tmp/3;
-    def[i][4]-=factor*tmp/12;
-    crt[i][0]+=factor*tmp*tmp;
-    flc[i][1]+=factor*tmp*tmp;//Fallo
-    gir[i][2]+=factor*tmp*tmp/2;
-    def[i][3]+=factor*tmp*tmp/6;//Fallo
-    flc[i][0]-=factor*tmp*tmp*tmp/3;
-    gir[i][1]-=factor*tmp*tmp*tmp/3;
-    def[i][2]-=factor*tmp*tmp*tmp/6;
-    gir[i][0]+=factor*tmp*tmp*tmp*tmp/12;
-    def[i][1]+=factor*tmp*tmp*tmp*tmp/12;
-    def[i][0]-=factor*tmp*tmp*tmp*tmp*tmp/60;*/
     //  parte rectangular que suma
     tmp=fcv[j];
     factor=bcv[j];
@@ -1542,36 +1303,11 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
     gir[i][0]-=factor;
     def[i][1]-=factor;
     def[i][0]+=factor*tmp/4;
-    /*crt[i][0]-=factor*tmp;
-    crt[i][1]+=factor;
-    flc[i][0]+=factor*tmp*tmp/2;
-    flc[i][1]-=factor*tmp;
-    flc[i][2]+=factor/2;
-    gir[i][0]-=factor*tmp*tmp*tmp/6;
-    gir[i][1]+=factor*tmp*tmp/2;
-    gir[i][2]-=factor*tmp/2;
-    gir[i][3]+=factor/6;
-    def[i][0]+=factor*tmp*tmp*tmp*tmp/24;
-    def[i][1]-=factor*tmp*tmp*tmp/6;
-    def[i][2]+=factor*tmp*tmp/4;
-    def[i][3]-=factor*tmp/6;
-    def[i][4]+=factor/24;*/
    }/*  F I N   D E L   C A R G A   E N   C A M P O   O   F U E R A*/
   }/*  F I N   D E L for(j=0;j<ncv;j++)*/
  }/*  F I N   D E L for(i=0;i<ncmp;i++)*/
 
 
-
-
-
-
-
-/*var daa = dapp[0];
-var dab = dapp[1];
-var dac = dapp[2];
-var dad = dapp[3];
-var dae = dapp[4];
-var daf = dapp[5];*/
 var res_ctes = new Array(2);
 
  // Procesar constantes
@@ -1594,15 +1330,10 @@ var res_ctes = new Array(2);
     ctes_def[i]=0;
    }
   break;
-  case 2:   //Arreglar esto
+  case 2:
   case 8:
-   //alert("apoyos_rotulas");
-   //cte_gir = -sustituir(lng, gir[ncmp-1][0], gir[ncmp-1][1], gir[ncmp-1][2], gir[ncmp-1][3], gir[ncmp-1][4], 0);
-   //cte_def = -sustituir(lng, def[ncmp-1][0], def[ncmp-1][1], def[ncmp-1][2], def[ncmp-1][3], def[ncmp-1][4], def[ncmp-1][5]) - (cte_gir*lng);
    cte_gir = -sustituir_b(lng, gir[ncmp-1]);
    cte_def = -sustituir_b(lng, def[ncmp-1]) - (cte_gir * lng);
-   //cte_gir = -der_g[ncmp-1];
-   //cte_def = -der_d[ncmp-1]-(cte_gir*lng);
    for(i=0;i<ncmp;i++){
     ctes_gir[i]=cte_gir;
     ctes_def[i]=cte_def;
@@ -1623,9 +1354,6 @@ var res_ctes = new Array(2);
     }
     cortes_cmp.push(j);
    }
-   /*for (i in cortes){
-    alert("Corte: " + cortes[i]);
-   }*/
    if(tipo == 3 || tipo == 6){ // Empotramiento a la izquierda
     while(i < cortes_cmp[1]){ // Hasta el campo donde esté la primera rótula
      ctes_gir[i] = 0;  ctes_def[i] = 0;  i++;
@@ -1634,8 +1362,6 @@ var res_ctes = new Array(2);
    if(tipo == 4 || tipo == 6){ // Empotramiento a la derecha
     cte_gir = -sustituir_b(lng, gir[ncmp-1]);
     cte_def = -sustituir_b(lng, def[ncmp-1]) - (cte_gir * lng);
-    //cte_gir= - sustituir(lng, gir[ncmp - 1][0], gir[ncmp - 1][1], gir[ncmp - 1][2], gir[ncmp - 1][3], gir[ncmp - 1][4], 0);
-    //cte_def= - sustituir(lng, def[ncmp - 1][0], def[ncmp - 1][1], def[ncmp - 1][2], def[ncmp - 1][3], def[ncmp - 1][4], def[ncmp - 1][5]) - (cte_gir * lng);
     i = cortes_cmp[cortes_cmp.length-2];
     //alert("Corte: " + i + " " + dcmp[i]);
     while(i < ncmp){
@@ -1647,15 +1373,13 @@ var res_ctes = new Array(2);
      altura_a = yapp[constantes_comp[tipo-3][subtipo][i][2]];
     }else{
      var cc = cortes_cmp[constantes_comp[tipo-3][subtipo][i][2] + 1]-1;
-     //altura_a = sustituir(dcmp[cc+1],def[cc][0]+ctes_def[cc],def[cc][1]+ctes_gir[cc],def[cc][2],def[cc][3],def[cc][4],def[cc][5]);
-     altura_a = sustituir_b(dcmp[cc+1], def[cc], ctes_gir[cc], ctes_def[cc]);
+     altura_a = sustituir_b(dcmp[cc+1], def[cc]) + sustituir_b(dcmp[cc+1], [ctes_def[cc], ctes_gir[cc]]);
     }
     if(apoyos_rotulas[tipo][subtipo][constantes_comp[tipo-3][subtipo][i][3]]){ // Comprobar si es un apoyo
      altura_b = yapp[constantes_comp[tipo-3][subtipo][i][3]];
     }else{
      var cc = cortes_cmp[constantes_comp[tipo-3][subtipo][i][3] + 1];
-     //altura_b = sustituir(dapp[constantes_comp[tipo-3][subtipo][i][3]], def[cc][0]+ctes_def[cc],def[cc][1]+ctes_gir[cc],def[cc][2],def[cc][3],def[cc][4],def[cc][5]);
-     altura_b = sustituir_b(dapp[constantes_comp[tipo-3][subtipo][i][3]], def[cc], ctes_gir[cc], ctes_def[cc]);
+     altura_b = sustituir_b(dapp[constantes_comp[tipo-3][subtipo][i][3]], def[cc]) + sustituir_b(dapp[constantes_comp[tipo-3][subtipo][i][3]], [ctes_def[cc], ctes_gir[cc]]);
     }
     res_ctes = sacar_constantes(dapp[constantes_comp[tipo-3][subtipo][i][2]], dapp[constantes_comp[tipo-3][subtipo][i][3]], altura_a, altura_b, def, dcmp);
     var j = cortes_cmp[constantes_comp[tipo-3][subtipo][i][0] + 1];
@@ -1663,33 +1387,9 @@ var res_ctes = new Array(2);
      ctes_gir[j] = res_ctes[0];    ctes_def[j] = res_ctes[1];    j++;
     }
    }
-   // alert("Campo: " + cc + " " + dcmp[cc]);
-
   break;
  }
-   //alert("Pwnalidad.");
-
- /*for(i=0;i<ncmp;i++){ //Cargar datos en los vectores para calcular valores al final
- // Para hacer: simplificar el código.
-  crt0_js[i] = crt[i][0];
-  crt1_js[i] = crt[i][1];
-  crt2_js[i] = crt[i][2];
-  flc0_js[i] = flc[i][0];
-  flc1_js[i] = flc[i][1];
-  flc2_js[i] = flc[i][2];
-  flc3_js[i] = flc[i][3];
-  gir0_js[i] = gir[i][0]+ctes_gir[i];
-  gir1_js[i] = gir[i][1];
-  gir2_js[i] = gir[i][2];
-  gir3_js[i] = gir[i][3];
-  gir4_js[i] = gir[i][4];
-  def0_js[i] = def[i][0]+ctes_def[i];
-  def1_js[i] = def[i][1]+ctes_gir[i];
-  def2_js[i] = def[i][2];
-  def3_js[i] = def[i][3];
-  def4_js[i] = def[i][4];
-  def5_js[i] = def[i][5];
- }*/
+ //Cargar datos en los vectores para calcular valores al final
  func_js = [crt, flc, gir, def, ctes_gir, ctes_def];
  return [crt, flc, gir, def, ctes_gir, ctes_def];
 }
@@ -2304,13 +2004,10 @@ var magnappoyob = 0;
 
 
 //function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia){
-//alert("texto");
-// alert("resolver_sis_ecuac" + tipo + " " + lng + " " + unidades + " " + elasticidad + " " + inercia);
 //}
 //	 calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp, yapp, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv){//vectof[tam]*= (-1);
 
 function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp, yapp, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv){ //FILE *archivo;
-//function fuu(){
  var float_temp, float_temp2, float_temp3, largo;//
  //var i, j, k, float_temp_int, temp_int2, temp_int3;
  var napp = dapp.length;
@@ -2447,49 +2144,7 @@ function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp,
      if(float_temp >= 0)
       matrif[2+i][j+2]= float_temp*float_temp*float_temp;
     }   //Meter el descenso del apoyo
-    if(inercia==0){   //Si se trata de forma simbólica la inercia y la elasticidad:
-     if(elasticidad==0){
-      vectof[temp_int2]=yapp[i]*6;
-     }else{//Elastidicad como número
-      switch(unidades){//Inercia como número
-       case 'c':
-       vectof[temp_int2]=yapp[i]*elasticidad*6;
-       break;
-       case 'i': case 't':
-       vectof[temp_int2]=yapp[i]*elasticidad*10000*6;
-       break;
-       case 'I': case 'T':
-       vectof[temp_int2]=yapp[i]*elasticidad*10*6;
-       break;
-      }
-     }
-    }else{
-     if(elasticidad==0){
-      switch(unidades){//Inercia como número
-       case 'c':
-        vectof[temp_int2]=yapp[i]*inercia*6;
-       break;
-       case 'i': case 't':
-        vectof[temp_int2]=yapp[i]*inercia*6/100;
-       break;
-       case 'I': case 'T':
-        vectof[temp_int2]=yapp[i]*inercia*6/100000;
-       break;
-      }
-     }else{//Elastidicad e inercia como número
-      switch(unidades){
-       case 'c':
-        vectof[temp_int2]=yapp[i]*inercia*6;
-       break;
-       case 'i': case 't'://Las cargas usan N y Kp
-        vectof[temp_int2]=yapp[i]*elasticidad*6*inercia/10;
-       break;
-       case 'I': case 'T'://KN y Tf
-        vectof[temp_int2]=yapp[i]*elasticidad*6*inercia/10000;
-       break;
-      }
-     }
-    }
+    vectof[temp_int2] = yapp[i] * elasticidad * inercia * 6;
     for(j=0; j < mcp.length; j++){
      float_temp=dcp[j]-dapp[i];
      if(float_temp <= 0){
@@ -2604,42 +2259,8 @@ function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp,
       temp_int2=temp_int3-i;
       matrif[tam-j-1][tam-1-i]= float_temp*float_temp*float_temp;
      }
-    }
-    //Meter el descenso del apoyo
-    if(inercia==0){
-     if(elasticidad==0){
-      vectof[temp_int2]=yapp[i]*6;
-     }else{//Elastidicad como número
-      switch(unidades){//Inercia como número
-       case 'c':
-       vectof[temp_int2]=yapp[i]*elasticidad*6;     break;
-       case 'i': case 't':
-       vectof[temp_int2]=yapp[i]*elasticidad*10000*6; break;
-       case 'I': case 'T':
-       vectof[temp_int2]=yapp[i]*elasticidad*10*6;   break;
-      }
-     }
-    }else{
-     if(elasticidad==0){
-      switch(unidades){//Inercia como número
-       case 'c':
-        vectof[temp_int2]=yapp[i]*inercia*6;      break;
-       case 'i': case 't':
-        vectof[temp_int2]=yapp[i]*inercia*6/100;  break;
-       case 'I': case 'T':
-        vectof[temp_int2]=yapp[i]*inercia*6/100000; break;
-      }
-     }else{//Elastidicad e inercia como número
-      switch(unidades){
-       case 'c':
-        vectof[temp_int2]=yapp[i]*inercia*6;      break;
-       case 'i': case 't'://
-        vectof[temp_int2]=yapp[i]*elasticidad*6*inercia/10;  break;
-       case 'I': case 'T':
-        vectof[temp_int2]=yapp[i]*elasticidad*6*inercia/10000; break;
-      }
-     }
-    }
+    } //Meter el descenso del apoyo
+    vectof[temp_int2] = yapp[i] * elasticidad * inercia * 6;
     for(j=0;j<ncp;j++){
      float_temp=dapp[i]-dcp[j];
      if(float_temp <= 0){
@@ -2760,49 +2381,7 @@ function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp,
      if(float_temp >= 0)
       matrif[i][j+2]= float_temp*float_temp*float_temp;
     }//Meter el descenso del apoyo
-    if(inercia==0){//Si se trata de forma simbólica la inercia y la elasticidad:
-     if(elasticidad==0){
-      vectof[i]=yapp[i]*6;
-     }else{//Elastidicad como número
-      switch(unidades){//Inercia como número
-       case 'c':
-       vectof[i]=yapp[i]*elasticidad*6;
-       break;
-       case 'i': case 't':
-       vectof[i]=yapp[i]*elasticidad*10000*6;
-       break;
-       case 'I': case 'T':
-       vectof[i]=yapp[i]*elasticidad*10*6;
-       break;
-      }
-     }
-    }else{
-     if(elasticidad==0){
-      switch(unidades){//Inercia como número
-       case 'c':
-        vectof[i]=yapp[i]*inercia*6;
-       break;
-       case 'i': case 't':
-        vectof[i]=yapp[i]*inercia*6/100;
-       break;
-       case 'I': case 'T':
-        vectof[i]=yapp[i]*inercia*6/100000;
-       break;
-      }
-     }else{//Elastidicad e inercia como número
-      switch(unidades){
-       case 'c':
-        vectof[i]=yapp[i]*inercia*6;
-       break;
-       case 'i': case 't'://Las cargas usan N y Kp
-        vectof[i]=yapp[i]*elasticidad*6*inercia/10;
-       break;
-       case 'I': case 'T'://KN y Tf
-        vectof[i]=yapp[i]*elasticidad*6*inercia/10000;
-       break;
-      }
-     }
-    }
+    vectof[i] = yapp[i] * elasticidad * inercia * 6;
     for(j=0;j<ncp;j++){
      float_temp=dcp[j]-dapp[i];
      if(float_temp <= 0)
@@ -2945,49 +2524,7 @@ function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp,
      if(float_temp >= 0)
       matrif[4+i][j+4]= float_temp*float_temp*float_temp;  //Actualizado, los apoyos irían a partir de la cuarta fila.
     }  //Meter el descenso del apoyo
-    if(inercia==0){//Si se trata de forma simbólica la inercia y la elasticidad:
-     if(elasticidad==0){
-      vectof[temp_int2]=yapp[i]*6;
-     }else{//Elastidicad como número
-      switch(unidades){//Inercia como número
-       case 'c':
-       vectof[temp_int2]=yapp[i]*elasticidad*6;
-       break;
-       case 'i': case 't':
-       vectof[temp_int2]=yapp[i]*elasticidad*10000*6;
-       break;
-       case 'I': case 'T':
-       vectof[temp_int2]=yapp[i]*elasticidad*10*6;
-       break;
-      }
-     }
-    }else{
-     if(elasticidad==0){
-      switch(unidades){//Inercia como número
-       case 'c':
-        vectof[temp_int2]=yapp[i]*inercia*6;
-       break;
-       case 'i': case 't':
-        vectof[temp_int2]=yapp[i]*inercia*6/100;
-       break;
-       case 'I': case 'T':
-        vectof[temp_int2]=yapp[i]*inercia*6/100000;
-       break;
-      }
-     }else{//Elastidicad e inercia como número
-      switch(unidades){
-       case 'c':
-        vectof[temp_int2]=yapp[i]*inercia*6;
-       break;
-       case 'i': case 't'://Las cargas usan N y Kp
-        vectof[temp_int2]=yapp[i]*elasticidad*6*inercia/10;
-       break;
-       case 'I': case 'T'://KN y Tf
-        vectof[temp_int2]=yapp[i]*elasticidad*6*inercia/10000;
-       break;
-      }
-     }
-    }
+    vectof[temp_int2] = yapp[i] * elasticidad * inercia * 6;
     for(j=0;j<ncp;j++){
      float_temp=dcp[j]-dapp[i];
      if(float_temp <= 0)
@@ -3073,11 +2610,6 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
   inercia = 1;
  }
  var unidades = 'I';
- // alert("asf");
- // var tipo = 'a';
- // var subtipo = 'a';
- // var apoyos_d = new Array(10);
- // var apoyos_num = 0;
  var apoyos_f = new Array(10);
  var femptr1 = 0; // Fuerza empotramiento
  var memptr1 = 0; // Momento empotramiento
@@ -3102,14 +2634,6 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
  var maa = 0; var mab = 0; var mac = 0; var mad = 0; var mae = 0; var maf = 0;
  var daa = apoyos_d[0]; var dab = apoyos_d[1]; var dac = apoyos_d[2]; var dad = apoyos_d[3]; var dae = apoyos_d[4]; var daf = apoyos_d[5];
 
-//document.getElementById('resultado').innerHTML = "ADIOS";
-/*document.div.resultado.innerText = "Text";
-//document.div.resultado.innerHTML = "Text";*/
-//  alert("He pasado por aquí.");
-
-
-
-    // alert (" " + dcp[0] + " " + dcp[1]);
 
  // Variables para recibir los resultados:
  var resultado_apoyos = new Array(3);
@@ -3265,10 +2789,8 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    var ii = 1;
    for(i in apoyos_f){
     texto = texto + "<tr><td>Apoyo " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
-    //texto = texto + "<br>Apoyo " + ii + ": " + apoyos_f[i];
     ii++;
    }
-   //texto = texto + "<br>Carga total: " + cgt + "</span>";
    texto = texto + "<tr><td>Carga total </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
    document.getElementById('res_apoyos').innerHTML = texto;
   break;
@@ -3280,16 +2802,12 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    memptr2 = resultado_ecuaciones[3];
    femptr2 = resultado_ecuaciones[4];
    apoyos_f = resultado_ecuaciones[5];
-   //var texto = "<span>Fuerza vertical (emp. izq.): " + femptr1 + "<br>Momento (emp. izq.): " + memptr1;
-   //texto = texto + "<br>Fuerza vertical (emp. der.): " + femptr2 + "<br>Momento (emp. der.): " + memptr2;
    var texto = "<table><tr><td>F. emptr. izq.</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>M. emptr. izq.</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr><tr><td>F. emptr. der.</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>M. emptr. der.</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr>";
    var ii = 1;
    for(i in apoyos_f){
     texto = texto + "<tr><td>Apoyo " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
-    //texto = texto + "<br>Apoyo " + ii + ": " + apoyos_f[i];
     ii++;
    }
-   //texto = texto + "<br>Carga total: " + cgt + "</span>";
    texto = texto + "<tr><td>Carga total </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
    document.getElementById('res_apoyos').innerHTML = texto;
   break;
@@ -3310,14 +2828,8 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
  var max_abs_g = resultado_max_min[4]; var max_abs_d = resultado_max_min[6];
  max_crt_js = max_abs_c; max_flc_js = max_abs_f;
  max_gir_js = max_abs_g; max_def_js = max_abs_d;
- //alert("max_abs_c: " + max_abs_c);
- //alert("gir: " + gir[0][0] + "ctes_gir: " + ctes_gir[0]);
  graf(lng, tipo, subtipo, apoyos_d, dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d, max_abs_c, max_abs_m, max_abs_g, max_abs_d); //
  document.getElementById('resultado').innerHTML = "Cálculo concluido con éxito.";
- // alert("FLC: " + resultado_funciones[1][0][2]);
- // alert("FLC: " + flc[0][2]);
- //alert("Campos: " + ncmp + " ncp " + ncp + " nmp " + nmp);
- //  alert("Va bien hasta aquí.");
  document.getElementById('zona_resultados').style.display = '';
 }
 
@@ -3340,9 +2852,6 @@ function vista_previa_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, 
  var subtipo = vector_datos[1];
  var apoyos_d = vector_datos[2];
  var apoyos_y = vector_datos[3];
- //alert("Vista previa: " + tipo + " " + subtipo + " " + apoyos_d[0]);
- // alert("Va bien hasta aquí.");
- //              graficar_svg(lng, tipo, subtipo, apoyos_d, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, grafgraf)
  var texto_svg = graficar_svg(lng, tipo, subtipo, apoyos_d, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, 1);
 
  var texto_vista_previa = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600px\" height=\"300px\">\n" + texto_svg + "</svg>";
@@ -3385,8 +2894,6 @@ function actualizar_gui_viga_apoyos(num, vector_apoyos_rotulas){
 }
 
 
-//alert("Punto de control." + document.getElementById('etiqueta_distancia_horz_' + 2).innerHTML);
-//alert("Punto de control." + document.getElementById('etiqueta_distancia_horz_' + 1).innerHTML);
 
 function actualizar_gui_tipo(){
  var tipo = leer_opciones('radio_choice_tipo_viga');
@@ -3458,6 +2965,7 @@ function actualizar_gui_tipo(){
 
 
 // Lee los datos de los apoyos a partir de los datos del formulario y actualiza 2 vectores globales
+// Esta función evita la introducción de apoyos con la misma posición, y al introducirlos los ordena.
 function intro_apoyo_nuevo(){
  var lng = parseFloat(document.datos_viga.longitud.value);
  var temp_xx = parseFloat(document.frm_apoyos.number_apoyo_pos_x.value);
@@ -3510,10 +3018,8 @@ function quitar_apoyo(num){
 
 // Escribe la lista de apoyos de la pantalla.
 function escribir_lista_apoyos(arr_apoyos_x, arr_apoyos_y){
- //var texto = "<table><tr><th>Num</th><th>Posición</th><th>Altura</th></tr>";
  var texto = "";
  for(i in arr_apoyos_x){
-  //texto = texto + "<tr><td>" + i + "</td><td>" + arr_apoyos_x[i] + "</td><td>" + arr_apoyos_y[i] + "</td><td class=\"borrar\"><a href=\"#\" onclick=\"quitar_apoyo(" + i + ");vista_previa();return false;\">×</a></td></tr>";
   texto = texto + "<div class=\"fila_form_2filas\"><div class=\"form_num form_app_var\">" + (parseInt(i) + 1) + "</div><div class=\"form_txt form_app_var\">" + arr_apoyos_x[i] + "</div><div class=\"form_txt form_app_var\">" + arr_apoyos_y[i] + "</div><div class=\"form_btn form_app_var\"><a class=\"btn quitar\" href=\"#\" onclick=\"quitar_apoyo(" + i + ");vista_previa();return false;\">×</a></div></div>"; /* papelera:  &#128465;    &#10060;*/
  }
  return texto; // + "</table>";
@@ -3523,10 +3029,8 @@ function escribir_lista_apoyos(arr_apoyos_x, arr_apoyos_y){
 
 // Lee los datos de las cargas puntuales a partir de los datos del formulario y actualiza 2 vectores globales
 function intro_carga_puntual_nueva(){
- //alert("He pasado por aquí. X");
  var lng = parseFloat(document.datos_viga.longitud.value);
  var temp_mcp = parseFloat(document.frm_cargas_puntuales.number_carga_puntual_mag.value);
- //alert("He pasado por aquí." + temp_mcp);
  if(temp_mcp != 0 && !isNaN(temp_mcp) && isFinite(temp_mcp)){
   var temp_dcp = parseFloat(document.frm_cargas_puntuales.number_carga_puntual_pos.value);
   if (validar_distancia(lng, temp_dcp)){
@@ -3580,11 +3084,9 @@ function quitar_momento_puntual(num){
 
 // Escribe la lista de momentos puntuales de la pantalla.
 function escribir_lista_momentos_puntuales(arr_momentos_puntuales_mag, arr_momentos_puntuales_pos){
- //var texto = "<table><tr><th>Num</th><th>Magnitud</th><th>Posición</th></tr>";
  var texto = "";
  for(i in arr_momentos_puntuales_mag){
   texto = texto + "<div class=\"fila_form_2filas\"><div class=\"form_num form_moment_punt\">" + (parseInt(i) + 1) + "</div><div class=\"form_txt form_moment_punt\">" + arr_momentos_puntuales_mag[i] + "</div><div class=\"form_txt form_moment_punt\">" + arr_momentos_puntuales_pos[i] + "</div><div class=\"form_btn form_moment_punt\"><a class=\"btn quitar\" href=\"#\" onclick=\"quitar_momento_puntual(" + i + ");vista_previa();return false;\">×</a></div></div>"; /* papelera:  &#128465;    &#10060;*/
-  //texto = texto + "<tr><td>" + i + "</td><td>" + arr_momentos_puntuales_mag[i] + "</td><td>" + arr_momentos_puntuales_pos[i] + "</td><td class=\"borrar\"><a class=\"btn\" href=\"#\" onclick=\"quitar_momento_puntual(" + i + ");vista_previa();return false;\">×</a></td></tr>";
  }
  return texto; // + "</table>";
 }
@@ -3622,13 +3124,10 @@ function quitar_carga_continua(num){
 
 // Escribe la lista de cargas contínuas de la pantalla.
 function escribir_lista_cargas_continuas(arr_cargas_continuas_mag, arr_cargas_continuas_pos_A, arr_cargas_continuas_pos_B){
- //var texto = "<table><tr><th>Num</th><th>Magnitud</th><th>Posición inicio</th><th>Posición fin</th><th>Borrar</th></tr>";
  var texto = "";
  for(i in arr_cargas_continuas_mag){
-  //texto = texto + "<tr><td>" + i + "</td><td>" + arr_cargas_continuas_mag[i] + "</td><td>" + arr_cargas_continuas_pos_A + "</td><td>" + arr_cargas_continuas_pos_B[i] + "</td><td class=\"borrar\"><a class=\"btn\" href=\"#\" onclick=\"quitar_carga_continua(" + i + ");vista_previa();return false;\">×</a></td></tr>";
   texto = texto + "<div class=\"fila_form_2filas\"><div class=\"form_num form_cargas_rep\">" + (parseInt(i) + 1) + "</div><div class=\"form_txt form_cargas_rep\">" + arr_cargas_continuas_mag[i] + "</div><div class=\"form_txt form_cargas_rep\">" + arr_cargas_continuas_pos_A[i] + "</div><div class=\"form_txt form_cargas_rep\">" + arr_cargas_continuas_pos_B[i] + "</div><div class=\"form_btn form_cargas_rep\"><a class=\"btn quitar\" href=\"#\" onclick=\"quitar_carga_continua(" + i + ");vista_previa();return false;\">×</a></div></div>"; /* papelera:  &#128465;    &#10060;*/
  }
- //texto = texto + "</table>";
  return texto;
 }
 
@@ -3676,18 +3175,6 @@ function escribir_lista_cargas_variables(arr_cargas_variables_mag_A, arr_cargas_
  return texto;
 }
 
-/* var texto = "<table><tr><th>Num</th><th>Magnitud inicio</th><th>Magnitud fin</th><th>Posición inicio</th><th>Posición fin</th><th>Borrar</th></tr>";
- for(i in arr_cargas_variables_mag_A){
-  texto = texto + "<tr><td>" + i + "</td><td>" + arr_cargas_variables_mag_A[i] + "</td><td>" + arr_cargas_variables_mag_B[i] + "</td><td>" + arr_cargas_variables_pos_A + "</td><td>" + arr_cargas_variables_pos_B[i] + "</td><td class=\"borrar\"><a class=\"btn\" href=\"#\" onclick=\"quitar_carga_variable(" + i + ");vista_previa();return false;\">×</a></td></tr>";
- }
- texto = texto + "</table>";
-*/
-  // alert("asf" + arr_cargas_variables_mag_A[0]);
-  // alert("asf" + temp_acv + " " + temp_bcv + " " + temp_icv + " " + temp_fcv + " ");
-
-
-
-
 
 
 // Lee la distancia y calcula el valor de las funciones y lo muestra por pantalla
@@ -3703,7 +3190,7 @@ function dar_valor_punto(){
  if(cota > lng){
   cota=lng;
  }
- var num_campo = campo_distancia(cota, dcmp_js) - 1;
+ var num_campo = campo_distancia(cota, dcmp_js);
  derecha = document.frm_dar_valores.dar_valores_derecha.checked ? 1 : 0;
  if(derecha){
   if(cota == dcmp_js[num_campo + 1]){
@@ -3712,30 +3199,17 @@ function dar_valor_punto(){
    }
   }
  }
- //alert("func_js[2][num_campo][0]" + func_js[2][0][0] + " " + func_js[4][0]);
- //[crt, flc, gir, def, ctes_gir, ctes_def]; func_js
+ //func_js[crt=0, flc, gir, def, ctes_gir, ctes_def=5][número de campo];
  var cortante = sustituir_b(cota, func_js[0][num_campo]);
  var flector = sustituir_b(cota, func_js[1][num_campo]);
- var giro = sustituir_b(cota, func_js[2][num_campo] , func_js[4][num_campo]) / denominador; //
- var deformada = sustituir_b(cota, func_js[3][num_campo] , func_js[4][num_campo], func_js[5][num_campo]) / denominador; //
- /*var cortante = sustituir_js(cota,crt0_js[num_campo],crt1_js[num_campo],crt2_js[num_campo],0,0,0);
- var flector = sustituir_js(cota,flc0_js[num_campo],flc1_js[num_campo],flc2_js[num_campo],flc3_js[num_campo],0,0);
- var giro = sustituir_js(cota,gir0_js[num_campo],gir1_js[num_campo],gir2_js[num_campo],gir3_js[num_campo],gir4_js[num_campo],0) / denominador;
- var deformada = sustituir_js(cota,def0_js[num_campo],def1_js[num_campo],def2_js[num_campo],def3_js[num_campo],def4_js[num_campo],def5_js[num_campo]) / denominador;*/
+ var giro = (sustituir_b(cota, func_js[2][num_campo]) + func_js[4][num_campo]) / denominador; //
+ var deformada = (sustituir_b(cota, func_js[3][num_campo]) + sustituir_b(cota, [func_js[5][num_campo] , func_js[4][num_campo]])) / denominador; //
 
  var txt_cota = document.createTextNode(cota + (derecha ? " (d)" : ""));
  var txt_cortante = document.createTextNode(mostrar_float(cortante,max_crt_js) +"");
  var txt_flector = document.createTextNode(mostrar_float(flector,max_crt_js) +"");
  var txt_giro = document.createTextNode(mostrar_float(giro,max_crt_js) +"");
  var txt_flecha = document.createTextNode(mostrar_float(deformada,max_crt_js) +"");
-
- //var div = document.createTextNode("<div class=\"fila_form_2filas\"><div class=\"form_num\">" + cota + "</div>" + flector +  "</div>");
- /*document.getElementById("div_resultados").appendChild(div_cota);
- document.getElementById("div_resultados").appendChild(div_cortante);
- document.getElementById("div_resultados").appendChild(div_flector);
- document.getElementById("div_resultados").appendChild(div_cota);
- document.getElementById("div_resultados").appendChild(div_giro);
- document.getElementById("div_resultados").appendChild(div_flecha);*/
 
  num_consultas ++; // Nueva fila con una consulta nueva
  var div_resultados = document.createElement("div");   
@@ -3767,7 +3241,6 @@ function dar_valor_punto(){
  div_resultados.appendChild(div_flector);
  div_resultados.appendChild(div_giro);
  div_resultados.appendChild(div_flecha);
- //alert("Testing..." + cota);
  document.getElementById("div_dar_valores").appendChild(div_resultados);
 }
 
@@ -3776,7 +3249,11 @@ function dar_valor_punto(){
 la idea de detectar periodos y mostrarlos como tal
 no se realizará por el momento, ya que podría haber
 bibliotecas en Internet que hagan mejor esta función
-de lo que yo pueda programar. */
+de lo que yo pueda programar.
+
+Recibe el número a mostrar y una referencia.
+Si el número está varios órdenes de magnitudes de magnitud por debajo de la referencia se devuelve cero.
+Si no se devuelve un número exponencial si es un número pequeño y sino uno decimal. */
 
 function mostrar_float(num, ref){
  if(Math.abs(num / ref) < 0.00000001){
@@ -3794,26 +3271,6 @@ function mostrar_float(num, ref){
  }
 }
 
-
-
-
 function cargar_float(texto){
  var tmp = parseFloat(texto);
-}
-function leer_datos(){
- alert("asf");
- var texto = parseFloat(document.datos_viga.longitud.value);
- alert("fuuu" + texto);
- alert("asf" + document.datos_viga.longitud.value);
- alert(texto * 2);
- alert(document.getElementById("longitud").value + "asdf" + texto);
-}
-function sustituir_js(sustituto, va, vb, vc, vd, ve, vf){
- var tmp=0;
- tmp+=vf; tmp*=sustituto;
- tmp+=ve; tmp*=sustituto;
- tmp+=vd; tmp*=sustituto;
- tmp+=vc; tmp*=sustituto;
- tmp+=vb; tmp*=sustituto;
- tmp+=va; return tmp;
 }
