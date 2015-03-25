@@ -5,6 +5,7 @@
  <title>XVIGAS - Web app</title>
  <meta name="viewport" content="width=device-width, initial-scale=1" />
  <script src="xvigas.js"></script>
+ <link rel="stylesheet" media="screen" href="http://openfontlibrary.org/face/comic-relief" type="text/css"/>
  <link rel="stylesheet" href="xvigas.css" type="text/css" />
  <link rel="stylesheet" href="xvigas_graf.css" type="text/css" />
  <link rel="icon" type="image/x-icon" href="xvigas.ico" />
@@ -33,9 +34,9 @@
   <form name="datos_viga">
     <fieldset data-role="controlgroup">
       <legend>Longitud y características:</legend><div class="tabla_tipo_vigas">
-      <table><tr><td>Longitud:</td><td><input name="longitud" id="longitud" placeholder="Text input" value="10" type="text" pattern="\d+((,|.)\d{0,15})?" onchange="vista_previa()" /></td></tr>
-      <tr><td>Elasticidad:</td><td><input name="elasticidad" id="elasticidad" placeholder="Text input" value="10" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
-      <tr><td>Inercia:</td><td><input name="inercia" id="inercia" placeholder="Text input" value="10" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr></table>
+      <table><tr><td>Longitud:</td><td><input name="longitud" id="longitud" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" onchange="vista_previa()" /></td></tr>
+      <tr><td>Elasticidad:</td><td><input name="elasticidad" id="elasticidad" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
+      <tr><td>Inercia:</td><td><input name="inercia" id="inercia" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr></table>
     </div></fieldset>
   </form>
   <form name="tipo_viga">
@@ -77,10 +78,10 @@
             <div class="form_txt"><b>Altura</b></div>
           </div>
         <div class="fila_form_2filas" id="apoyos_fila_0"><div class="form_txt"><span id="etiqueta_distancia_horz_0">Apoyo 1:</span></div>
-        <div class="form_txt"><input name="apoyo" value="1" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="apoyo" value="0.1" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
         <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
         <div class="fila_form_2filas" id="apoyos_fila_1"><div class="form_txt"><span id="etiqueta_distancia_horz_1">Apoyo 2:</span></div>
-        <div class="form_txt"><input name="apoyo" value="9" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="apoyo" value="0.9" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
         <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
         <div class="fila_form_2filas" id="apoyos_fila_2"><div class="form_txt"><span id="etiqueta_distancia_horz_2">Apoyo 3:</span></div>
         <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>

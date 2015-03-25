@@ -102,3 +102,14 @@
 .eq_crcc {
   background-color: rgba(200, 40, 0, 0.2);
 }
+
+
+/* Gente con problemas visuales. */
+@media screen and (-ms-high-contrast: active) {
+  .graf_svg_func_gir_rell{
+    fill: #880;
+  }
+  .graf_svg_func_gir_borde{
+    stroke: #880;
+  }
+}

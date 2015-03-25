@@ -27,7 +27,7 @@ h1 {
 }
 
 .logo_txt {
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  font-family: "ComicReliefRegular", "Comic Sans MS", "Comic Sans";
   color:#ffe120; //#f1ff10;
   text-shadow: 0px 0px 10px #F00;
 }

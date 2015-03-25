@@ -3,7 +3,8 @@
 <head>
  <meta charset="Windows-1252" />
  <title>XVIGAS - Teoría de cálculo de vigas</title>
- <!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" media="screen" href="http://openfontlibrary.org/face/comic-relief" type="text/css"/>
  <link rel="stylesheet" href="xvigas_a.css" type="text/css" />
  <link rel="stylesheet" href="xvigas_graf.css" type="text/css" />
  <link rel="icon" type="image/x-icon" href="xvigas.ico" />
@@ -19,9 +20,7 @@
 
 <i>Sección en construcción</i>
 
-<br>
 <!-- anuncio -->
-<br>
 
 <p>El cálculo se realiza siguiendo varios pasos que dependen del tipo de viga que se va a calcular.</p>
 
@@ -242,11 +241,24 @@
 </g>
 </svg>
 
+<p>Cuando una rótula tiene que hacer una fuerza hacia arriba, transmite una carga puntual hacia abajo en el tramo de al lado.</p>
+<p>Cuando una carga o un momento puntual está sobre una rótula su efecto se divide entre los dos tramos a partes iguales.</p>
+<h3>Ecuaciones de esfuerzos cortantes y flectores</h3>
+<h3>Ecuaciones de esfuerzos giros y flechas</h3>
+<p>La ecuación de giros se obtiene mediante la integración de la ecuación de momentos flectores respecto de x (la dimensión horizontal de la viga), y la de flechas mediante la integración de la ecuación de giros.</p>
+<p>Al integrarse estas ecuaciones aparecen dos constantes, una de giros y otra de flechas. El valor de estas constantes se puede obtener de varias formas dependiendo del tipo de viga, pero en general consiste en calcular el valor de esas ecuaciones (con la incógnita) en los empotramientos o los apoyos y hayar el valor de la incógnita que hace que las ecuaciones valgan 0 o el desplazamiento vertical del apoyo.</p>
 
-
+<h4>Vigas con un empotramiento a la izquierda</h4>
+<p>En este caso las ecuaciones de giros y flechas deben valer 0 cuando x vale cero, con lo que basta con sustituir las ecuaciones y despejar las constantes, que por lo general valdrán cero en este tipo de viga.</p>
+<h4>Vigas con un empotramiento a la derecha</h4>
+<p>Es similar al anterior, pero las ecuaciones se sustituyen con el valor de la longitud de la viga. Después se despejan las constantes y se obtiene su valor.</p>
+<h4>Vigas simples con dos apoyos</h4>
+<p>En este caso hay que sustituir la ecuación de flechas (que contiene la constante de giros y la de flechas) dos veces, para la posición de cada apoyo, y igualándolo a la altura de ese apoyo (0 si no tiene desplazamiento inicial). Esto da un sistema de dos ecuaciones con dos incógnitas (las constantes) que se debe resolver para encontrar su valor.</p>
+<h4>Vigas simples con dos apoyos</h4>
+<p>En este caso hay que ir por tramos, siguiendo el orden inverso al cálculo de reacciones.</p>
 
 <h2>Vigas hiperestáticas</h2>
-<p>En este caso las ecuaciones de la estática no pueden determinar por si solas las fuerzas que actúan sobre una viga.</p>
+<p>En este caso las ecuaciones de la estática no pueden determinar por si solas las fuerzas que actúan sobre una viga. Para ello se calculan las ecuaciones de deformaciones, tomando las reacciones de los empotramientos o apoyos como incógnitas, y posteriormente formando un sistema de ecuaciones donde esas ecuaciones tomen el valor de giro 0 en los empotramientos o de desplazamiento 0 (o el que haya) en los apoyos.</p>
 
 </body>
 </html>
