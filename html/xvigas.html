@@ -4,6 +4,7 @@
  <meta charset="Windows-1252" />
  <title>XVIGAS - Web app</title>
  <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <script src="xvigas_txt_es.js"></script>
  <script src="xvigas.js"></script>
  <link rel="stylesheet" media="screen" href="http://openfontlibrary.org/face/comic-relief" type="text/css"/>
  <link rel="stylesheet" href="xvigas.css" type="text/css" />
@@ -11,21 +12,22 @@
  <link rel="icon" type="image/x-icon" href="xvigas.ico" />
  <link rel="apple-touch-icon" href="xvigas_ios.png" />
  <meta name="description" content="Aplicación gratuita para ejercicos de cálculo de vigas">
- <meta name="keywords" content="Mecánica,vigas,cálculo,isostática,carga">
+ <meta name="keywords" content="Mecánica,vigas,cálculo,isostática,carga,xvigas online">
  <meta name="author" content="pwnage2apps">
 </head>
 
-<body onload="actualizar_gui_tipo();vista_previa()">
+<body onload="iniciar()">
 <header>
-<div class="aviso_vertical">Si visitas XVIGAS web appp desde un teléfono móvil es recomendable situarlo en posición horizontal.</div>
-   <h1 class="logo_txt"><img src="xvigas_128.png" class="logotipo" height="128" width="128" alt="Logotipo de XVIGAS" /><span class="letra1">X</span>VIGAS</h1>
+ <div class="aviso_vertical">Si visitas XVIGAS web appp desde un teléfono móvil es recomendable situarlo en posición horizontal.</div>
+ <div class="lang"><span class="globo"></span> &nbsp; <a href="xvigas_en.html" title="English version">EN</a> · ES</div>
+   <h1 class="logo_txt"><span class="logotipo"></span><span class="letra1">X</span>VIGAS</h1>
   <p class="beta_webapp logo_txt">WEBAPP &nbsp;&nbsp;&nbsp; (beta)</p>
  <nav><ul>
   <li><a href="fuente.html">Acerca de...</a></li>
   <li><a href="ayuda.html">Ayuda</a></li>
   <li><a href="teoria.html">Teoría</a></li>
  </ul></nav>
- <p class="inicio">Aplicación web gratuita (con publicidad) de aprendizaje de cálculo de vigas.<!--<br>Basada en XVIGAS para Windows. Licencia GPL v3, puede bajar el código fuente <a href="fuente.html">aquí.</a>--><br>Esta página usa galletas (<i>cookies</i>) para mostrar la publicidad, más información <a href="../galletas.html">aquí.</a></p>
+ <p class="inicio">Aplicación web gratuita (con publicidad) para aprendizaje de análisis de vigas.<!--<br>Basada en XVIGAS para Windows. Licencia GPL v3, puede bajar el código fuente <a href="fuente.html">aquí.</a>--><br>Esta página usa galletas (<i>cookies</i>) para mostrar la publicidad, más información <a href="../galletas.html">aquí.</a></p>
 </header>
 
 <!-- anuncio -->
@@ -35,8 +37,42 @@
     <fieldset data-role="controlgroup">
       <legend>Longitud y características:</legend><div class="tabla_tipo_vigas">
       <table><tr><td>Longitud:</td><td><input name="longitud" id="longitud" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" onchange="vista_previa()" /></td></tr>
-      <tr><td>Elasticidad:</td><td><input name="elasticidad" id="elasticidad" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
-      <tr><td>Inercia:</td><td><input name="inercia" id="inercia" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr></table>
+      <tr><td>Elasticidad:</td><td><input name="elasticidad" id="elasticidad" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,20})?" /> &nbsp;<a href="#" onclick="tabla_elast();return false;" title="Abrir tabla de ejemplos de materiales"><span class="boton_EI_mat botones_EI"></span></a></td></tr>
+      <tr><td>Inercia:</td><td><input name="inercia" id="inercia" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,20})?" /> &nbsp;<a href="#" onclick="tabla_pefiles();return false;" title="Abrir tabla con algunos perfiles EN 10034"><span class="boton_EI_perfiles botones_EI"></span></a> <a href="#" onclick="inercia_calculadora();return false;" title="Abrir calculadora de inercias"><span class="boton_EI_calculadora botones_EI"></span></a></td></tr></table>
+
+<div id="div_elast">Elasticidad:<table class="elast_tabla"><tr><th class="elast_tabla_nombre">Material</th><th>Pa</th><th>Tf/cm²</th><th>psi</th></tr>
+<!--<tr><td>Prueba</td><td><a href="#" onclick="elast('100');return false;">100</a></td><td><a href="#" onclick="elast('1');return false;">1</a></td><td><a href="#" onclick="elast('5');return false;">5</a></td></tr>-->
+<tr><td>Acero (ASTM-A36)</td><td><a href="#" onclick="elast('200000000000');return false;">200 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('2000');return false;">2000</a></td><td><a href="#" onclick="elast('29000000');return false;">2.9 × 10<sup>7</sup></a></td></tr>
+<tr><td>Aluminio</td><td><a href="#" onclick="elast('69000000000');return false;">69 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('690');return false;">690</a></td><td><a href="#" onclick="elast('10000000');return false;">1 × 10<sup>7</sup></a></td></tr>
+<tr><td>Bronce</td><td><a href="#" onclick="elast('96000000000');return false;">96 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('960');return false;">960</a></td><td><a href="#" onclick="elast('13900000');return false;">1.39 × 10<sup>7</sup></a></td></tr>
+<tr><td>Cobre</td><td><a href="#" onclick="elast('117000000000');return false;">117 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1170');return false;">1170</a></td><td><a href="#" onclick="elast('17000000');return false;">1.7 × 10<sup>7</sup></a></td></tr>
+<tr><td>Grafeno</td><td><a href="#" onclick="elast('1050000000000');return false;">1050 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('10500');return false;">10500</a></td><td><a href="#" onclick="elast('152000000');return false;">1.52 × 10<sup>8</sup></a></td></tr>
+<tr><td>Hormigón (alta resistencia)</td><td><a href="#" onclick="elast('30000000000');return false;">30 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('300');return false;">300</a></td><td><a href="#" onclick="elast('4350000');return false;">4.35 × 10<sup>6</sup></a></td></tr>
+<tr><td>Latón</td><td><a href="#" onclick="elast('100000000000');return false;">100 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1000');return false;">1000</a></td><td><a href="#" onclick="elast('14500000');return false;">1.45 × 10<sup>7</sup></a></td></tr>
+<tr><td>Madera (sentido de las fibras)</td><td><a href="#" onclick="elast('11000000000');return false;">11 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('110');return false;">110</a></td><td><a href="#" onclick="elast('1600000');return false;">1.6 × 10<sup>6</sup></a></td></tr>
+<tr><td>Magnesio</td><td><a href="#" onclick="elast('45000000000');return false;">45 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('450');return false;">450</a></td><td><a href="#" onclick="elast('6530000');return false;">6.53 × 10<sup>6</sup></a></td></tr>
+<tr><td>Titanio</td><td><a href="#" onclick="elast('110000000000');return false;">110 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1100');return false;">1100</a></td><td><a href="#" onclick="elast('29000000');return false;">1.6 × 10<sup>7</sup></a></td></tr>
+<tr><td>Wolframio</td><td><a href="#" onclick="elast('410000000000');return false;">410 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('4100');return false;">4100</a></td><td><a href="#" onclick="elast('57000000');return false;">5.7 × 10<sup>7</sup></a></td></tr>
+</table><br><i>Fuente: <a href="https://en.wikipedia.org/wiki/Young's_modulus">https://en.wikipedia.org/wiki/Young's_modulus</a></i></div>
+
+<div id="div_perfiles">
+Ejemplos de secciones EN 10034:
+<ul class="menu_pefiles"><li><span class="perf ipn"></span>IPN <a href="#" onclick="mostrar_IPN(0);return false;">(max)</a> <a href="#" onclick="mostrar_IPN(1);return false;">(min)</a></li><li><span class="perf ipe"></span>IPE <a href="#" onclick="mostrar_IPE(0);return false;">(max)</a> <a href="#" onclick="mostrar_IPE(1);return false;">(min)</a></li><li><span class="perf hea"></span>HEA <a href="#" onclick="mostrar_HEA(0);return false;">(max)</a> <a href="#" onclick="mostrar_HEA(1);return false;">(min)</a></li><li><span class="perf heb"></span>HEB <a href="#" onclick="mostrar_HEB(0);return false;">(max)</a> <a href="#" onclick="mostrar_HEB(1);return false;">(min)</a></li><li><span class="perf hem"></span>HEM <a href="#" onclick="mostrar_HEM(0);return false;">(max)</a> <a href="#" onclick="mostrar_HEM(1);return false;">(min)</a></li></ul>
+<div id="cont_perfiles">
+</div></div>
+
+<div id="div_calculadora">Cálculo de inercias:
+      <table><tr><td>a:</td><td><input name="iner_a" id="iner_a" placeholder="Text input" value="1" type="text" pattern="-?\d+((,|.)\d{0,15})?" /></td></tr>
+      <tr><td>b:</td><td><input name="iner_b" id="iner_b" placeholder="Text input" value="1" type="text" pattern="-?\d+((,|.)\d{0,15})?" /></td></tr>
+      <tr><td>e:</td><td><input name="iner_e" id="iner_e" placeholder="Text input" value="0.1" type="text" pattern="-?\d+((,|.)\d{0,15})?" /></td></tr></table>
+<!--<div c<table><tr><td>a:</td><td><input name="iner_a" id="iner_a" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
+      <tr><td>b:</td><td><input name="iner_b" id="iner_b" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
+      <tr><td>e:</td><td><input name="iner_e" id="iner_e" placeholder="Text input" value="0.1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr></table>-->
+<div class="botonera_calc"><a href="#" onclick="inercia_calcular(0);return false;" title="calcular sección rectangular"><span class="boton_calc_rect botones_calc"></span></a> <a href="#" onclick="inercia_calcular(1);return false;" title="calcular sección circular"><span class="boton_calc_circ botones_calc"></span></a>
+<ul><li>Usar e = 0 para seciones macizas</li><li>Usar e > 0 para seciones huecas gruesas.</li><li>Usar e < 0 para seciones huecas delgadas.</li></ul></div>.
+</div>
+
+
     </div></fieldset>
   </form>
   <form name="tipo_viga">
@@ -119,9 +155,8 @@
     </div>
   </div>
 
-
-
-
+<br><br><br>
+<!-- anuncio -->
 <h2>Cargas</h2>
 
 <h3><span class="h3_cp">&#11015;</span>Cargas puntuales</h3>
@@ -302,6 +337,8 @@
   </div>
   <h3>Cálculo intermedio</h3>
   <div id="calc_int"><span>Cálculo no realizado</span>
+  </div>
+  <div id="calc_ctes"><span>Cálculo no realizado</span>
   </div>
   <h3>Consultar resultados por puntos</h3>
   <div id="dar_valores">

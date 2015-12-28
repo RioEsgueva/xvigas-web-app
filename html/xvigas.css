@@ -5,6 +5,8 @@ body {
   font-size: 1.0em;
   font-weight: 500;
   text-align: center;
+  margin-top: 0;
+  margin-right: 0;
 }
 
 .aviso_vertical {
@@ -13,7 +15,35 @@ body {
   margin: 0em;
 }
 
+
+.lang {
+  align: right;
+  margin: 0;
+  margin-left: auto;
+  padding: 0.5em;
+  padding-right: 1.5em;
+  float: right;
+  display: inline;
+  text-align: right;
+  font-size: 1.5em;
+  font-weight: 900;
+  /*background: linear-gradient(to right, rgba(176,176,208,1), rgba(176,176,208,1), rgba(176,176,208,1), rgba(176,176,208,0));*/
+  background-color: #bbd;
+  border-bottom-left-radius: 1em;
+}
+
+/*.band_rojo {
+  color: red;
+}
+.band_amarillo {
+  color: yellow;
+}
+.band_verde {
+  color: green;
+}*/
+
 h1 {
+  clear: both;
   font-size: 8em;
   font-weight: 900;
   /*position: relative;
@@ -21,6 +51,10 @@ h1 {
   margin-top: 0.3em;
   margin-bottom: 0em;
 }
+
+/*h1::first-letter {
+  color:#ffc120;
+}*/
 
 .letra1 {
   color:#ffc120;
@@ -30,6 +64,25 @@ h1 {
   font-family: "ComicReliefRegular", "Comic Sans MS", "Comic Sans";
   color:#ffe120; //#f1ff10;
   text-shadow: 0px 0px 10px #F00;
+}
+
+
+.logotipo {
+  width: 128px;
+  height: 128px;
+  vertical-align: middle;
+  position: relative;
+  top: -0.125em;
+  margin-right: 0.125em;
+  background: url(xvigas_sprites.svg) -200px -35px;
+  display: inline-block;
+}
+
+ /* HACK IE 8 y anteriores */
+@media \0screen\,screen\9 {
+  .logotipo {
+    background: url(xvigas_sprites.png) -200px -35px;
+  }
 }
 
 .beta_webapp {
@@ -116,6 +169,21 @@ nav a:hover{
   background: #efe0c5;
 }*/
 
+.elast_tabla{
+  width: 40em;
+}
+
+.elast_tabla_nombre{
+  width: 12em;
+}
+
+#div_elast , #div_perfiles, #div_calculadora{
+  background: #efe0c5;
+  padding: 1em;
+  margin-top: 2em;
+}
+
+
 th{
   width: 7em;
 }
@@ -125,6 +193,16 @@ th{
 }
 td{
   background: #efe0c5;
+}
+fieldset td{
+  height: 2em;
+  vertical-align: center;
+  padding: 0.5em;
+//  font-size: 1.25em;
+}
+
+.lst_perf{
+  background: #dfd0b5;
 }
 
 table {
@@ -165,6 +243,120 @@ table {
   width: 20px;
   height: 35px;
 }
+
+
+
+.botones_EI {
+  display: inline-table;
+  width: 20px;
+  height: 24px;
+  position: relative;
+  top: 5px;
+}
+.botones_EI:hover{
+  opacity:0.6;
+}
+.botones_calc {
+  display: inline-table;
+  width: 100px;
+  height: 136px;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+.botones_calc:hover{
+  opacity:0.6;
+}
+
+.globo {
+  display: inline-table;
+  background: url(xvigas_sprites.svg) -170px 0px;
+  width: 26px;
+  height: 26px;
+  position: relative;
+  top: 5px;
+}
+
+
+
+
+.perf{
+  display: inline-table;
+  width: 22px;
+  height: 24px;
+  margin-right: 0.5em;
+  margin-bottom: 0.25em;
+  position: relative;
+  top: 2px;
+}
+
+.ipn {
+  background: url(xvigas_sprites.svg) -204px 0px;
+}
+.ipe {
+  background: url(xvigas_sprites.svg) -228px 0px;
+}
+.hea {
+  background: url(xvigas_sprites.svg) -252px 0px;
+}
+.heb {
+  background: url(xvigas_sprites.svg) -276px 0px;
+}
+.hem {
+  background: url(xvigas_sprites.svg) -300px 0px;
+}
+
+.botonera_calc{
+  margin-left:auto; 
+  margin-right:auto;
+  text-align:center;
+}
+
+
+.boton_calc_rect {
+  background: url(xvigas_sprites.svg) 0px -35px;
+}
+.boton_calc_circ {
+  background: url(xvigas_sprites.svg) -100px -35px;
+}
+.boton_EI_mat {
+  background: url(xvigas_sprites.svg) -128px 0px;
+}
+.boton_EI_perfiles {
+  background: url(xvigas_sprites.svg) -108px 0px;
+}
+.boton_EI_calculadora {
+  background: url(xvigas_sprites.svg) -148px 0px;
+}
+.viga {
+  background: url(xvigas_sprites.svg) -60px 0px;
+}
+.appy {
+  background: url(xvigas_sprites.svg) -20px 0px;
+}
+.empI {
+  background: url(xvigas_sprites.svg) -00px 0px;
+}
+.empD {
+  background: url(xvigas_sprites.svg) -80px 0px;
+}
+.rotl {
+  background: url(xvigas_sprites.svg) -40px 0px;
+}
+
+ /* HACK IE 8 y anteriores */
+@media \0screen\,screen\9 {
+.globo {
+  background: url(xvigas_sprites.png) -170px 0px;
+}
+.boton_EI_mat {
+  background: url(xvigas_sprites.png) -170px 0px;
+}
+.boton_EI_perfiles {
+  background: url(xvigas_sprites.png) -170px 0px;
+}
+.boton_EI_calculadora {
+  background: url(xvigas_sprites.png) -170px 0px;
+}
 .viga {
   background: url(xvigas_sprites.png) -60px 0px;
 }
@@ -180,6 +372,26 @@ table {
 .rotl {
   background: url(xvigas_sprites.png) -40px 0px;
 }
+.ipn {
+  background: url(xvigas_sprites.png) -204px 0px;
+}
+.ipe {
+  background: url(xvigas_sprites.png) -228px 0px;
+}
+.hea {
+  background: url(xvigas_sprites.png) -252px 0px;
+}
+.heb {
+  background: url(xvigas_sprites.png) -276px 0px;
+}
+.hem {
+  background: url(xvigas_sprites.png) -300px 0px;
+}
+}/* FIN HACK IE 8 y anteriores */
+
+
+
+
 .simpl {
   color:#060;
 }
@@ -216,6 +428,17 @@ input:disabled{
 }
 
 
+fieldset input[type="text"]{
+  /*  border: none; */
+  width: 8em;
+  height: 1.25em;
+  text-align: right;
+  font-size: 1.4em;
+  background-color: rgba(255, 255, 255, 0.6);
+  /* background: #fff0d580; */
+}
+
+
 
 fieldset {
   border: none;
@@ -237,6 +460,15 @@ legend {
   font-size:90%;*/
   text-align:right;
   font-weight: 600;
+}
+
+
+
+.resultado_int{
+  background: #efe0c5;
+  margin-left: auto; 
+  margin-right: auto;
+  width: 50em;
 }
 
 

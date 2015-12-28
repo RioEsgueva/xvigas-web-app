@@ -1,0 +1,6 @@
+var txt_min = ['pin joint','support','cant. left','cant. right','cant.','total load','shear','moment','slope','displacement'];
+var txt_may = ['Pin joint','Support','Cant. left','Cant. right','Cant.','Total load','Shear','Moment','Slope','Displacement'];
+var txt_res = ['F. cant. left','F. cant. right','M. cant. left','M. cant. right','F. cant.','M. cant.','Shear left','Shear right','Moment left','Moment right','Slope left','Slope right','Displacement left','Displacement right','left','right','start','end','field','Position','Value','Shear & moment','Slope & Displacement','Slope & displacement (with Young\'s modulus. and Inertia)','Load in sections','Section','Reactions on supports:','Slope & displacement constants:','P. constant'];
+var FRASE_CALCULO_NO = "Calculation not done, press 'Calculate' to do it.";
+var FRASE_CALCULO_CONCL = "Calculation finished successfully.";
+var FRASE_ERROR_MATRIZ = "Irresoluble, esta viga no se puede resolver. Check the data introduced, there could be two supports in the same position or there is a support in the same place than a cantilever.";

@@ -20,16 +20,167 @@ Donations (Bitcoin): 195CBoywruk4pfMDSp1Nr1yCojqf8jxZaC
 */
 
 
-/*function aa(){
- alert("He pasado por aquí. aa");
-}
-
-function bb(){
- alert("He pasado por aquí bb.");
-}*/
-
 
 // Constantes
+
+//Perfiles
+
+var tabla_IPN = [
+[80,77.8,6.29],
+[100,171.0,12.2],
+[120,328.0,21.5],
+[140,573.0,32.2],
+[160,935.0,54.7],
+[180,1450.0,81.3],
+[200,2140.0,117.0],
+[220,3060.0,162.0],
+[240,4250.0,221.0],
+[260,5740.0,288.0],
+[280,7590.0,364.0],
+[300,9800.0,451.0],
+[320,12510.0,555.0],
+[340,15700.0,674.0],
+[360,19610.0,818.0],
+[380,24010.0,975.0],
+[400,29210.0,1160.0],
+[450,45850.0,1730.0],
+[500,68740.0,2480.0],
+[550,99180.0,3490.0],
+[600,139000.0,4670.0]
+];
+
+var tabla_IPE = [
+[80,80.1,8.49],
+[100,171.0,15.9],
+[120,318.0,27.7],
+[140,541.0,44.9],
+[160,869.0,68.3],
+[180,1320.0,101.0],
+[200,1940.0,142.0],
+[220,2770.0,205.0],
+[240,3890.0,284.0],
+[270,5790.0,420.0],
+[300,8360.0,604.0],
+[330,11770.0,788.0],
+[360,16270.0,1040.0],
+[400,23130.0,1320.0],
+[450,33740.0,1680.0],
+[500,48200.0,2140.0],
+[550,67120.0,2670.0],
+[600,92080.0,3390.0]
+];
+
+var tabla_HEB = [
+[100,450.0,167.0],
+[120,864.0,318.0],
+[140,1510.0,550.0],
+[160,2490.0,889.0],
+[180,3830.0,1360.0],
+[200,5700.0,2000.0],
+[220,8090.0,2840.0],
+[240,11260.0,3920.0],
+[260,14920.0,5130.0],
+[280,19270.0,6590.0],
+[300,25170.0,8560.0],
+[320,30820.0,9240.0],
+[340,36660.0,9690.0],
+[360,43190.0,10140.0],
+[400,57680.0,10820.0],
+[450,79890.0,11720.0],
+[500,107200.0,12620.0],
+[550,136700.0,13080.0],
+[600,171000.0,13530.0]
+];
+
+var tabla_HEA = [
+[100,349.0,134.0],
+[120,606.0,231.0],
+[140,1033.0,389.0],
+[160,1673.0,616.0],
+[180,2510.0,925.0],
+[200,3692.0,1336.0],
+[220,5410.0,1955.0],
+[240,7763.0,2769.0],
+[260,10455.0,3668.0],
+[280,13673.0,4763.0],
+[300,18263.0,6310.0],
+[320,22928.0,6985.0],
+[340,27693.0,7436.0],
+[360,33090.0,7787.0],
+[400,45069.0,8564.0],
+[450,63722.0,9465.0],
+[500,66975.0,10367.0],
+[550,111932.0,10819.0],
+[600,141208.0,11271.0]
+];
+
+var tabla_HEM = [
+[100,1143.0,399.0],
+[120,2018.0,703.0],
+[140,3291.0,1144.0],
+[160,5098.0,1759.0],
+[180,7483.0,2580.0],
+[200,10620.0,3651.0],
+[220,14605.0,5012.0],
+[240,24289.0,8153.0],
+[260,31307.0,10449.0],
+[280,39547.0,13163.0],
+/*[300,40951.0,6310.0],*/
+[300,59201.0,19403.0],
+[320,66135.0,19709.0],
+[340,76372.0,19711.0],
+[360,84867.0,19522.0],
+[400,104119.0,19335.0],
+[450,131484.0,19339.0],
+[500,161929.0,19155.0],
+[550,197984.0,19158.0],
+[600,237447.0,18975.0]
+];
+
+// Corregir
+
+
+// Texto para traducir
+var ROTULA = 0;
+var APOYO = 1;
+var EMP_IZQ = 2;
+var EMP_DER = 3;
+var EMPOTRM = 4;
+var C_TOTAL = 5;
+var CORTANTES = 6;
+var FLECTORES = 7;
+var GIROS = 8;
+var FLECHAS = 9;
+var EMP_IZQ_F = 0;
+var EMP_DER_F = 1;
+var EMP_IZQ_M = 2;
+var EMP_DER_M = 3;
+var EMPOTRM_F = 4;
+var EMPOTRM_M = 5;
+var CRT_IZQ = 6;
+var CRT_DER = 7;
+var MOM_IZQ = 8;
+var MOM_DER = 9;
+var GIR_IZQ = 10;
+var GIR_DER = 11;
+var FLC_IZQ = 12;
+var FLC_DER = 13;
+var IZQ = 14;
+var DER = 15;
+var INICIO = 16;
+var FIN = 17;
+var CAMPO = 18;
+var POSICION = 19;
+var VALOR = 20;
+var CRT_Y_MOM = 21;
+var GIR_Y_FLC = 22;
+var GIR_Y_FLC_EI = 23;
+var CARGA_TRAMOS = 24;
+var TRAMO = 25;
+var EQ_REACCIONES = 26;
+var EQ_GIR_FLC = 27;
+var T_INDEP = 28;
+
 var num_letras = ['a','b','c','d','e','f','g','h','i','j','k'];
 // Número de apoyos. -1 significa que el número es variable.
 var num_apoyos_tipos = [[2],[0],[0],[2,4,4,6,6,6,6],[2,4,4,6,6,6,6],[4,4,6,6,6,6],[2,4,4,6,6,6,6],[-1],[-1],[-1],[-1]];
@@ -179,14 +330,20 @@ function sustituir_b(sustituto,  polinomio){ //, cte_gir, cte_def
 // Recibe la distancia de los apoyos (dist_a y dist_b) y la altura de estos (alturaA y alturaB),
 //   también recibe la función de deformación, el número de campos y el vector con sus posiciones.
 // Devuelve un vector con la constante de giro y la de deformación para ese trozo de viga (o la viga entera).
+// Y devuelve además un fragmento HTML (txt) con la información extra del cálculo.
 function sacar_constantes(dist_a,  dist_b,  alturaA,  alturaB, def, dcmp){
  var tmpa = campo_distancia(dist_a, dcmp);
  var tmpb = campo_distancia(dist_b, dcmp);
- var va = sustituir_b(dist_a, def[tmpa]) - alturaA;
- var vb = sustituir_b(dist_b, def[tmpb]) - alturaB;
+ var va_sust = sustituir_b(dist_a, def[tmpa]);
+ var vb_sust = sustituir_b(dist_b, def[tmpb]);
+ var va = va_sust - alturaA;
+ var vb = vb_sust - alturaB;
  var tgir= -(vb - va) / (dist_b - dist_a);
  var tdef= - va- tgir * dist_a;
- return [tgir, tdef];
+ var ref = Math.max(va_sust, vb_sust, alturaA, alturaB);
+ var txt = "<table><tr><th>EI&sigma;<sub>0</sub> x</th><th>EIY<sub>0</sub></th><th>C</th></tr><tr><td>" + dist_a + "</td><td>1</td><td>" + mostrar_float(va_sust, ref) + " - " + mostrar_float(alturaA, ref) + "</td></tr><tr><td>" + dist_b + "</td><td>1</td><td>" + mostrar_float(vb_sust, ref) + " - " + mostrar_float(alturaB, ref) + "</td></tr></table></table>"
+ //var txt = "<table><tr><td>" + dist_a + " EIs<sub>0</sub></td><td> + EIY<sub>0</sub></td><td>" + va_sust + "</td><td><b> = " + va + "</b></td></tr><tr><td>" + dist_b + " EIs<sub>0</sub></td><td> + EIY<sub>0</sub></td><td>" + vb_sust + "</td><td><b> = " + vb + "</b></td></tr></table></table>"
+ return [tgir, tdef, txt];
 }
 
 
@@ -203,9 +360,9 @@ function escribir_matriz(matrif, vectof, nombres){
  var completar_apoyos = vectof.length - nombres.length;
  for(i = 0; i < completar_apoyos; i++){
   var ii = i + 1;
-  texto = texto + "<th>Apoyo " + ii + "</th>";
+  texto = texto + "<th>" + txt_may[APOYO] + " " + ii + "</th>";
  }
- texto = texto + "<th>T. independientes</th></tr>";
+ texto = texto + "<th>" + txt_res[T_INDEP] + "</th></tr>";
  for(i in vectof){
   texto = texto + "  <tr>";
   for(j in vectof){
@@ -269,7 +426,7 @@ var tam = tam_matriz_calculo;
     }
    }else{
     var irresoluble = 1;
-    alert("Irresoluble, esta viga no se puede resolver. Revise los datos introducidos, tal vez haya dos apoyos en la misma posición o junto a un empotramiento.");
+    alert(FRASE_ERROR_MATRIZ);
    }
   }else{
    for(j=k+1; j<tam; j++){//bien
@@ -971,24 +1128,21 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
 
 
 
-//alert(max_abs_d + " " + def[0][5]);
-
-//alert("Intermedio: " + maxd_m + "_" + maxd + "_" + cmp_d_max + "_" + mind_m + "_" + mind + "_" + cmp_d_min + "_" + max_abs_d + "_" + max_abs_d_dist);
 
  // Mostrar resultados de las funciones
- var texto = "<h4>Cortantes</h4><table><tr><th>Campo</th><th>x<sup>0</sup></th><th>x<sup>1</sup></th><th>x<sup>2</sup></th></tr>";
+ var texto = "<h4>" + txt_may[CORTANTES] + "</h4><table><tr><th>" + txt_res[CAMPO] + "</th><th>x<sup>0</sup></th><th>x<sup>1</sup></th><th>x<sup>2</sup></th></tr>";
  for(i=0; i<ncmp; i++){
   texto = texto + "<tr><td>" + i + "</td><td>" + mostrar_float(crt[i][0],max_abs_c) + "</td><td>" + mostrar_float(crt[i][1],max_abs_c) + "</td><td>" + mostrar_float(crt[i][2],max_abs_c) + "</td></tr>";
  }
- texto = texto + "</table><h4>Flectores</h4><table><tr><th>Campo</th><th>x<sup>0</sup></th><th>x<sup>1</sup></th><th>x<sup>2</sup></th><th>x<sup>3</sup></th></tr>";
+ texto = texto + "</table><h4>" + txt_may[FLECTORES] + "</h4><table><tr><th>" + txt_res[CAMPO] + "</th><th>x<sup>0</sup></th><th>x<sup>1</sup></th><th>x<sup>2</sup></th><th>x<sup>3</sup></th></tr>";
  for(i=0; i<ncmp; i++){
   texto = texto + "<tr><td>" + i + "</td><td>" + mostrar_float(flc[i][0],max_abs_m) + "</td><td>" + mostrar_float(flc[i][1],max_abs_m) + "</td><td>" + mostrar_float(flc[i][2],max_abs_m) + "</td><td>" + mostrar_float(flc[i][3],max_abs_m) + "</td></tr>";
  }
- texto = texto + "</table><h4>Giros</h4><table><tr><th>Campo</th><th class=\"const\">x<sup>0</sup></th><th>x<sup>1</sup></th><th>x<sup>2</sup></th><th>x<sup>3</sup></th><th>x<sup>4</sup></th></tr>";
+ texto = texto + "</table><h4>" + txt_may[GIROS] + "</h4><table><tr><th>" + txt_res[CAMPO] + "</th><th class=\"const\">x<sup>0</sup></th><th>x<sup>1</sup></th><th>x<sup>2</sup></th><th>x<sup>3</sup></th><th>x<sup>4</sup></th></tr>";
  for(i=0; i<ncmp; i++){
   texto = texto + "<tr><td>" + i + "</td><td>" + mostrar_float(gir[i][0],max_abs_g) + " + " + mostrar_float(ctes_gir[i],max_abs_g) + "</td><td>" + mostrar_float(gir[i][1],max_abs_g) + "</td><td>" + mostrar_float(gir[i][2],max_abs_g) + "</td><td>" + mostrar_float(gir[i][3],max_abs_g) + "</td><td>" + mostrar_float(gir[i][4],max_abs_g) + "</td></tr>";
  }
- texto = texto + "</table><h4>Flechas</h4><table><tr><th>Campo</th><th class=\"const\">x<sup>0</sup></th><th class=\"const\">x<sup>1</sup></th><th>x<sup>2</sup></th><th>x<sup>3</sup></th><th>x<sup>4</sup></th><th>x<sup>5</sup></th></tr>";
+ texto = texto + "</table><h4>" + txt_may[FLECHAS] + "</h4><table><tr><th>" + txt_res[CAMPO] + "</th><th class=\"const\">x<sup>0</sup></th><th class=\"const\">x<sup>1</sup></th><th>x<sup>2</sup></th><th>x<sup>3</sup></th><th>x<sup>4</sup></th><th>x<sup>5</sup></th></tr>";
  for(i=0; i<ncmp; i++){
   texto = texto + "<tr><td>" + i + "</td><td>" + mostrar_float(def[i][0],max_abs_d) + " + " + mostrar_float(ctes_def[i],max_abs_d) + "</td><td>" + mostrar_float(def[i][1],max_abs_d) + " + " + mostrar_float(ctes_gir[i],max_abs_d) + "</td><td>" + mostrar_float(def[i][2],max_abs_d) + "</td><td>" + mostrar_float(def[i][3],max_abs_d) + "</td><td>" + mostrar_float(def[i][4],max_abs_d) + "</td><td>" + mostrar_float(def[i][5],max_abs_d) + "</td></tr>";
  }
@@ -1002,15 +1156,15 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
  var der_g_ei = new Array(ncmp);
  var izq_d_ei = new Array(ncmp);
  var der_d_ei = new Array(ncmp);
- texto = "<h4>Cortantes y Flectores</h4><table><tr><th>Campo</th><th>Cort. izq</th><th>Cort. der</th><th>Flector izq</th><th>Flector der</th></tr>"; // TEMAZO: Rai vs. Edu - I'll be there
+ texto = "<h4>" + txt_res[CRT_Y_MOM] + "</h4><table><tr><th>" + txt_res[CAMPO] + "</th><th>" + txt_res[CRT_IZQ] + "</th><th>" + txt_res[CRT_DER] + "</th><th>" + txt_res[MOM_IZQ] + "</th><th>" + txt_res[MOM_DER] + "</th></tr>"; // TEMAZO: Rai vs. Edu - I'll be there
  for(i=0;i<ncmp;i++){
   texto = texto + "<tr><td>" + i + "</td><td>" + mostrar_float(izq_c[i],max_abs_c) + "</td><td>" + mostrar_float(der_c[i],max_abs_c) + "</td><td>" + mostrar_float(izq_f[i],max_abs_m) + "</td><td>" + mostrar_float(der_f[i],max_abs_m) + "</td></tr>";
  }
- texto = texto + "</table><h4>Giros y flechas</h4><table><tr><th>Campo</th><th>Giro izq</th><th>Giro der</th><th>Flecha izq</th><th>Flecha der</th></tr>";
+ texto = texto + "</table><h4>" + txt_res[GIR_Y_FLC] + "</h4><table><tr><th>" + txt_res[CAMPO] + "</th><th>" + txt_res[GIR_IZQ] + "</th><th>" + txt_res[GIR_DER] + "</th><th>" + txt_res[FLC_IZQ] + "</th><th>" + txt_res[FLC_DER] + "</th></tr>";
  for(i=0;i<ncmp;i++){
   texto = texto + "<tr><td>" + i + "</td><td>" + mostrar_float(izq_g[i],max_abs_g) + "</td><td>" + mostrar_float(der_g[i],max_abs_g) + "</td><td>" + mostrar_float(izq_d[i],max_abs_d) + "</td><td>" + mostrar_float(der_d[i],max_abs_d) + "</td></tr>";
  }
- texto = texto + "</table><h4>Giros y flechas (con elasticiadad y inercia)</h4><table><tr><th>Campo</th><th>Giro izq</th><th>Giro der</th><th>Flecha izq</th><th>Flecha der</th></tr>";
+ texto = texto + "</table><h4>" + txt_res[GIR_Y_FLC_EI] + "</h4><table><tr><th>" + txt_res[CAMPO] + "</th><th>" + txt_res[GIR_IZQ] + "</th><th>" + txt_res[GIR_DER] + "</th><th>" + txt_res[FLC_IZQ] + "</th><th>" + txt_res[FLC_DER] + "</th></tr>";
  for(i=0;i<ncmp;i++){
   izq_g_ei[i] = izq_g[i] / ei;
   der_g_ei[i] = der_g[i] / ei;
@@ -1026,7 +1180,7 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
  // Mostrar resultados
  //var texto = "<h4>Cortantes</h4><ul><li>Posición: " + max_abs_c_dist + "</li><li>Valor: " + max_abs_c + "</li></ul><h4>Flectores</h4><ul><li>Posición: " + max_abs_m_dist + "</li><li>Valor: " + max_abs_m + "</li></ul><h4>Giros</h4><ul><li>Posición: " + max_abs_g_dist + "</li><li>Valor: " + max_abs_g + "</li></ul><h4>Deformada</h4><ul><li>Posición: " + max_abs_d_dist + "</li><li>Valor: " + max_abs_d + "</li></ul>";
  var lng = dcmp[dcmp.length - 1];
- var texto = "<table><tr><th>&nbsp;</th><th>Cortantes</th><th>Flectores</th><th>Giros</th><th>Flechas</th></tr><tr><td>Posición</td><td>" + mostrar_float(max_abs_c_dist, lng) + "</td><td>" + mostrar_float(max_abs_m_dist, lng) + "</td><td>" + mostrar_float(max_abs_g_dist, lng) + "</td><td>" + mostrar_float(max_abs_d_dist, lng) + "</td></tr><tr><td>Valor</td><td>" + mostrar_float(max_abs_c,1) + "</td><td>" + mostrar_float(max_abs_m,1) + "</td><td>" + mostrar_float(max_abs_g / ei,1) + "</td><td>" + mostrar_float(max_abs_d / ei,1) + "</td></tr></table>";
+ var texto = "<table><tr><th>&nbsp;</th><th>" + txt_min[CORTANTES] + "</th><th>" + txt_min[FLECTORES] + "</th><th>" + txt_min[GIROS] + "</th><th>" + txt_min[FLECHAS] + "</th></tr><tr><td>" + txt_res[POSICION] + "</td><td>" + mostrar_float(max_abs_c_dist, lng) + "</td><td>" + mostrar_float(max_abs_m_dist, lng) + "</td><td>" + mostrar_float(max_abs_g_dist, lng) + "</td><td>" + mostrar_float(max_abs_d_dist, lng) + "</td></tr><tr><td>" + txt_res[VALOR] + "</td><td>" + mostrar_float(max_abs_c,1) + "</td><td>" + mostrar_float(max_abs_m,1) + "</td><td>" + mostrar_float(max_abs_g / ei,1) + "</td><td>" + mostrar_float(max_abs_d / ei,1) + "</td></tr></table>";
  document.getElementById('res_maxmin').innerHTML = texto;
  return [max_abs_c, max_abs_c_dist, max_abs_m, max_abs_m_dist, max_abs_g, max_abs_g_dist, max_abs_d, max_abs_d_dist];
 }
@@ -1308,7 +1462,8 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
  }/*  F I N   D E L for(i=0;i<ncmp;i++)*/
 
 
-var res_ctes = new Array(2);
+var res_ctes = new Array(3);
+var intermedio_txt_ctes = ""; // Texto para constantes de giro y flechas
 
  // Procesar constantes
  switch(tipo){
@@ -1316,6 +1471,7 @@ var res_ctes = new Array(2);
    res_ctes = sacar_constantes(dapp[0], dapp[1], yapp[0], yapp[1], def, dcmp);
    cte_gir = res_ctes[0]; // La función devuelve dos resultados en un vector se pueden sacar y
    cte_def = res_ctes[1]; // usarse cuando se asignan a las variables que había en el código original.
+   intermedio_txt_ctes = "<h4>" + txt_res[EQ_GIR_FLC] + "</h4><h5>" + txt_res[TRAMO] + " 0 - " + lng + ":</h5>" + res_ctes[2]; // Se recoge el valor de las constantes
    for(i=0; i<ncmp; i++){
     ctes_gir[i]=cte_gir;
     ctes_def[i]=cte_def;
@@ -1323,6 +1479,8 @@ var res_ctes = new Array(2);
   break;
   case 1: // Al ser un empotramiento las constantes valen cero.
   case 7:
+  case 10:
+   intermedio_txt_ctes = "<h4>" + txt_res[EQ_GIR_FLC] + "</h4>" + "<div class=\"resultado_int\"><ul><li>&sigma;<sub>0</sub> = 0</li><li>Y<sub>0</sub> = 0</li></ul></div>";
    cte_gir=0;
    cte_def=0;
    for(i=0;i<ncmp;i++){
@@ -1334,6 +1492,7 @@ var res_ctes = new Array(2);
   case 8:
    cte_gir = -sustituir_b(lng, gir[ncmp-1]);
    cte_def = -sustituir_b(lng, def[ncmp-1]) - (cte_gir * lng);
+   intermedio_txt_ctes = "<h4>" + txt_res[EQ_GIR_FLC] + "</h4>" + "<div class=\"resultado_int\"><ul><li>&sigma;<sub>0</sub> = " + cte_gir + "</li><li>Y<sub>0</sub> = -" + sustituir_b(lng, def[ncmp-1]) + " - (" + cte_gir + "×" + lng + ")</li></ul></div>";
    for(i=0;i<ncmp;i++){
     ctes_gir[i]=cte_gir;
     ctes_def[i]=cte_def;
@@ -1346,6 +1505,7 @@ var res_ctes = new Array(2);
    }
   break;
   case 3: case 4: case 5: case 6:
+   intermedio_txt_ctes = "<h4>" + txt_res[EQ_GIR_FLC] + "</h4>";
    var cortes_cmp = new Array();
    var j = 0;
    for (i in cortes){
@@ -1364,10 +1524,15 @@ var res_ctes = new Array(2);
     cte_def = -sustituir_b(lng, def[ncmp-1]) - (cte_gir * lng);
     i = cortes_cmp[cortes_cmp.length-2];
     //alert("Corte: " + i + " " + dcmp[i]);
+    intermedio_txt_ctes += "<h5>" + txt_may[EMPOTRM] + ":</h5>" + "<div class=\"resultado_int\"><ul><li>&sigma;<sub>0</sub> = " + cte_gir + "</li><li>Y<sub>0</sub> = -" + sustituir_b(lng, def[ncmp-1]) + " - (" + cte_gir + "×" + lng + ")</li></ul></div>";
     while(i < ncmp){
      ctes_gir[i]=cte_gir;  ctes_def[i]=cte_def;  i++;
     }
    }
+   // Vector cortes para indicar los tramos del cálculo intermedio
+   var cortes = apoyos_d.slice(0); // Se copia el vector de apoyos
+   cortes.splice(0,0,0); // Se añade 0 al principio
+   cortes.push(lng); // Se añade la longitud al final
    for (i in constantes_comp[tipo-3][subtipo]){ // Tramos intermedios
     if(apoyos_rotulas[tipo][subtipo][constantes_comp[tipo-3][subtipo][i][2]]){ // Comprobar si es un apoyo
      altura_a = yapp[constantes_comp[tipo-3][subtipo][i][2]];
@@ -1382,6 +1547,7 @@ var res_ctes = new Array(2);
      altura_b = sustituir_b(dapp[constantes_comp[tipo-3][subtipo][i][3]], def[cc]) + sustituir_b(dapp[constantes_comp[tipo-3][subtipo][i][3]], [ctes_def[cc], ctes_gir[cc]]);
     }
     res_ctes = sacar_constantes(dapp[constantes_comp[tipo-3][subtipo][i][2]], dapp[constantes_comp[tipo-3][subtipo][i][3]], altura_a, altura_b, def, dcmp);
+    intermedio_txt_ctes += "<h5>" + txt_res[TRAMO] + " " + cortes[resolver_comp[tipo-3][subtipo][i][0] + 1] + " - " + cortes[resolver_comp[tipo-3][subtipo][i][1] + 1] + ":</h5>" + res_ctes[2]; // Se recoge el valor de las constantes
     var j = cortes_cmp[constantes_comp[tipo-3][subtipo][i][0] + 1];
     while(j < cortes_cmp[constantes_comp[tipo-3][subtipo][i][1] + 1]){
      ctes_gir[j] = res_ctes[0];    ctes_def[j] = res_ctes[1];    j++;
@@ -1389,6 +1555,7 @@ var res_ctes = new Array(2);
    }
   break;
  }
+ document.getElementById('calc_ctes').innerHTML = intermedio_txt_ctes;
  //Cargar datos en los vectores para calcular valores al final
  func_js = [crt, flc, gir, def, ctes_gir, ctes_def];
  return [crt, flc, gir, def, ctes_gir, ctes_def];
@@ -1483,7 +1650,7 @@ function campos(apoyos_d, lng, dcp, dmp, icc, fcc, icv, fcv){
  dcmp.sort(function(a, b){return a-b});
     //alert(ncmp);
  // Mostrar resultados
- var texto = "<table><tr><th>Campo</th><th>Inicio</th><th>Fin</th></tr>";
+ var texto = "<table><tr><th>" + txt_res[CAMPO] + "</th><th>" + txt_res[INICIO] + "</th><th>" + txt_res[FIN] + "</th></tr>";
  for(i = 0; i < dcmp.length - 1; i ++){
   texto = texto + "<tr><td>" + i + "</td><td>" + dcmp[i] + "</td><td>" + dcmp[i+1] + "</td></tr>";
  }
@@ -1513,9 +1680,9 @@ function calcular_empotramiento(cota_corte, lado, fuerza_punto_corte, lng, mcp, 
  var fuerza_emp = 0;
  //if(lado=='d') ap=0; else ap=1;//0 a la derecha, 1 a la izquierda
  var ap = (lado=='d') ? 0 : 1;
- var sub_texto = (ap) ? "<sub>izq</sub>" : "<sub>der</sub>";
- var texto1 = "<div class=\"eq_calc\">F. emptr." + sub_texto + " = ";
- var texto2 = "<div class=\"eq_calc\">M. emptr." + sub_texto + " = ";
+ var sub_texto = (ap) ? "<sub>" + txt_res[IZQ] + "</sub>" : "<sub>" + txt_res[DER] + "</sub>";
+ var texto1 = "<div class=\"eq_calc\">" + txt_res[EMPOTRM_F] + sub_texto + " = ";
+ var texto2 = "<div class=\"eq_calc\">" + txt_res[EMPOTRM_M] + sub_texto + " = ";
  var control_vacio = texto1;
  var cgt=0;
  if(fuerza_punto_corte != 0){
@@ -1772,8 +1939,12 @@ function calcular_empotramiento(cota_corte, lado, fuerza_punto_corte, lng, mcp, 
 
 
 
+/*
+Función principal para cálculo de vigas biapoyadas. Esta función también calcula vigas compuestas mediante cotas de corte.
 
-
+Recibe la longitud de la viga, las cotas de corte (0 y longitud en vigas simples), la distancia de los apoyos (o rótulas en vigas compuestas), la carga que puede estar recibida de otras vigas
+en vigas compuestas, la carga total (cgt), las listas con las cargas, el máximo valor de las cargas (para formatear textos) y cadenas de texto para escribir el nombre de los apoyos o rótulas.
+*/
 
 function calcular_2apoyos(lng, cota_inicio, cota_fin, apoyoA, apoyoB, mag_rot_izq, mag_rot_der, cgt, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_cargas, str1, str2){
 var magnappoyoa = 0;
@@ -1852,28 +2023,28 @@ var magnappoyob = 0;
  for(i in mmp){
   if(cota_inicio==dmp[i] && extrem_izq){
    sumaA -= mmp[i]/2;   sumaB -= mmp[i]/2;
-   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ") / 2</span>";
-   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ") / 2</span>";
+   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ") / 2</span>";
+   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ") / 2</span>";
   }
   if(cota_fin==dmp[i] && extrem_der){
    sumaA -= mmp[i]/2;   sumaB -= mmp[i]/2;
-   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ") / 2</span>";
-   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ") / 2</span>";
+   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ") / 2</span>";
+   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ") / 2</span>";
   }
   if(cota_inicio==dmp[i] && extrem_izq==0){
    sumaA -= mmp[i];   sumaB -= mmp[i];
-   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ")</span>";
-   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ")</span>";
+   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ")</span>";
+   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ")</span>";
   }
   if(cota_fin==dmp[i] && extrem_der==0){
    sumaA -= mmp[i];   sumaB -= mmp[i];
-   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ")</span>";
-   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ")</span>";
+   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ")</span>";
+   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ")</span>";
   }
   if(cota_fin>dmp[i] && cota_inicio<dmp[i]){
    sumaA -= mmp[i];   sumaB -= mmp[i];
-   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ")</span>";
-   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + mmp[i] + ")</span>";
+   texto1 = texto1 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ")</span>";
+   texto2 = texto2 + " + <span class=\"eq_mmpt\">(" + -mmp[i] + ")</span>";
   }
  }
   //alert("He pasado por aquí.");
@@ -2190,7 +2361,7 @@ function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp,
     }
    }
    var texto_matriz = escribir_matriz(matrif, vectof,["M Emptr. 1","F Emptr. 1"]);
-   document.getElementById('calc_int').innerHTML = texto_matriz;
+   document.getElementById('calc_int').innerHTML = "<h4>" + txt_res[EQ_REACCIONES] + "</h4>" + texto_matriz;
    var vect_resultado = resolver_sis_ecuac(matrif, vectof);
    memptr1 = vect_resultado[0];
    femptr1 = vect_resultado[1];
@@ -2315,7 +2486,7 @@ function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp,
    }
    alert("texto-" + ncp + " " + typeof ncp);
    var texto_matriz = escribir_matriz(matrif, vectof,["M Emptr. 2","F Emptr. 2"]);
-   document.getElementById('calc_int').innerHTML = texto_matriz;
+   document.getElementById('calc_int').innerHTML = "<h4>" + txt_res[EQ_REACCIONES] + "</h4>" + texto_matriz;
    var vect_resultado = resolver_sis_ecuac(matrif, vectof);
    memptr1 = 0;
    femptr1 = 0;
@@ -2425,7 +2596,7 @@ function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp,
     }
    }
    var texto_matriz = escribir_matriz(matrif, vectof,["EI&sigma;<sub>0</sub>","EIY<sub>0</sub>"]);
-   document.getElementById('calc_int').innerHTML = texto_matriz;
+   document.getElementById('calc_int').innerHTML = "<h4>" + txt_res[EQ_REACCIONES] + "</h4>" + texto_matriz;
    var vect_resultado = resolver_sis_ecuac(matrif, vectof);
    memptr1 = vect_resultado[0];
    femptr1 = vect_resultado[1];
@@ -2567,8 +2738,8 @@ function calc_hiper_integr_desc(tipo, lng, unidades, elasticidad, inercia, dapp,
      }
     }
    }
-   var texto_matriz = escribir_matriz(matrif, vectof,["M Emptr. 1","F Emptr. 1","M Emptr. 2","F Emptr. 2"]);
-   document.getElementById('calc_int').innerHTML = texto_matriz;
+   var texto_matriz = escribir_matriz(matrif, vectof,[txt_res[EMPOTRM_M] + " 1",txt_res[EMPOTRM_F] + " 1",txt_res[EMPOTRM_M] + " 2",txt_res[EMPOTRM_F] + " 2"]);
+   document.getElementById('calc_int').innerHTML = "<h4>" + txt_res[EQ_REACCIONES] + "</h4>" + texto_matriz;
    var vect_resultado = resolver_sis_ecuac(matrif, vectof);
    memptr1 = vect_resultado[0];
    femptr1 = vect_resultado[1];
@@ -2644,14 +2815,14 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
  switch(tipo){
   case 0:
    // Calcular reacciones en apoyos y tomar el resultado
-   resultado_apoyos = calcular_2apoyos(lng, 0, lng, apoyos_d[0], apoyos_d[1], 0, 0, 0, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_general, "Apoyo 1", "Apoyo 2");
+   resultado_apoyos = calcular_2apoyos(lng, 0, lng, apoyos_d[0], apoyos_d[1], 0, 0, 0, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_general, txt_may[APOYO] + " 1", txt_may[APOYO] + " 2");
    apoyos_f[0] = resultado_apoyos[0];
    apoyos_f[1] = resultado_apoyos[1];
    cgt = resultado_apoyos[2];
    //var texto = "<span>Apoyo 1: " + apoyos_f[0] + "<br>Apoyo 2: " + apoyos_f[1] + "<br>Total: " + cgt + "</span>";
-   var texto = "<table><tr><td>Apoyo 1:</td><td>" + mostrar_float(apoyos_f[0],cgt) + "</td></tr><tr><td>Apoyo 2:</td><td>" + mostrar_float(apoyos_f[1],cgt) + "</td></tr><tr><td>Carga total:</td><td>" + cgt + "</td></tr></table>";
+   var texto = "<table><tr><td>" + txt_may[APOYO] + " 1:</td><td>" + mostrar_float(apoyos_f[0],cgt) + "</td></tr><tr><td>" + txt_may[APOYO] + " 2:</td><td>" + mostrar_float(apoyos_f[1],cgt) + "</td></tr><tr><td>" + txt_may[C_TOTAL] + ":</td><td>" + cgt + "</td></tr></table>";
    document.getElementById('res_apoyos').innerHTML = texto;
-   document.getElementById('calc_int').innerHTML = resultado_apoyos[3] + resultado_apoyos[4];
+   document.getElementById('calc_int').innerHTML = "<h4>" + txt_res[EQ_REACCIONES] + "</h4>" + resultado_apoyos[3] + resultado_apoyos[4];
   break;
   case 1:
    resultado_emptr = calcular_empotramiento(lng, 'i', 0, lng, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_general);
@@ -2659,9 +2830,9 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    memptr1 = resultado_emptr[1];
    cgt = resultado_emptr[2];
    //var texto = "<span>Fuerza vertical: " + femptr1 + "<br>Momento: " + memptr1 + "</span>";
-   var texto = "<table><tr><td>F. emptr. izq.</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>M. emptr. izq.</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr></table>";
+   var texto = "<table><tr><td>" + txt_res[EMP_IZQ_F] + "</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>" + txt_res[EMP_IZQ_M] + "</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr></table>";
    document.getElementById('res_apoyos').innerHTML = texto;
-   document.getElementById('calc_int').innerHTML = resultado_emptr[3] + resultado_emptr[4];
+   document.getElementById('calc_int').innerHTML = "<h4>" + txt_res[EQ_REACCIONES] + "</h4>" + resultado_emptr[3] + resultado_emptr[4];
   break;
   case 2:
    resultado_emptr = calcular_empotramiento(0,   'd', 0, lng, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_general);
@@ -2669,9 +2840,9 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    memptr2 = resultado_emptr[1];
    cgt = resultado_emptr[2];
    //var texto = "<span>Fuerza vertical: " + femptr1 + "<br>Momento: " + memptr1 + "</span>";
-   var texto = "<table><tr><td>F. emptr. der.</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>M. emptr. der.</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr></table>";
+   var texto = "<table><tr><td>" + txt_res[EMP_DER_F] + "</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>" + txt_res[EMP_DER_M] + "</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr></table>";
    document.getElementById('res_apoyos').innerHTML = texto;
-   document.getElementById('calc_int').innerHTML = resultado_emptr[3] + resultado_emptr[4];
+   document.getElementById('calc_int').innerHTML = "<h4>" + txt_res[EQ_REACCIONES] + "</h4>" + resultado_emptr[3] + resultado_emptr[4];
   break;
   case 3:  case 4:  case 5:  case 6: // Vigas compuestas
    //alert("Llega hasta aquí" + cortes[resolver_comp[tipo-3][subtipo][i][0] + 1]);
@@ -2680,11 +2851,13 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    cortes.splice(0,0,0); // Se añade 0 al principio
    cortes.push(lng); // Se añade la longitud al final
    var resultado_txt = "<table>";
-   var intermedio_txt = "";
+   var intermedio_txt = "<h4>" + txt_res[EQ_REACCIONES] + "</h4>"; // Texto para reacciones en apoyos o rótulas
    cgt = 0;
    var cgt_trozo = new Array(resolver_comp[tipo-3][subtipo].length); // Vector con cargas totales en cada tramo
+   var contar_apoyos = 1;
+   var contar_rotulas = 1;
    for(i in resolver_comp[tipo-3][subtipo]){
-    resultado_apoyos = calcular_2apoyos(lng, cortes[resolver_comp[tipo-3][subtipo][i][0] + 1], cortes[resolver_comp[tipo-3][subtipo][i][1] + 1], apoyos_d[resolver_comp[tipo-3][subtipo][i][2]],apoyos_d[resolver_comp[tipo-3][subtipo][i][3]], (resolver_comp[tipo-3][subtipo][i][4] == -1 ? 0 : apoyos_f[resolver_comp[tipo-3][subtipo][i][4]]), (resolver_comp[tipo-3][subtipo][i][5] == -1 ? 0 : apoyos_f[resolver_comp[tipo-3][subtipo][i][5]]), 0, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_general, "Rótula 1", "Rótula 2");
+    resultado_apoyos = calcular_2apoyos(lng, cortes[resolver_comp[tipo-3][subtipo][i][0] + 1], cortes[resolver_comp[tipo-3][subtipo][i][1] + 1], apoyos_d[resolver_comp[tipo-3][subtipo][i][2]],apoyos_d[resolver_comp[tipo-3][subtipo][i][3]], (resolver_comp[tipo-3][subtipo][i][4] == -1 ? 0 : apoyos_f[resolver_comp[tipo-3][subtipo][i][4]]), (resolver_comp[tipo-3][subtipo][i][5] == -1 ? 0 : apoyos_f[resolver_comp[tipo-3][subtipo][i][5]]), 0, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_general, (apoyos_rotulas[tipo][subtipo][resolver_comp[tipo-3][subtipo][i][2]] ? (txt_may[APOYO] + " " + contar_apoyos++) : (txt_may[ROTULA] + " " + contar_rotulas++)), (apoyos_rotulas[tipo][subtipo][resolver_comp[tipo-3][subtipo][i][3]] ? (txt_may[APOYO] + " " + contar_apoyos++) : (txt_may[ROTULA] + " " + contar_rotulas++)));
     apoyos_f[resolver_comp[tipo-3][subtipo][i][2]] = resultado_apoyos[0];
     apoyos_f[resolver_comp[tipo-3][subtipo][i][3]] = resultado_apoyos[1];
     cgt += resultado_apoyos[2];  
@@ -2698,7 +2871,7 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
     memptr1 = resultado_emptr[1];
     cgt += resultado_emptr[2];
     cgt_trozo.splice(0,0,resultado_emptr[2]);
-    resultado_txt = resultado_txt + "<tr><td>F. emptr. izq.</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>M. emptr. izq.</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr>";
+    resultado_txt = resultado_txt + "<tr><td>" + txt_res[EMP_IZQ_F] + "</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>" + txt_res[EMP_IZQ_M] + "</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr>";
     intermedio_txt = intermedio_txt + resultado_emptr[3] + resultado_emptr[4];
    }
    if(tipo == 4 || tipo == 6){ // Si hay un empotramiento a la derecha
@@ -2708,26 +2881,26 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
     memptr2 = resultado_emptr[1];
     cgt += resultado_emptr[2];
     cgt_trozo.push(resultado_emptr[2]);
-    resultado_txt = resultado_txt + "<tr><td>F. emptr. der.</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>M. emptr. der.</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr>";
+    resultado_txt = resultado_txt + "<tr><td>" + txt_res[EMP_DER_F] + "</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>" + txt_res[EMP_DER_M] + "</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr>";
     intermedio_txt = intermedio_txt + resultado_emptr[3] + resultado_emptr[4];
    }
    var apoyo_num = 1;
    var rotula_num = 1;
    for(i in apoyos_d){
-    resultado_txt = resultado_txt + "<tr><td>" + (apoyos_rotulas[tipo][subtipo][i] ? "Apoyo " + apoyo_num : "<i>Rótula " + rotula_num + "</i>") + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
+    resultado_txt = resultado_txt + "<tr><td>" + (apoyos_rotulas[tipo][subtipo][i] ? (txt_may[APOYO] + " " + apoyo_num) : ("<i>" + txt_may[ROTULA] + " " + rotula_num + "</i>")) + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
     if(apoyos_rotulas[tipo][subtipo][i]){
      apoyo_num++;
     }else{
      rotula_num++;
     }
    }
-   resultado_txt = resultado_txt + "</table><h4>Carga por tramos:</h4><table>";
+   resultado_txt = resultado_txt + "</table><h4>" + txt_res[CARGA_TRAMOS] + ":</h4><table>";
    var tramo = 0;
    for(i in cgt_trozo){
-    resultado_txt = resultado_txt + "<tr><td>Tramo " + tramo + " </td><td>" + mostrar_float(cgt_trozo[i],cgt) + "</td></tr>";
+    resultado_txt = resultado_txt + "<tr><td>" + txt_res[TRAMO] + " " + tramo + " </td><td>" + mostrar_float(cgt_trozo[i],cgt) + "</td></tr>";
     tramo++;
    }
-   resultado_txt = resultado_txt + "<tr><td>Carga total </td><td>" + cgt + "</td></tr></table>";
+   resultado_txt = resultado_txt + "<tr><td>" + txt_may[C_TOTAL] + " </td><td>" + cgt + "</td></tr></table>";
    document.getElementById('res_apoyos').innerHTML = resultado_txt;
    document.getElementById('calc_int').innerHTML = intermedio_txt;
   break;
@@ -2745,13 +2918,13 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    femptr2 = resultado_ecuaciones[4];
    apoyos_f = resultado_ecuaciones[5];
    //var texto = "<span>Fuerza vertical (emp. izq.): " + femptr1 + "<br>Momento (emp. izq.): " + memptr1;
-   var texto = "<table><tr><td>F. emptr. izq.</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>M. emptr. izq.</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr>";
+   var texto = "<table><tr><td>" + txt_res[EMP_IZQ_F] + "</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>" + txt_res[EMP_IZQ_M] + "</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr>";
    var ii = 1;
    for(i in apoyos_f){
-    texto = texto + "<tr><td>Apoyo " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
+    texto = texto + "<tr><td>" + txt_may[APOYO] + " " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
     ii++;
    }
-   texto = texto + "<tr><td>Carga total </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
+   texto = texto + "<tr><td>" + txt_may[C_TOTAL] + " </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
    document.getElementById('res_apoyos').innerHTML = texto;
   break;
   case 8:
@@ -2763,15 +2936,15 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    femptr2 = resultado_ecuaciones[4];
    apoyos_f = resultado_ecuaciones[5];
    //var texto = "<span>Fuerza vertical (emp. der.): " + femptr2 + "<br>Momento (emp. der.): " + memptr2;
-   var texto = "<table><tr><td>F. emptr. der.</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>M. emptr. der.</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr>";
+   var texto = "<table><tr><td>" + txt_res[EMP_DER_F] + "</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>" + txt_res[EMP_DER_M] + "</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr>";
    var ii = 1;
    for(i in apoyos_f){
     //texto = texto + "<br>Apoyo " + ii + ": " + apoyos_f[i];
-    texto = texto + "<tr><td>Apoyo " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
+    texto = texto + "<tr><td>" + txt_may[APOYO] + " " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
     ii++;
    }
    //texto = texto + "<br>Carga total: " + cgt + "</span>";
-   texto = texto + "<tr><td>Carga total </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
+   texto = texto + "<tr><td>" + txt_may[C_TOTAL] + " </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
    document.getElementById('res_apoyos').innerHTML = texto;
   break;
   case 9:
@@ -2788,10 +2961,10 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    var texto = "<table>";
    var ii = 1;
    for(i in apoyos_f){
-    texto = texto + "<tr><td>Apoyo " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
+    texto = texto + "<tr><td>" + txt_may[APOYO] + " " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
     ii++;
    }
-   texto = texto + "<tr><td>Carga total </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
+   texto = texto + "<tr><td>" + txt_may[C_TOTAL] + " </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
    document.getElementById('res_apoyos').innerHTML = texto;
   break;
   case 10:
@@ -2802,13 +2975,13 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
    memptr2 = resultado_ecuaciones[3];
    femptr2 = resultado_ecuaciones[4];
    apoyos_f = resultado_ecuaciones[5];
-   var texto = "<table><tr><td>F. emptr. izq.</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>M. emptr. izq.</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr><tr><td>F. emptr. der.</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>M. emptr. der.</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr>";
+   var texto = "<table><tr><td>" + txt_res[EMP_IZQ_F] + "</td><td>" + mostrar_float(femptr1,cgt) + "</td></tr><tr><td>" + txt_res[EMP_IZQ_M] + "</td><td>" + mostrar_float(memptr1,cgt) + "</td></tr><tr><td>" + txt_res[EMP_DER_F] + "</td><td>" + mostrar_float(femptr2,cgt) + "</td></tr><tr><td>" + txt_res[EMP_DER_M] + "</td><td>" + mostrar_float(memptr2,cgt) + "</td></tr>";
    var ii = 1;
    for(i in apoyos_f){
-    texto = texto + "<tr><td>Apoyo " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
+    texto = texto + "<tr><td>" + txt_may[APOYO] + " " + ii + "</td><td>" + mostrar_float(apoyos_f[i],cgt) + "</td></tr>";
     ii++;
    }
-   texto = texto + "<tr><td>Carga total </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
+   texto = texto + "<tr><td>" + txt_may[C_TOTAL] + " </td><td>" + cgt + "</td></tr></table>"; // + "<br>" + apoyos_f[0] + "<br>" + apoyos_f[1]
    document.getElementById('res_apoyos').innerHTML = texto;
   break;
  }
@@ -2829,7 +3002,7 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
  max_crt_js = max_abs_c; max_flc_js = max_abs_f;
  max_gir_js = max_abs_g; max_def_js = max_abs_d;
  graf(lng, tipo, subtipo, apoyos_d, dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d, max_abs_c, max_abs_m, max_abs_g, max_abs_d); //
- document.getElementById('resultado').innerHTML = "Cálculo concluido con éxito.";
+ document.getElementById('resultado').innerHTML = FRASE_CALCULO_CONCL;
  document.getElementById('zona_resultados').style.display = '';
 }
 
@@ -2857,7 +3030,7 @@ function vista_previa_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, 
  var texto_vista_previa = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600px\" height=\"300px\">\n" + texto_svg + "</svg>";
  document.getElementById('vista_previa').innerHTML = texto_vista_previa;
  document.getElementById('zona_resultados').style.display = 'none';
- document.getElementById('resultado').innerHTML = "Cálculo no realizado, pulse 'Calcular' para proceder a realizarlo.";
+ document.getElementById('resultado').innerHTML = FRASE_CALCULO_NO;
  // Eliminar las consultas con datos antiguos
  // http://www.randomsnippets.com/2008/03/26/how-to-dynamically-remove-delete-elements-via-javascript/
  var lista = document.getElementById("div_dar_valores");
@@ -2878,10 +3051,10 @@ function actualizar_gui_viga_apoyos(num, vector_apoyos_rotulas){
   document.txt_apoyos.despl[i].disabled = false;
   document.txt_apoyos.apoyo[i].disabled = false;
   if(vector_apoyos_rotulas[i] == 1){
-   document.getElementById('etiqueta_distancia_horz_' + i).innerHTML = "Apoyo " + napp + ":";
+   document.getElementById('etiqueta_distancia_horz_' + i).innerHTML = txt_may[APOYO] + " " + napp + ":";
    napp ++;
   }else{
-   document.getElementById('etiqueta_distancia_horz_' + i).innerHTML = "Rótula " + nrot + ":";
+   document.getElementById('etiqueta_distancia_horz_' + i).innerHTML = txt_may[ROTULA] + " " + nrot + ":";
    nrot ++;
   }
  }
@@ -2945,12 +3118,12 @@ function actualizar_gui_tipo(){
     iconos = iconos + "<span class=\"dibujos " + iconos_string[iconos_esquema[tipo-3][i][j]] + "\"></span>";
    }
    iconos = iconos + "</span>";
-   var texto = "<span class=\"cont_texto sub\">" + ((tipo == 3 || tipo == 6) ? "emptr. - " : "");
-   texto = texto + (apoyos_rotulas[tipo][i][0] ? "apoyo" : "rótula");
+   var texto = "<span class=\"cont_texto sub\">" + ((tipo == 3 || tipo == 6) ? (txt_min[EMPOTRM] + " - ") : "");
+   texto = texto + (apoyos_rotulas[tipo][i][0] ? txt_min[APOYO] : txt_min[ROTULA]);
    for(var j=1; j < num_apoyos_tipos[tipo][i]; j++){
-    texto = texto + " - " + (apoyos_rotulas[tipo][i][j] ? "apoyo" : "rótula");
+    texto = texto + " - " + (apoyos_rotulas[tipo][i][j] ? txt_min[APOYO] : txt_min[ROTULA]);
    }
-   texto = texto + ((tipo == 4 || tipo == 6) ? " - emptr." : "") + "</span>";
+   texto = texto + ((tipo == 4 || tipo == 6) ? (" - " + txt_min[EMPOTRM]) : "") + "</span>";
    document.getElementById('label_subtipo_viga_2' + num_letras[i]).innerHTML = iconos + texto;
   }
   document.getElementById('div_subtipo_viga_2g').style.display = (tipo == 5) ? 'none' : '';
@@ -3243,6 +3416,117 @@ function dar_valor_punto(){
  div_resultados.appendChild(div_flecha);
  document.getElementById("div_dar_valores").appendChild(div_resultados);
 }
+
+
+function iniciar(){
+ actualizar_gui_tipo();
+ document.getElementById('div_elast').style.display = 'none';
+ document.getElementById('div_perfiles').style.display = 'none';
+ document.getElementById('div_calculadora').style.display = 'none';
+ mostrar_IPN(0);
+ vista_previa();
+}
+
+/* orientar: posición del perfil, 0 es la mayor inercia y 1 la menor. */
+function mostrar_IPE(orientar){
+ var texto = tabla_tecn(tabla_IPE, orientar);
+ document.getElementById('cont_perfiles').innerHTML = texto;
+}
+
+function mostrar_IPN(orientar){
+ var texto = tabla_tecn(tabla_IPN, orientar);
+ document.getElementById('cont_perfiles').innerHTML = texto;
+}
+
+function mostrar_HEA(orientar){
+ var texto = tabla_tecn(tabla_HEB, orientar);
+ document.getElementById('cont_perfiles').innerHTML = texto;
+}
+
+function mostrar_HEB(orientar){
+ var texto = tabla_tecn(tabla_HEB, orientar);
+ document.getElementById('cont_perfiles').innerHTML = texto;
+}
+
+function mostrar_HEM(orientar){
+ var texto = tabla_tecn(tabla_HEB, orientar);
+ document.getElementById('cont_perfiles').innerHTML = texto;
+}
+
+function tabla_tecn(tabla_perfil, orientar){
+ var texto = "<table><tr><th>Perfil</th><th>m<sup>4</sup></th><th>cm<sup>4</sup></th><th>in<sup>4</sup></th></tr>";
+ for(i in tabla_perfil){
+  texto = texto + "<tr><td class=\"lst_perf\">" + tabla_perfil[i][0] + "</td><td class=\"lst_perf\"><a href=\"#\" onclick=\"inercia_tabla(\'" + tabla_perfil[i][1 + orientar]/100000000 + "\');return false;\">" + tabla_perfil[i][1 + orientar] + " × 10<sup>-8</sup></a></td><td class=\"lst_perf\"><a href=\"#\" onclick=\"inercia_tabla(\'" + tabla_perfil[i][1 + orientar] + "\');return false;\">" + tabla_perfil[i][1 + orientar] + "</a></td><td class=\"lst_perf\"><a href=\"#\" onclick=\"inercia_tabla(\'" + tabla_perfil[i][1 + orientar]/41.62314256 + "\');return false;\">" + tabla_perfil[i][1 + orientar]/41.62314256 + "</a></td></tr>";
+ }
+ return texto = texto + "</table>";
+}
+
+/* Se cierra la ventana y se pone el número seleccionado de inercia por tabla */
+function inercia_tabla(num){
+ document.getElementById("inercia").value = num;
+ document.getElementById('div_perfiles').style.display = 'none';
+}
+
+/* Se cierra la ventana y se pone el número seleccionado de inercia por cálculo */
+function inercia_calcular(tipo){
+ var a = parseFloat(document.datos_viga.iner_a.value);
+ var b = parseFloat(document.datos_viga.iner_b.value);
+ var e = parseFloat(document.datos_viga.iner_e.value);
+ var inercia;
+ switch(tipo){
+  case 0: // Cuadrado
+   if(e == 0){ // Relleno
+    inercia = a * a * a * b / 12; // Correcto
+   }else{ // Contorno
+    if(e > 0){ // Grueso
+     var interior_a = a - e;
+     var interior_b = b - e;
+     inercia = (a * a * a * b - interior_a * interior_a * interior_a * interior_b) / 12; // Correcto
+    }else{ // Delgado (invertir signo)
+     inercia = - e * a * a * (b + a / 3) / 4; // Correcto
+    }
+   }
+  break;
+  case 1: // Redondel
+   if(e == 0){ // Círculo
+    inercia = Math.PI * a * a * a * b / 4; // Correcto
+   }else{ // Círcunferencia
+    if(e > 0){ // Grueso
+     var interior_a = a - e;
+     var interior_b = b - e;
+     inercia = Math.PI * (a * a * a * b - interior_a * interior_a * interior_a * interior_b) / 4; // Correcto
+    }else{ // Delgado (invertir signo)
+     inercia = - Math.PI * e * a * a * (a + 3 * b) / 4; // Correcto
+    }
+   }
+  break;
+ }
+ document.getElementById("inercia").value = inercia;
+ document.getElementById('div_calculadora').style.display = 'none';
+}
+
+/* Se cierra la ventana y se pone el número seleccionado de elasticidad */
+function elast(num){
+ document.getElementById("elasticidad").value = num;
+ document.getElementById('div_elast').style.display = 'none';
+}
+
+/* Se abre la ventana de elasticidad */
+function tabla_elast(){
+ document.getElementById('div_elast').style.display = '';
+}
+
+/* Se abre la ventana de cálculo de inercias */
+function inercia_calculadora(){
+ document.getElementById('div_calculadora').style.display = '';
+}
+
+/* Se abre la ventana de perfiles */
+function tabla_pefiles(){
+ document.getElementById('div_perfiles').style.display = '';
+}
+
+
 
 
 /* Función para mostrar números mejores

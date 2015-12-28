@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="Windows-1252" />
+ <title>XVIGAS - Web app</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <script src="xvigas_txt_en.js"></script>
+ <script src="xvigas.js"></script>
+ <link rel="stylesheet" media="screen" href="http://openfontlibrary.org/face/comic-relief" type="text/css"/>
+ <link rel="stylesheet" href="xvigas.css" type="text/css" />
+ <link rel="stylesheet" href="xvigas_graf.css" type="text/css" />
+ <link rel="icon" type="image/x-icon" href="xvigas.ico" />
+ <link rel="apple-touch-icon" href="xvigas_ios.png" />
+ <meta name="description" content="Free web appliclatonaton to learn to solve beam problems">
+ <meta name="keywords" content="Mechanical,beams,calculus,isostatic,load,xvigas online">
+ <meta name="author" content="pwnage2apps">
+</head>
+
+<body onload="iniciar()">
+<header>
+  <div class="aviso_vertical">If you visit XVIGAS web app from a smart phone, is recommended to place it in landscape position.</div>
+  <div class="lang"><span class="globo"></span> &nbsp; EN · <a href="xvigas.html" title="Spanish version">ES</a></div>
+   <h1 class="logo_txt"><span class="logotipo"></span><span class="letra1">X</span>VIGAS</h1>
+  <p class="beta_webapp logo_txt">WEBAPP &nbsp;&nbsp;&nbsp; (beta)</p>
+ <nav><ul>
+  <li><a href="fuente.html">About...</a></li>
+  <li><a href="help.html">Help</a></li>
+  <!--<li><a href="teoria.html">Teoría</a></li>-->
+ </ul></nav>
+ <p class="inicio">XVIGAS is a free beam analysis tool (web application) to learning. XVIGAS displays adds.<!--<br>Basada en XVIGAS para Windows. Licencia GPL v3, puede bajar el código fuente <a href="fuente.html">aquí.</a>--><br>This page uses cookies in advertisements, more information <a href="../cookies.html">here.</a></p>
+</header>
+
+<!-- anuncio -->
+
+<h2>Beam's data</h2>
+  <form name="datos_viga">
+    <fieldset data-role="controlgroup">
+      <legend>Length and features:</legend><div class="tabla_tipo_vigas">
+      <table><tr><td>Length:</td><td><input name="longitud" id="longitud" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" onchange="vista_previa()" /></td></tr>
+      <tr><td>Young's modulus:</td><td><input name="elasticidad" id="elasticidad" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,20})?" /> &nbsp;<a href="#" onclick="tabla_elast();return false;" title="Open table with some examples"><span class="boton_EI_mat botones_EI"></span></a></td></tr>
+      <tr><td>Inertia:</td><td><input name="inercia" id="inercia" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,20})?" /> &nbsp;<a href="#" onclick="tabla_pefiles();return false;" title="Open table with some EN 10034 examples"><span class="boton_EI_perfiles botones_EI"></span></a> <a href="#" onclick="inercia_calculadora();return false;" title="Open inertia calculator"><span class="boton_EI_calculadora botones_EI"></span></a></td></tr></table>
+
+<div id="div_elast">Young's modulus examples:<table class="elast_tabla"><tr><th class="elast_tabla_nombre">Material</th><th>Pa</th><th>kf/cm²</th><th>psi</th></tr>
+<tr><td>Aluminium</td><td><a href="#" onclick="elast('69000000000');return false;">69 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('690');return false;">690</a></td><td><a href="#" onclick="elast('10000000');return false;">1 × 10<sup>7</sup></a></td></tr>
+<tr><td>Brass</td><td><a href="#" onclick="elast('100000000000');return false;">100 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1000');return false;">1000</a></td><td><a href="#" onclick="elast('14500000');return false;">1.45 × 10<sup>7</sup></a></td></tr>
+<tr><td>Bronze</td><td><a href="#" onclick="elast('96000000000');return false;">96 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('960');return false;">960</a></td><td><a href="#" onclick="elast('13900000');return false;">1.39 × 10<sup>7</sup></a></td></tr>
+<tr><td>Concrete (High-strength)</td><td><a href="#" onclick="elast('30000000000');return false;">30 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('300');return false;">300</a></td><td><a href="#" onclick="elast('4350000');return false;">4.35 × 10<sup>6</sup></a></td></tr>
+<tr><td>Cooper</td><td><a href="#" onclick="elast('117000000000');return false;">117 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1170');return false;">1170</a></td><td><a href="#" onclick="elast('17000000');return false;">1.7 × 10<sup>7</sup></a></td></tr>
+<tr><td>Graphene</td><td><a href="#" onclick="elast('1050000000000');return false;">1050 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('10500');return false;">10500</a></td><td><a href="#" onclick="elast('152000000');return false;">1.52 × 10<sup>8</sup></a></td></tr>
+<tr><td>Magnesium</td><td><a href="#" onclick="elast('45000000000');return false;">45 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('450');return false;">450</a></td><td><a href="#" onclick="elast('6530000');return false;">6.53 × 10<sup>6</sup></a></td></tr>
+<tr><td>Steel (ASTM-A36)</td><td><a href="#" onclick="elast('200000000000');return false;">200 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('2000');return false;">2000</a></td><td><a href="#" onclick="elast('29000000');return false;">2.9 × 10<sup>7</sup></a></td></tr>
+<tr><td>Titanium</td><td><a href="#" onclick="elast('110000000000');return false;">110 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1100');return false;">1100</a></td><td><a href="#" onclick="elast('29000000');return false;">1.6 × 10<sup>7</sup></a></td></tr>
+<tr><td>Wolfram</td><td><a href="#" onclick="elast('410000000000');return false;">410 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('4100');return false;">4100</a></td><td><a href="#" onclick="elast('57000000');return false;">5.7 × 10<sup>7</sup></a></td></tr>
+<tr><td>Wood (along grain)</td><td><a href="#" onclick="elast('11000000000');return false;">11 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('110');return false;">110</a></td><td><a href="#" onclick="elast('1600000');return false;">1.6 × 10<sup>6</sup></a></td></tr>
+</table><br><i>Source: <a href="https://en.wikipedia.org/wiki/Young's_modulus">https://en.wikipedia.org/wiki/Young's_modulus</a></i></div>
+
+<div id="div_perfiles">
+EN 10034 section examples:
+<ul class="menu_pefiles"><li><span class="perf ipn"></span>IPN <a href="#" onclick="mostrar_IPN(0);return false;">(max)</a> <a href="#" onclick="mostrar_IPN(1);return false;">(min)</a></li><li><span class="perf ipe"></span>IPE <a href="#" onclick="mostrar_IPE(0);return false;">(max)</a> <a href="#" onclick="mostrar_IPE(1);return false;">(min)</a></li><li><span class="perf hea"></span>HEA <a href="#" onclick="mostrar_HEA(0);return false;">(max)</a> <a href="#" onclick="mostrar_HEA(1);return false;">(min)</a></li><li><span class="perf heb"></span>HEB <a href="#" onclick="mostrar_HEB(0);return false;">(max)</a> <a href="#" onclick="mostrar_HEB(1);return false;">(min)</a></li><li><span class="perf hem"></span>HEM <a href="#" onclick="mostrar_HEM(0);return false;">(max)</a> <a href="#" onclick="mostrar_HEM(1);return false;">(min)</a></li></ul>
+<div id="cont_perfiles">
+</div></div>
+
+<div id="div_calculadora">Inertia calculator:
+      <table><tr><td>a:</td><td><input name="iner_a" id="iner_a" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
+      <tr><td>b:</td><td><input name="iner_b" id="iner_b" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
+      <tr><td>e:</td><td><input name="iner_e" id="iner_e" placeholder="Text input" value="0.1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr></table>
+<div class="botonera_calc"><a href="#" onclick="inercia_calcular(0);return false;" title="Calculate a rectangular section"><span class="boton_calc_rect botones_calc"></span></a> <a href="#" onclick="inercia_calcular(1);return false;" title="Calculate a round section"><span class="boton_calc_circ botones_calc"></span></a>
+<ul><li>Use e = 0 for a solid section.</li><li>Use e > 0 for a hollow section (thick).</li><li>Use e < 0 for a hollow section with (thin).</li></ul></div>.
+</div>
+
+
+    </div></fieldset>
+  </form>
+  <form name="tipo_viga">
+    <fieldset data-role="controlgroup">
+      <legend>Beam class:</legend><div class="tabla_tipo_vigas">
+      <label><input id="radio_choice_tipo_viga_2a" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" checked="checked" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span></span><span class="cont_texto simpl">a - Simply supported</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2b" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span></span><span class="cont_texto simpl">b - Cantilever left (without supports)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2c" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto simpl">c - Cantilever right (without supports)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2d" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos rotl"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span></span><span class="cont_texto comps">d - Cantilever left with supports and pin joints (choose subclass &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2e" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos rotl"></span><span class="dibujos empD"></span></span><span class="cont_texto comps">e - Cantilever right with supports and pin joints (choose subclass &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2f" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos rotl"></span><span class="dibujos appy"></span></span><span class="cont_texto comps">f - Free with supports and pin joints (choose subclass &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2g" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos rotl"></span><span class="dibujos viga"></span><span class="dibujos rotl"></span><span class="dibujos empD"></span></span><span class="cont_texto comps">g - Fixed with supports and pin joints (choose subclass &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2h" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span></span><span class="cont_texto hiper">h - Cantilever left with some supports (hyperstatic)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2i" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto hiper">i - Cantilever right with some supports (hyperstatic)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2j" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span></span><span class="cont_texto hiper">j - Three or more supports (hyperstatic)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2k" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto hiper">k - Fixed with some supports (hyperstatic)</span></label>
+    </div></fieldset>
+  </form>
+  <div id="div_subtipo_viga"> <form name="subtipo_viga">
+    <fieldset data-role="controlgroup">
+      <legend>Beam's subclass (only for d, e, f y g):</legend><div class="tabla_tipo_vigas">
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2a" type="radio" onClick="actualizar_gui_tipo();vista_previa()" checked="checked" /><span id="label_subtipo_viga_2a">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2b" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2b">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2c" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2c">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2d" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2d">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2e" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2e">-</span></label><br />
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2f" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2f">-</span></label><div id="div_subtipo_viga_2g">
+      <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2g" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2g">-</span></label></div>
+    </div></fieldset>
+  </form></div>
+  <div id="gui_apoyos_general">
+  <h2>Placement of supports</h2>
+    <div id="gui_apoyos_fijos">
+      <form name="txt_apoyos">
+        <div class="tabla_form_2filas form_app_var">
+          <div class="fila_form_2filas">
+            <div class="form_num"></div>
+            <div class="form_txt"><b>Position</b></div>
+            <div class="form_txt"><b>Height</b></div>
+          </div>
+        <div class="fila_form_2filas" id="apoyos_fila_0"><div class="form_txt"><span id="etiqueta_distancia_horz_0">Support 1:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0.1" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_1"><div class="form_txt"><span id="etiqueta_distancia_horz_1">Support 2:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0.9" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_2"><div class="form_txt"><span id="etiqueta_distancia_horz_2">Support 3:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_3"><div class="form_txt"><span id="etiqueta_distancia_horz_3">Support 4:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_4"><div class="form_txt"><span id="etiqueta_distancia_horz_4">Support 5:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+        <div class="fila_form_2filas" id="apoyos_fila_5"><div class="form_txt"><span id="etiqueta_distancia_horz_5">Support 6:</span></div>
+        <div class="form_txt"><input name="apoyo" value="0" pattern="\d+((,|.)\d{0,15})?" type="text" onchange="vista_previa()" /></div>
+        <div class="form_txt"><input name="despl" value="0" pattern="-?\d+((,|.)\d{0,15})?" onchange="vista_previa()" type="text" /></div></div>
+      </div>
+      </form>
+    </div>
+    <div id="gui_apoyos_variables">
+      <form name="frm_apoyos" onsubmit="intro_apoyo_nuevo(); return false;">
+        <div class="tabla_form_2filas form_app_var">
+          <div class="fila_form_2filas">
+            <div class="form_num"></div>
+            <div class="form_txt"><b>Position</b></div>
+            <div class="form_txt"><b>Height</b></div>
+            <div class="form_num"></div>
+          </div>
+          <div class="fila_form_2filas">
+            <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+            <div class="form_txt"><input name="number_apoyo_pos_x" id="number_apoyo_pos_x" value="0" type="text" pattern="\d+((,|.)\d{0,15})?" /></div>
+            <div class="form_txt"><input name="number_apoyo_pos_y" id="number_apoyo_pos_y" value="0" type="text" pattern="-?\d+((,|.)\d{0,15})?" /></div>
+            <div class="form_num"><a class="btn nueva" href="#" onclick="intro_apoyo_nuevo();vista_previa();return false;">+</a></div>
+          </div>
+        </div>
+        <div class="tabla_form_2filas" id="lista_apoyos"></div>
+      </form>
+    </div>
+  </div>
+
+<!-- anuncio -->
+
+<h2>Loads</h2>
+
+<h3><span class="h3_cp">&#11015;</span>Point loads</h3>
+  <form name="frm_cargas_puntuales" onsubmit="intro_carga_puntual_nueva();vista_previa(); return false;">
+    <div class="tabla_form_2filas form_cargas_punt">
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_txt"><b>Magnitude</b></div>
+        <div class="form_txt"><b>Position</b></div>
+        <div class="form_num"></div>
+      </div>
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_txt">
+            <input name="number_carga_puntual_mag" pattern="-?\d+((,|.)\d{0,15})?" id="number_carga_puntual_mag" type="text" value="1" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_puntual_pos" pattern="\d+((,|.)\d{0,15})?" id="number_carga_puntual_pos" type="text" value="0" />
+          </div>
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="intro_carga_puntual_nueva();vista_previa();return false;"><b>&#10004;</b></a>
+          </div>
+      </div>
+    </div>
+    <div class="tabla_form_2filas" id="lista_cargas_puntuales">
+    </div>
+  </form>
+
+
+
+
+<h3><span class="h3_mp">&#10227;</span>Point moments</h3>
+  <form name="frm_momentos_puntuales" onsubmit="intro_momento_puntual_nuevo();vista_previa(); return false;">
+    <div class="tabla_form_2filas form_moment_punt">
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_txt"><b>Magnitude</b></div>
+        <div class="form_txt"><b>Position</b></div>
+        <div class="form_num"></div>
+      </div>
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_txt">
+            <input name="number_momento_puntual_mag" pattern="-?\d+((,|.)\d{0,15})?" id="number_momento_puntual_mag" type="text" value="1" />
+          </div>
+          <div class="form_txt">
+            <input name="number_momento_puntual_pos" pattern="\d+((,|.)\d{0,15})?" id="number_momento_puntual_pos" type="text" value="0" />
+          </div>
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="intro_momento_puntual_nuevo();vista_previa();return false;"><b>&#10004;</b></a>
+          </div>
+      </div>
+    </div>
+    <div class="tabla_form_2filas" id="lista_momentos_puntuales">
+    </div>
+  </form>
+
+
+
+
+<h3><span class="h3_cc">&#9724;</span>Uniform distributed loads</h3>
+  <form name="frm_cargas_continuas" onsubmit="intro_carga_continua_nueva();vista_previa(); return false;">
+    <div class="tabla_form_2filas form_cargas_rep">
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_txt"><b>Magnitude</b></div>
+        <div class="form_txt"><b>Start position</b></div>
+        <div class="form_txt"><b>End position</b></div>
+        <div class="form_num"></div>
+      </div>
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_txt">
+            <input name="number_carga_continua_mag" pattern="-?\d+((,|.)\d{0,15})?" id="number_carga_continua_mag" type="text" value="1" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_continua_pos_A" pattern="\d+((,|.)\d{0,15})?" id="number_carga_continua_pos_A" type="text" value="0" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_continua_pos_B" pattern="\d+((,|.)\d{0,15})?" id="number_carga_continua_pos_B" type="text" value="1" />
+          </div>
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="intro_carga_continua_nueva();vista_previa();return false;"><b>&#10004;</b></a>
+          </div>
+      </div>
+    </div>
+    <div class="tabla_form_2filas" id="lista_cargas_continuas">
+    </div>
+  </form>
+
+
+
+
+
+
+
+<h3><span class="h3_cv">&#9698;</span>Variable distributed loads</h3>
+  <form name="frm_cargas_variables" onsubmit="intro_carga_variable_nueva();vista_previa(); return false;">
+    <div class="tabla_form_2filas form_cargas_var">
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_txt"><b>Magnitude at start</b></div>
+        <div class="form_txt"><b>Magnitude at end</b></div>
+        <div class="form_txt"><b>Start position</b></div>
+        <div class="form_txt"><b>End position</b></div>
+        <div class="form_num"></div>
+      </div>
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_txt">
+            <input name="number_carga_variable_mag_A" pattern="-?\d+((,|.)\d{0,15})?" id="number_carga_variable_mag_A" type="text" value="0" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_variable_mag_B" pattern="-?\d+((,|.)\d{0,15})?" id="number_carga_variable_mag_B" type="text" value="1" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_variable_pos_A" pattern="\d+((,|.)\d{0,15})?" id="number_carga_variable_pos_A" type="text" value="0" />
+          </div>
+          <div class="form_txt">
+            <input name="number_carga_variable_pos_B" pattern="\d+((,|.)\d{0,15})?" id="number_carga_variable_pos_B" type="text" value="1" />
+          </div>
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="intro_carga_variable_nueva();vista_previa();return false;"><b>&#10004;</b></a>
+          </div>
+      </div>
+    </div>
+    <div class="tabla_form_2filas" id="lista_cargas_variables">
+    </div>
+  </form>
+
+
+
+<h2>Diagram of loads and elements</h2>
+<div id="vista_previa">
+</div>
+
+
+
+
+
+<hr>
+<h2>Results</h2>
+<p><a class="btn_calcular" href="#" onclick="calcular(); return false;"><b>Results</b></a></p>
+
+  <div id="resultado">Press 'Calculate' to get results.
+  </div>
+  <div id="zona_resultados">
+  <!-- <h3>Datos</h3>
+   <div id="res_datos"><span>Cálculo no realizado</span>
+  </div>-->
+  <h3>Reactions on supports</h3>
+  <div id="res_apoyos"><span>Calculation not done</span>
+  </div>
+  <h3>Diagrams</h3>
+  <h4>Shear</h4>
+  <div id="res_graf_crt"><span>Calculation not done</span>
+  </div>
+  <h4>Moments</h4>
+  <div id="res_graf_flc"><span>Calculation not done</span>
+  </div>
+  <h4>Slope</h4>
+  <div id="res_graf_gir"><span>Calculation not done</span>
+  </div>
+  <h4>Displacement</h4>
+  <div id="res_graf_def"><span>Calculation not done</span>
+  </div>
+  <h3>Fields</h3>
+  <div id="res_campos"><span>Calculation not done</span>
+  </div>
+  <h3>Functions</h3>
+  <div id="res_funciones"><span>Calculation not done</span>
+  </div>
+  <h3>Values at the end of fields</h3>
+  <div id="res_valores"><span>Calculation not done</span>
+  </div>
+  <h3>Max. values</h3>
+  <div id="res_maxmin"><span>Calculation not done</span>
+  </div>
+  <h3>Details of calculus</h3>
+  <div id="calc_int"><span>Calculation not done</span>
+  </div>
+  <div id="calc_ctes"><span>Calculation not done</span>
+  </div>
+  <h3>Find values in a certain position</h3>
+  <div id="dar_valores">
+  <form name="frm_dar_valores" onsubmit="dar_valor_punto();return false;">
+    <div class="tabla_form_2filas form_dar_valores" id="div_dar_valores">
+      <div class="fila_form_2filas">
+          <div class="form_num"><span class="lapicero">&#9998;</span></div><!--&#9999;-->
+          <div class="form_res">Position:</div>
+          <div class="form_res">
+            <input name="dar_valores_distancia" id="dar_valores_distancia" type="text" value="" pattern="\d+((,|.)\d{0,15})?" />
+          </div>
+          <div class="form_res">
+            <label><input type="checkbox" name="simb" id="dar_valores_derecha" value="" />right</label>
+          </div>
+          <!--<div class="form_res">
+            <label><input type="checkbox" name="simb" id="dar_valores_inercia" value="" />Inercia. simbólica</label>
+          </div>
+          <div class="form_res">
+            <label><input type="checkbox" name="simb" id="dar_valores_elasticidad" value="" />Elast. simbólica</label>
+          </div>-->
+          <div class="form_btn">
+            <a class="btn nueva" href="#" onclick="dar_valor_punto();return false;"><b>Find</b></a><!--&#10004;-->
+          </div>
+      </div>
+      <div class="fila_form_2filas">
+        <div class="form_num"></div>
+        <div class="form_res"><b>Shear</b></div>
+        <div class="form_res"><b>Moment</b></div>
+        <div class="form_res"><b>Slope</b></div>
+        <div class="form_res"><b>Displacement</b></div>
+      </div>
+    </div>
+    <!--<div class="tabla_form_2filas" id="lista_cargas_variables">
+    </div>-->
+  </form>
+  </div><!--Fin dar valores-->
+  </div><!-- Fin del trozo que debe desaparecer cuando no hay cálculo.-->
+
+
+<hr>
+  <footer>
+   <p>XVIGAS - Web app · License GPLv3 · 2015 · pwnage2apps<br>
+Bitcoin donations: 195CBoywruk4pfMDSp1Nr1yCojqf8jxZaC<br>
+   Contact: <ul><li>Bitmessage: BM-2cT6X8N1us2jqkknP1AnjcHcCsZf5szUHY</li><!--<li>Correo electrónico: Siento tener que escribirlo así, pero quiero evitar el correo basura. En el medio va la arroba, antes de ella va el texto "pwnage", el dígito DOS (en número, no en letras) y luego "APP" en minúsculas, y finalmente una S minúscula. Después de la arroba va lo mismo que hay antes pero añadiendo un punto, la plabra "ESY" en minúscula, y la extensión de España "ES" separada con otro punto. Si tienes dudas mira la dirección de esta página. Siento tener que ponerlo así, pero no tengo otro remedio si quiero evitar el correo basura y mantener una cierta accesibilidad.</li>--></ul>
+<p>Thanks to: <a href="http://www.hostinger.es/" target="_blank"><img src="http://www.hostinger.es/banners/es/hostinger-80x15-powered-1.gif" alt="Hosting Web" width="80" height="15" /></a></p>
+  </footer>
+</body>
+</html>
