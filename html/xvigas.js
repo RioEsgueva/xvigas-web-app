@@ -1695,12 +1695,12 @@ function calcular_empotramiento(cota_corte, lado, fuerza_punto_corte, lng, mcp, 
    momento_emp += fuerza_punto_corte * (lng - cota_corte);
    fuerza_emp += fuerza_punto_corte;
    texto1 = texto1 + " + <span class=\"eq_rotl\">(" + mostrar_float(fuerza_punto_corte,max_cargas) + ")</span>";
-   texto2 = texto2 + " + <span class=\"eq_rotl\">(" + lng + " - " + cota_corte + " × " + mostrar_float(fuerza_punto_corte,max_cargas) + ")</span>";
+   texto2 = texto2 + " + <span class=\"eq_rotl\">((" + lng + " - " + cota_corte + ") × " + mostrar_float(fuerza_punto_corte,max_cargas) + ")</span>";
   }
  }
  for(i in dcp){
   if(ap){ // A la izquierda
-   if(cota_corte > dcp[i]){
+   if(cota_corte > dcp[i] || (cota_corte == lng && cota_corte == dcp[i])){
     cgt += mcp[i];
     momento_emp += mcp[i] * dcp[i];
     fuerza_emp += mcp[i];
@@ -1716,19 +1716,19 @@ function calcular_empotramiento(cota_corte, lado, fuerza_punto_corte, lng, mcp, 
     }
    }
   }else{ // A la derecha
-   if(cota_corte<dcp[i]){
+   if(cota_corte<dcp[i] || (cota_corte == 0 && cota_corte==dcp[i])){
     momento_emp += mcp[i]*(lng-dcp[i]);
     fuerza_emp += mcp[i];
     cgt+=mcp[i];
      texto1 = texto1 + " + <span class=\"eq_crpt\">(" + mcp[i] + ")</span>";
-     texto2 = texto2 + " + <span class=\"eq_crpt\">(" + lng + " - " + dcp[i] + " × " + mcp[i] + ")</span>";
+     texto2 = texto2 + " + <span class=\"eq_crpt\">((" + lng + " - " + dcp[i] + ") × " + mcp[i] + ")</span>";
    }else{
     if(cota_corte==dcp[i]){
      momento_emp += mcp[i]*(lng-dcp[i])/2;
      fuerza_emp += mcp[i]/2;
      cgt+=mcp[i]/2;
      texto1 = texto1 + " + <span class=\"eq_crpt\">(" + mcp[i] + ") / 2</span>";
-     texto2 = texto2 + " + <span class=\"eq_crpt\">(" + lng + " - " + dcp[i] + " × " + mcp[i] + ") / 2</span>";
+     texto2 = texto2 + " + <span class=\"eq_crpt\">((" + lng + " - " + dcp[i] + ") × " + mcp[i] + ") / 2</span>";
     }
    }
   }
@@ -3439,7 +3439,7 @@ function mostrar_IPN(orientar){
 }
 
 function mostrar_HEA(orientar){
- var texto = tabla_tecn(tabla_HEB, orientar);
+ var texto = tabla_tecn(tabla_HEA, orientar);
  document.getElementById('cont_perfiles').innerHTML = texto;
 }
 
@@ -3449,7 +3449,7 @@ function mostrar_HEB(orientar){
 }
 
 function mostrar_HEM(orientar){
- var texto = tabla_tecn(tabla_HEB, orientar);
+ var texto = tabla_tecn(tabla_HEM, orientar);
  document.getElementById('cont_perfiles').innerHTML = texto;
 }
 
