@@ -535,7 +535,8 @@ function max_vector(vect){
 
 // Esta función determina el máximo valor de las cargas para poder dibujar los gráficos corréctamente.
 // Recibe los valores de las cargas (número de cada tipo y valores (sólo magnitudes, no distancias))
-// Devuelve 5 valores, el máximo para cada tipo, y un quinto valor con el máximo de las cargas que no son momentos.
+// Devuelve 5 valores, el máximo para cada tipo, y un quinto valor con el máximo de las cargas que no son momentos,
+//  si bien en caso de no haber cargas, usa los momentos o en su defecto devuelve un 1 para evitar divisiones entre cero.
 
 function max_cargas(mcp, mmp, mcc, acv, bcv){
  var max_cv = (acv.length == 0) ? 0 : Math.max(max_vector(acv), max_vector(bcv));
@@ -544,9 +545,13 @@ function max_cargas(mcp, mmp, mcc, acv, bcv){
  var max_mp = (mmp.length == 0) ? 0 : max_vector(mmp);
  // Obtener el máximo total:
  var max = Math.max(max_cp, max_cc, max_cv);
+ // Si no hay cargas, solo momentos, se usa max_mp, si este es cero también por no haber momentos, se usa un 1.
+ if(max == 0){
+  max = (max_mp == 0) ? 1 : max_mp;
+ }
  return [max_cp, max_mp, max_cc, max_cv, max];
 }
-
+/*alert("max " + max);*/
 
 
 
@@ -1735,22 +1740,24 @@ function calcular_empotramiento(cota_corte, lado, fuerza_punto_corte, lng, mcp, 
  }
  for(i in dmp){
   if(ap){ //A la izquierda
-   if(cota_corte > dmp [i]){
+   if(cota_corte > dmp [i] || (cota_corte == lng && cota_corte == dmp[i])){
     momento_emp -= mmp [i];
-    texto2 = texto2 + " - <span class=\"eq_mmpt\">(" + mcp[i] + ")</span>";
+    texto2 = texto2 + " - <span class=\"eq_mmpt\">(" + mmp[i] + ")</span>";
+   }else{
+    if(cota_corte == dmp [i]){
+     momento_emp -= mmp [i]/2;
+     texto2 = texto2 + " - <span class=\"eq_mmpt\">(" + mmp[i] + ") / 2</span>";
+    }
    }
-   if(cota_corte == dmp [i]){
-    momento_emp -= mmp [i]/2;
-    texto2 = texto2 + " - <span class=\"eq_mmpt\">(" + mcp[i] + ") / 2</span>";
-   }
-  }else{
-   if(cota_corte < dmp [i]){
+  }else{ // A la derecha
+   if(cota_corte < dmp [i] || (cota_corte == 0 && cota_corte==dmp[i])){
     momento_emp += mmp [i];
-    texto2 = texto2 + " - <span class=\"eq_mmpt\">(" + mcp[i] + ")</span>";
-   }
-   if(cota_corte == dmp [i]){
-    momento_emp += mmp [i]/2;
-    texto2 = texto2 + " - <span class=\"eq_mmpt\">(" + mcp[i] + ") / 2</span>";
+    texto2 = texto2 + " - <span class=\"eq_mmpt\">(" + mmp[i] + ")</span>";
+   }else{
+    if(cota_corte == dmp [i]){
+     momento_emp += mmp [i]/2;
+     texto2 = texto2 + " - <span class=\"eq_mmpt\">(" + mmp[i] + ") / 2</span>";
+    }
    }
   }
  }
