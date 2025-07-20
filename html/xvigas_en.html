@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="Windows-1252" />
+ <meta charset="UTF-8">
  <title>XVIGAS - Web app</title>
  <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <meta name="adbit-site-verification" content="89c0514b8ae9712f0018670565a44d6973d78d7e8d21e44ca2d872cd7713845f"/>
  <script src="xvigas_txt_en.js"></script>
  <script src="xvigas.js"></script>
- <link rel="stylesheet" media="screen" href="http://openfontlibrary.org/face/comic-relief" type="text/css"/>
+ <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/comic-relief" type="text/css"/>
  <link rel="stylesheet" href="xvigas.css" type="text/css" />
  <link rel="stylesheet" href="xvigas_graf.css" type="text/css" />
  <link rel="icon" type="image/x-icon" href="xvigas.ico" />
@@ -19,18 +20,19 @@
 <body onload="iniciar()">
 <header>
   <div class="aviso_vertical">If you visit XVIGAS web app from a smart phone, is recommended to place it in landscape position.</div>
-  <div class="lang"><span class="globo"></span> &nbsp; EN · <a href="xvigas.html" title="Spanish version">ES</a></div>
+  <div class="lang"><span class="globo"></span> &nbsp; English Â· <a href="xvigas.html" title="Spanish version">EspaÃ±ol</a></div>
    <h1 class="logo_txt"><span class="logotipo"></span><span class="letra1">X</span>VIGAS</h1>
   <p class="beta_webapp logo_txt">WEBAPP &nbsp;&nbsp;&nbsp; (beta)</p>
+  <p><i>Your everyday XVIGAS, now under HTTPS.</i></p>
  <nav><ul>
   <li><a href="fuente.html">About...</a></li>
   <li><a href="help.html">Help</a></li>
-  <!--<li><a href="teoria.html">Teoría</a></li>-->
+  <!--<li><a href="teoria.html">TeorÃ­a</a></li>-->
  </ul></nav>
- <p class="inicio">XVIGAS is a free beam analysis tool (web application) to learning. XVIGAS displays adds.<!--<br>Basada en XVIGAS para Windows. Licencia GPL v3, puede bajar el código fuente <a href="fuente.html">aquí.</a>--><br>This page uses cookies in advertisements, more information <a href="../cookies.html">here.</a></p>
+ <p class="inicio">XVIGAS is a free beam analysis tool (web application) to learning. XVIGAS displays adds.<!--<br>Basada en XVIGAS para Windows. Licencia GPL v3, puede bajar el cÃ³digo fuente <a href="fuente.html">aquÃ­.</a>--><br>This page uses cookies in advertisements, more information <a href="../cookies.html">here.</a></p>
 </header>
 
-<!-- anuncio -->
+<iframe data-aa='1085446' src='//ad.a-ads.com/1085446?size=468x60' scrolling='no' style='width:468px; height:60px; border:0px; padding:0; overflow:hidden' allowtransparency='true'></iframe>
 
 <h2>Beam's data</h2>
   <form name="datos_viga">
@@ -40,18 +42,18 @@
       <tr><td>Young's modulus:</td><td><input name="elasticidad" id="elasticidad" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,20})?" /> &nbsp;<a href="#" onclick="tabla_elast();return false;" title="Open table with some examples"><span class="boton_EI_mat botones_EI"></span></a></td></tr>
       <tr><td>Inertia:</td><td><input name="inercia" id="inercia" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,20})?" /> &nbsp;<a href="#" onclick="tabla_pefiles();return false;" title="Open table with some EN 10034 examples"><span class="boton_EI_perfiles botones_EI"></span></a> <a href="#" onclick="inercia_calculadora();return false;" title="Open inertia calculator"><span class="boton_EI_calculadora botones_EI"></span></a></td></tr></table>
 
-<div id="div_elast">Young's modulus examples:<table class="elast_tabla"><tr><th class="elast_tabla_nombre">Material</th><th>Pa</th><th>kf/cm²</th><th>psi</th></tr>
-<tr><td>Aluminium</td><td><a href="#" onclick="elast('69000000000');return false;">69 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('690');return false;">690</a></td><td><a href="#" onclick="elast('10000000');return false;">1 × 10<sup>7</sup></a></td></tr>
-<tr><td>Brass</td><td><a href="#" onclick="elast('100000000000');return false;">100 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1000');return false;">1000</a></td><td><a href="#" onclick="elast('14500000');return false;">1.45 × 10<sup>7</sup></a></td></tr>
-<tr><td>Bronze</td><td><a href="#" onclick="elast('96000000000');return false;">96 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('960');return false;">960</a></td><td><a href="#" onclick="elast('13900000');return false;">1.39 × 10<sup>7</sup></a></td></tr>
-<tr><td>Concrete (High-strength)</td><td><a href="#" onclick="elast('30000000000');return false;">30 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('300');return false;">300</a></td><td><a href="#" onclick="elast('4350000');return false;">4.35 × 10<sup>6</sup></a></td></tr>
-<tr><td>Cooper</td><td><a href="#" onclick="elast('117000000000');return false;">117 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1170');return false;">1170</a></td><td><a href="#" onclick="elast('17000000');return false;">1.7 × 10<sup>7</sup></a></td></tr>
-<tr><td>Graphene</td><td><a href="#" onclick="elast('1050000000000');return false;">1050 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('10500');return false;">10500</a></td><td><a href="#" onclick="elast('152000000');return false;">1.52 × 10<sup>8</sup></a></td></tr>
-<tr><td>Magnesium</td><td><a href="#" onclick="elast('45000000000');return false;">45 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('450');return false;">450</a></td><td><a href="#" onclick="elast('6530000');return false;">6.53 × 10<sup>6</sup></a></td></tr>
-<tr><td>Steel (ASTM-A36)</td><td><a href="#" onclick="elast('200000000000');return false;">200 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('2000');return false;">2000</a></td><td><a href="#" onclick="elast('29000000');return false;">2.9 × 10<sup>7</sup></a></td></tr>
-<tr><td>Titanium</td><td><a href="#" onclick="elast('110000000000');return false;">110 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1100');return false;">1100</a></td><td><a href="#" onclick="elast('29000000');return false;">1.6 × 10<sup>7</sup></a></td></tr>
-<tr><td>Wolfram</td><td><a href="#" onclick="elast('410000000000');return false;">410 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('4100');return false;">4100</a></td><td><a href="#" onclick="elast('57000000');return false;">5.7 × 10<sup>7</sup></a></td></tr>
-<tr><td>Wood (along grain)</td><td><a href="#" onclick="elast('11000000000');return false;">11 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('110');return false;">110</a></td><td><a href="#" onclick="elast('1600000');return false;">1.6 × 10<sup>6</sup></a></td></tr>
+<div id="div_elast">Young's modulus examples:<table class="elast_tabla"><tr><th class="elast_tabla_nombre">Material</th><th>Pa</th><th>kf/cmÂ²</th><th>psi</th></tr>
+<tr><td>Aluminium</td><td><a href="#" onclick="elast('69000000000');return false;">69 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('690');return false;">690</a></td><td><a href="#" onclick="elast('10000000');return false;">1 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Brass</td><td><a href="#" onclick="elast('100000000000');return false;">100 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1000');return false;">1000</a></td><td><a href="#" onclick="elast('14500000');return false;">1.45 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Bronze</td><td><a href="#" onclick="elast('96000000000');return false;">96 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('960');return false;">960</a></td><td><a href="#" onclick="elast('13900000');return false;">1.39 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Concrete (High-strength)</td><td><a href="#" onclick="elast('30000000000');return false;">30 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('300');return false;">300</a></td><td><a href="#" onclick="elast('4350000');return false;">4.35 Ã— 10<sup>6</sup></a></td></tr>
+<tr><td>Cooper</td><td><a href="#" onclick="elast('117000000000');return false;">117 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1170');return false;">1170</a></td><td><a href="#" onclick="elast('17000000');return false;">1.7 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Graphene</td><td><a href="#" onclick="elast('1050000000000');return false;">1050 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('10500');return false;">10500</a></td><td><a href="#" onclick="elast('152000000');return false;">1.52 Ã— 10<sup>8</sup></a></td></tr>
+<tr><td>Magnesium</td><td><a href="#" onclick="elast('45000000000');return false;">45 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('450');return false;">450</a></td><td><a href="#" onclick="elast('6530000');return false;">6.53 Ã— 10<sup>6</sup></a></td></tr>
+<tr><td>Steel (ASTM-A36)</td><td><a href="#" onclick="elast('200000000000');return false;">200 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('2000');return false;">2000</a></td><td><a href="#" onclick="elast('29000000');return false;">2.9 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Titanium</td><td><a href="#" onclick="elast('110000000000');return false;">110 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1100');return false;">1100</a></td><td><a href="#" onclick="elast('29000000');return false;">1.6 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Wolfram</td><td><a href="#" onclick="elast('410000000000');return false;">410 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('4100');return false;">4100</a></td><td><a href="#" onclick="elast('57000000');return false;">5.7 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Wood (along grain)</td><td><a href="#" onclick="elast('11000000000');return false;">11 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('110');return false;">110</a></td><td><a href="#" onclick="elast('1600000');return false;">1.6 Ã— 10<sup>6</sup></a></td></tr>
 </table><br><i>Source: <a href="https://en.wikipedia.org/wiki/Young's_modulus">https://en.wikipedia.org/wiki/Young's_modulus</a></i></div>
 
 <div id="div_perfiles">
@@ -151,7 +153,11 @@ EN 10034 section examples:
     </div>
   </div>
 
-<!-- anuncio -->
+<!--<br><br><br>
+	<div>
+		<script type="text/javascript" src="https://adbit.biz/js/show_ads.js"></script>
+		<div class="adbit-display-ad" data-adspace-id="A87D72D5C0"></div>
+	</div>-->
 
 <h2>Loads</h2>
 
@@ -288,6 +294,8 @@ EN 10034 section examples:
 <h2>Diagram of loads and elements</h2>
 <div id="vista_previa">
 </div>
+<div id="res_graf_descargar" class="descargar"><span class="descargar"><a href="#" onclick="download_file('xvigas_preview.svg', dynamic_text_vista_previa() ); return false;"><span class="disquete">&#128190;</span> Download</a></span>
+</div>
 
 
 
@@ -301,7 +309,7 @@ EN 10034 section examples:
   </div>
   <div id="zona_resultados">
   <!-- <h3>Datos</h3>
-   <div id="res_datos"><span>Cálculo no realizado</span>
+   <div id="res_datos"><span>CÃ¡lculo no realizado</span>
   </div>-->
   <h3>Reactions on supports</h3>
   <div id="res_apoyos"><span>Calculation not done</span>
@@ -318,6 +326,9 @@ EN 10034 section examples:
   </div>
   <h4>Displacement</h4>
   <div id="res_graf_def"><span>Calculation not done</span>
+  </div>
+  <h4>Download diagrams</h4>
+  <div id="res_graf_descargar_resultados"><ul class="descargar"><li><a href="#" onclick="download_file('xvigas_shear.svg', dynamic_text_cortantes() ); return false;"><span class="disquete">&#128190;</span> Shear</a></li><li><a href="#" onclick="download_file('xvigas_moments.svg', dynamic_text_flectores() ); return false;"><span class="disquete">&#128190;</span> Moments</a></li><li><a href="#" onclick="download_file('xvigas_slope.svg', dynamic_text_giros() ); return false;"><span class="disquete">&#128190;</span> Slope</a></li><li><a href="#" onclick="download_file('xvigas_displacement.svg', dynamic_text_flechas() ); return false;"><span class="disquete">&#128190;</span> Displacement</a></li></ul>
   </div>
   <h3>Fields</h3>
   <div id="res_campos"><span>Calculation not done</span>
@@ -350,10 +361,10 @@ EN 10034 section examples:
             <label><input type="checkbox" name="simb" id="dar_valores_derecha" value="" />right</label>
           </div>
           <!--<div class="form_res">
-            <label><input type="checkbox" name="simb" id="dar_valores_inercia" value="" />Inercia. simbólica</label>
+            <label><input type="checkbox" name="simb" id="dar_valores_inercia" value="" />Inercia. simbÃ³lica</label>
           </div>
           <div class="form_res">
-            <label><input type="checkbox" name="simb" id="dar_valores_elasticidad" value="" />Elast. simbólica</label>
+            <label><input type="checkbox" name="simb" id="dar_valores_elasticidad" value="" />Elast. simbÃ³lica</label>
           </div>-->
           <div class="form_btn">
             <a class="btn nueva" href="#" onclick="dar_valor_punto();return false;"><b>Find</b></a><!--&#10004;-->
@@ -371,15 +382,15 @@ EN 10034 section examples:
     </div>-->
   </form>
   </div><!--Fin dar valores-->
-  </div><!-- Fin del trozo que debe desaparecer cuando no hay cálculo.-->
+  </div><!-- Fin del trozo que debe desaparecer cuando no hay cÃ¡lculo.-->
 
 
 <hr>
   <footer>
-   <p>XVIGAS - Web app · License GPLv3 · 2015 · pwnage2apps<br>
+   <p>XVIGAS - Web app Â· License GPLv3 Â· 2015 Â· pwnage2apps<br>
 Bitcoin donations: 195CBoywruk4pfMDSp1Nr1yCojqf8jxZaC<br>
-   Contact: <ul><li>Bitmessage: BM-2cT6X8N1us2jqkknP1AnjcHcCsZf5szUHY</li><!--<li>Correo electrónico: Siento tener que escribirlo así, pero quiero evitar el correo basura. En el medio va la arroba, antes de ella va el texto "pwnage", el dígito DOS (en número, no en letras) y luego "APP" en minúsculas, y finalmente una S minúscula. Después de la arroba va lo mismo que hay antes pero añadiendo un punto, la plabra "ESY" en minúscula, y la extensión de España "ES" separada con otro punto. Si tienes dudas mira la dirección de esta página. Siento tener que ponerlo así, pero no tengo otro remedio si quiero evitar el correo basura y mantener una cierta accesibilidad.</li>--></ul>
-<p>Thanks to: <a href="http://www.hostinger.es/" target="_blank"><img src="http://www.hostinger.es/banners/es/hostinger-80x15-powered-1.gif" alt="Hosting Web" width="80" height="15" /></a></p>
+   Contact: <ul><li>Bitmessage: BM-2cT6X8N1us2jqkknP1AnjcHcCsZf5szUHY</li><!--<li>Correo electrÃ³nico: Siento tener que escribirlo asÃ­, pero quiero evitar el correo basura. En el medio va la arroba, antes de ella va el texto "pwnage", el dÃ­gito DOS (en nÃºmero, no en letras) y luego "APP" en minÃºsculas, y finalmente una S minÃºscula. DespuÃ©s de la arroba va lo mismo que hay antes pero aÃ±adiendo un punto, la plabra "ESY" en minÃºscula, y la extensiÃ³n de EspaÃ±a "ES" separada con otro punto. Si tienes dudas mira la direcciÃ³n de esta pÃ¡gina. Siento tener que ponerlo asÃ­, pero no tengo otro remedio si quiero evitar el correo basura y mantener una cierta accesibilidad.</li>--></ul>
+<!--<p>Thanks to: <a href="http://www.hostinger.es/" target="_blank"><img src="http://www.hostinger.es/banners/es/hostinger-80x15-powered-1.gif" alt="Hosting Web" width="80" height="15" /></a></p>-->
   </footer>
 </body>
 </html>

@@ -1,58 +1,62 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="es">
 <head>
- <meta charset="Windows-1252" />
+ <meta charset="UTF-8">
  <title>XVIGAS - Web app</title>
  <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <meta name="adbit-site-verification" content="c91616c190abe93b857262d9cd2065e78e235b87912b20f6a7e16815a616d511"/>
  <script src="xvigas_txt_es.js"></script>
  <script src="xvigas.js"></script>
- <link rel="stylesheet" media="screen" href="http://openfontlibrary.org/face/comic-relief" type="text/css"/>
+ <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/comic-relief" type="text/css"/>
  <link rel="stylesheet" href="xvigas.css" type="text/css" />
  <link rel="stylesheet" href="xvigas_graf.css" type="text/css" />
  <link rel="icon" type="image/x-icon" href="xvigas.ico" />
  <link rel="apple-touch-icon" href="xvigas_ios.png" />
- <meta name="description" content="Aplicación gratuita para ejercicos de cálculo de vigas">
- <meta name="keywords" content="Mecánica,vigas,cálculo,isostática,carga,xvigas online">
+ <meta name="description" content="AplicaciÃ³n gratuita para ejercicos de cÃ¡lculo de vigas">
+ <meta name="keywords" content="MecÃ¡nica,vigas,cÃ¡lculo,isostÃ¡tica,carga,xvigas online">
  <meta name="author" content="pwnage2apps">
 </head>
 
 <body onload="iniciar()">
 <header>
- <div class="aviso_vertical">Si visitas XVIGAS web appp desde un teléfono móvil es recomendable situarlo en posición horizontal.</div>
- <div class="lang"><span class="globo"></span> &nbsp; <a href="xvigas_en.html" title="English version">EN</a> · ES</div>
+ <div class="aviso_vertical">Si visitas XVIGAS web appp desde un telÃ©fono mÃ³vil es recomendable situarlo en posiciÃ³n horizontal.</div>
+ <div class="lang"><span class="globo"></span> &nbsp; <a href="xvigas_en.html" title="English version">English</a> Â· EspaÃ±ol</div>
    <h1 class="logo_txt"><span class="logotipo"></span><span class="letra1">X</span>VIGAS</h1>
   <p class="beta_webapp logo_txt">WEBAPP &nbsp;&nbsp;&nbsp; (beta)</p>
+  <p><i>Tu XVIGAS de siempre, ahora bajo HTTPS.</i></p>
  <nav><ul>
   <li><a href="fuente.html">Acerca de...</a></li>
   <li><a href="ayuda.html">Ayuda</a></li>
-  <li><a href="teoria.html">Teoría</a></li>
+  <li><a href="teoria.html">TeorÃ­a</a></li>
  </ul></nav>
- <p class="inicio">Aplicación web gratuita (con publicidad) para aprendizaje de análisis de vigas.<!--<br>Basada en XVIGAS para Windows. Licencia GPL v3, puede bajar el código fuente <a href="fuente.html">aquí.</a>--><br>Esta página usa galletas (<i>cookies</i>) para mostrar la publicidad, más información <a href="../galletas.html">aquí.</a></p>
+ <p class="inicio">AplicaciÃ³n web gratuita (con publicidad) para aprendizaje de anÃ¡lisis de vigas.<!--<br>Basada en XVIGAS para Windows. Licencia GPL v3, puede bajar el cÃ³digo fuente <a href="fuente.html">aquÃ­.</a>--><br>Esta pÃ¡gina usa galletas (<i>cookies</i>) para mostrar la publicidad, mÃ¡s informaciÃ³n <a href="../galletas.html">aquÃ­.</a></p>
 </header>
 
-<!-- anuncio -->
+<!-- -->
+<iframe data-aa='1085446' src='//ad.a-ads.com/1085446?size=468x60' scrolling='no' style='width:468px; height:60px; border:0px; padding:0; overflow:hidden' allowtransparency='true'></iframe>
+<!-- -->
 
 <h2>Datos de la viga</h2>
   <form name="datos_viga">
     <fieldset data-role="controlgroup">
-      <legend>Longitud y características:</legend><div class="tabla_tipo_vigas">
+      <legend>Longitud y caracterÃ­sticas:</legend><div class="tabla_tipo_vigas">
       <table><tr><td>Longitud:</td><td><input name="longitud" id="longitud" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" onchange="vista_previa()" /></td></tr>
       <tr><td>Elasticidad:</td><td><input name="elasticidad" id="elasticidad" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,20})?" /> &nbsp;<a href="#" onclick="tabla_elast();return false;" title="Abrir tabla de ejemplos de materiales"><span class="boton_EI_mat botones_EI"></span></a></td></tr>
       <tr><td>Inercia:</td><td><input name="inercia" id="inercia" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,20})?" /> &nbsp;<a href="#" onclick="tabla_pefiles();return false;" title="Abrir tabla con algunos perfiles EN 10034"><span class="boton_EI_perfiles botones_EI"></span></a> <a href="#" onclick="inercia_calculadora();return false;" title="Abrir calculadora de inercias"><span class="boton_EI_calculadora botones_EI"></span></a></td></tr></table>
 
-<div id="div_elast">Elasticidad:<table class="elast_tabla"><tr><th class="elast_tabla_nombre">Material</th><th>Pa</th><th>Tf/cm²</th><th>psi</th></tr>
+<div id="div_elast">Elasticidad:<table class="elast_tabla"><tr><th class="elast_tabla_nombre">Material</th><th>Pa</th><th>Tf/cmÂ²</th><th>psi</th></tr>
 <!--<tr><td>Prueba</td><td><a href="#" onclick="elast('100');return false;">100</a></td><td><a href="#" onclick="elast('1');return false;">1</a></td><td><a href="#" onclick="elast('5');return false;">5</a></td></tr>-->
-<tr><td>Acero (ASTM-A36)</td><td><a href="#" onclick="elast('200000000000');return false;">200 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('2000');return false;">2000</a></td><td><a href="#" onclick="elast('29000000');return false;">2.9 × 10<sup>7</sup></a></td></tr>
-<tr><td>Aluminio</td><td><a href="#" onclick="elast('69000000000');return false;">69 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('690');return false;">690</a></td><td><a href="#" onclick="elast('10000000');return false;">1 × 10<sup>7</sup></a></td></tr>
-<tr><td>Bronce</td><td><a href="#" onclick="elast('96000000000');return false;">96 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('960');return false;">960</a></td><td><a href="#" onclick="elast('13900000');return false;">1.39 × 10<sup>7</sup></a></td></tr>
-<tr><td>Cobre</td><td><a href="#" onclick="elast('117000000000');return false;">117 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1170');return false;">1170</a></td><td><a href="#" onclick="elast('17000000');return false;">1.7 × 10<sup>7</sup></a></td></tr>
-<tr><td>Grafeno</td><td><a href="#" onclick="elast('1050000000000');return false;">1050 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('10500');return false;">10500</a></td><td><a href="#" onclick="elast('152000000');return false;">1.52 × 10<sup>8</sup></a></td></tr>
-<tr><td>Hormigón (alta resistencia)</td><td><a href="#" onclick="elast('30000000000');return false;">30 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('300');return false;">300</a></td><td><a href="#" onclick="elast('4350000');return false;">4.35 × 10<sup>6</sup></a></td></tr>
-<tr><td>Latón</td><td><a href="#" onclick="elast('100000000000');return false;">100 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1000');return false;">1000</a></td><td><a href="#" onclick="elast('14500000');return false;">1.45 × 10<sup>7</sup></a></td></tr>
-<tr><td>Madera (sentido de las fibras)</td><td><a href="#" onclick="elast('11000000000');return false;">11 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('110');return false;">110</a></td><td><a href="#" onclick="elast('1600000');return false;">1.6 × 10<sup>6</sup></a></td></tr>
-<tr><td>Magnesio</td><td><a href="#" onclick="elast('45000000000');return false;">45 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('450');return false;">450</a></td><td><a href="#" onclick="elast('6530000');return false;">6.53 × 10<sup>6</sup></a></td></tr>
-<tr><td>Titanio</td><td><a href="#" onclick="elast('110000000000');return false;">110 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1100');return false;">1100</a></td><td><a href="#" onclick="elast('29000000');return false;">1.6 × 10<sup>7</sup></a></td></tr>
-<tr><td>Wolframio</td><td><a href="#" onclick="elast('410000000000');return false;">410 × 10<sup>9</sup></a></td><td><a href="#" onclick="elast('4100');return false;">4100</a></td><td><a href="#" onclick="elast('57000000');return false;">5.7 × 10<sup>7</sup></a></td></tr>
+<tr><td>Acero (ASTM-A36)</td><td><a href="#" onclick="elast('200000000000');return false;">200 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('2000');return false;">2000</a></td><td><a href="#" onclick="elast('29000000');return false;">2.9 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Aluminio</td><td><a href="#" onclick="elast('69000000000');return false;">69 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('690');return false;">690</a></td><td><a href="#" onclick="elast('10000000');return false;">1 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Bronce</td><td><a href="#" onclick="elast('96000000000');return false;">96 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('960');return false;">960</a></td><td><a href="#" onclick="elast('13900000');return false;">1.39 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Cobre</td><td><a href="#" onclick="elast('117000000000');return false;">117 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1170');return false;">1170</a></td><td><a href="#" onclick="elast('17000000');return false;">1.7 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Grafeno</td><td><a href="#" onclick="elast('1050000000000');return false;">1050 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('10500');return false;">10500</a></td><td><a href="#" onclick="elast('152000000');return false;">1.52 Ã— 10<sup>8</sup></a></td></tr>
+<tr><td>HormigÃ³n (alta resistencia)</td><td><a href="#" onclick="elast('30000000000');return false;">30 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('300');return false;">300</a></td><td><a href="#" onclick="elast('4350000');return false;">4.35 Ã— 10<sup>6</sup></a></td></tr>
+<tr><td>LatÃ³n</td><td><a href="#" onclick="elast('100000000000');return false;">100 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1000');return false;">1000</a></td><td><a href="#" onclick="elast('14500000');return false;">1.45 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Madera (sentido de las fibras)</td><td><a href="#" onclick="elast('11000000000');return false;">11 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('110');return false;">110</a></td><td><a href="#" onclick="elast('1600000');return false;">1.6 Ã— 10<sup>6</sup></a></td></tr>
+<tr><td>Magnesio</td><td><a href="#" onclick="elast('45000000000');return false;">45 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('450');return false;">450</a></td><td><a href="#" onclick="elast('6530000');return false;">6.53 Ã— 10<sup>6</sup></a></td></tr>
+<tr><td>Titanio</td><td><a href="#" onclick="elast('110000000000');return false;">110 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('1100');return false;">1100</a></td><td><a href="#" onclick="elast('29000000');return false;">1.6 Ã— 10<sup>7</sup></a></td></tr>
+<tr><td>Wolframio</td><td><a href="#" onclick="elast('410000000000');return false;">410 Ã— 10<sup>9</sup></a></td><td><a href="#" onclick="elast('4100');return false;">4100</a></td><td><a href="#" onclick="elast('57000000');return false;">5.7 Ã— 10<sup>7</sup></a></td></tr>
 </table><br><i>Fuente: <a href="https://en.wikipedia.org/wiki/Young's_modulus">https://en.wikipedia.org/wiki/Young's_modulus</a></i></div>
 
 <div id="div_perfiles">
@@ -61,14 +65,14 @@ Ejemplos de secciones EN 10034:
 <div id="cont_perfiles">
 </div></div>
 
-<div id="div_calculadora">Cálculo de inercias:
+<div id="div_calculadora">CÃ¡lculo de inercias:
       <table><tr><td>a:</td><td><input name="iner_a" id="iner_a" placeholder="Text input" value="1" type="text" pattern="-?\d+((,|.)\d{0,15})?" /></td></tr>
       <tr><td>b:</td><td><input name="iner_b" id="iner_b" placeholder="Text input" value="1" type="text" pattern="-?\d+((,|.)\d{0,15})?" /></td></tr>
       <tr><td>e:</td><td><input name="iner_e" id="iner_e" placeholder="Text input" value="0.1" type="text" pattern="-?\d+((,|.)\d{0,15})?" /></td></tr></table>
 <!--<div c<table><tr><td>a:</td><td><input name="iner_a" id="iner_a" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
       <tr><td>b:</td><td><input name="iner_b" id="iner_b" placeholder="Text input" value="1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr>
       <tr><td>e:</td><td><input name="iner_e" id="iner_e" placeholder="Text input" value="0.1" type="text" pattern="\d+((,|.)\d{0,15})?" /></td></tr></table>-->
-<div class="botonera_calc"><a href="#" onclick="inercia_calcular(0);return false;" title="calcular sección rectangular"><span class="boton_calc_rect botones_calc"></span></a> <a href="#" onclick="inercia_calcular(1);return false;" title="calcular sección circular"><span class="boton_calc_circ botones_calc"></span></a>
+<div class="botonera_calc"><a href="#" onclick="inercia_calcular(0);return false;" title="calcular secciÃ³n rectangular"><span class="boton_calc_rect botones_calc"></span></a> <a href="#" onclick="inercia_calcular(1);return false;" title="calcular secciÃ³n circular"><span class="boton_calc_circ botones_calc"></span></a>
 <ul><li>Usar e = 0 para seciones macizas</li><li>Usar e > 0 para seciones huecas gruesas.</li><li>Usar e < 0 para seciones huecas delgadas.</li></ul></div>.
 </div>
 
@@ -81,19 +85,19 @@ Ejemplos de secciones EN 10034:
       <label><input id="radio_choice_tipo_viga_2a" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" checked="checked" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span></span><span class="cont_texto simpl">a - Dos apoyos</span></label><br />
       <label><input id="radio_choice_tipo_viga_2b" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span></span><span class="cont_texto simpl">b - Empotrada a la izquierda (sin apoyos)</span></label><br />
       <label><input id="radio_choice_tipo_viga_2c" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto simpl">c - Empotrada a la derecha (sin apoyos)</span></label><br />
-      <label><input id="radio_choice_tipo_viga_2d" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos rotl"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span></span><span class="cont_texto comps">d - Empotrada a la izquierda con varios apoyos y rótulas (elegir subtipo &#8628;)</span></label><br />
-      <label><input id="radio_choice_tipo_viga_2e" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos rotl"></span><span class="dibujos empD"></span></span><span class="cont_texto comps">e - Empotrada a la derecha con varios apoyos y rótulas (elegir subtipo &#8628;)</span></label><br />
-      <label><input id="radio_choice_tipo_viga_2f" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos rotl"></span><span class="dibujos appy"></span></span><span class="cont_texto comps">f - Sin empotramientos y con varios apoyos y rótulas (elegir subtipo &#8628;)</span></label><br />
-      <label><input id="radio_choice_tipo_viga_2g" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos rotl"></span><span class="dibujos viga"></span><span class="dibujos rotl"></span><span class="dibujos empD"></span></span><span class="cont_texto comps">g - Empotrada a los dos lados con varios apoyos y rótulas (elegir subtipo &#8628;)</span></label><br />
-      <label><input id="radio_choice_tipo_viga_2h" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span></span><span class="cont_texto hiper">h - Empotrada a la izquierda con varios apoyos y rótulas (hiperestática)</span></label><br />
-      <label><input id="radio_choice_tipo_viga_2i" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto hiper">i - Empotrada a la derecha con varios apoyos (hiperestática)</span></label><br />
-      <label><input id="radio_choice_tipo_viga_2j" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span></span><span class="cont_texto hiper">j - Sin empotramientos y con varios apoyos (hiperestática)</span></label><br />
-      <label><input id="radio_choice_tipo_viga_2k" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto hiper">k - Empotrada a los dos lados con varios apoyos (hiperestática)</span></label>
+      <label><input id="radio_choice_tipo_viga_2d" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos rotl"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span></span><span class="cont_texto comps">d - Empotrada a la izquierda con varios apoyos y rÃ³tulas (elegir subtipo &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2e" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos rotl"></span><span class="dibujos empD"></span></span><span class="cont_texto comps">e - Empotrada a la derecha con varios apoyos y rÃ³tulas (elegir subtipo &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2f" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos rotl"></span><span class="dibujos appy"></span></span><span class="cont_texto comps">f - Sin empotramientos y con varios apoyos y rÃ³tulas (elegir subtipo &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2g" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos rotl"></span><span class="dibujos viga"></span><span class="dibujos rotl"></span><span class="dibujos empD"></span></span><span class="cont_texto comps">g - Empotrada a los dos lados con varios apoyos y rÃ³tulas (elegir subtipo &#8628;)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2h" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span></span><span class="cont_texto hiper">h - Empotrada a la izquierda con varios apoyos y rÃ³tulas (hiperestÃ¡tica)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2i" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto hiper">i - Empotrada a la derecha con varios apoyos (hiperestÃ¡tica)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2j" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos appy"></span></span><span class="cont_texto hiper">j - Sin empotramientos y con varios apoyos (hiperestÃ¡tica)</span></label><br />
+      <label><input id="radio_choice_tipo_viga_2k" name="radio_choice_tipo_viga" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span class="cont_dibujos"><span class="dibujos empI"></span><span class="dibujos viga"></span><span class="dibujos appy"></span><span class="dibujos viga"></span><span class="dibujos empD"></span></span><span class="cont_texto hiper">k - Empotrada a los dos lados con varios apoyos (hiperestÃ¡tica)</span></label>
     </div></fieldset>
   </form>
   <div id="div_subtipo_viga"> <form name="subtipo_viga">
     <fieldset data-role="controlgroup">
-      <legend>Subtipo de viga (sólo para d, e, f y g):</legend><div class="tabla_tipo_vigas">
+      <legend>Subtipo de viga (sÃ³lo para d, e, f y g):</legend><div class="tabla_tipo_vigas">
       <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2a" type="radio" onClick="actualizar_gui_tipo();vista_previa()" checked="checked" /><span id="label_subtipo_viga_2a">-</span></label><br />
       <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2b" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2b">-</span></label><br />
       <label><input name="radio_choice_subtipo_viga" id="radio_choice_subtipo_viga_2c" type="radio" onClick="actualizar_gui_tipo();vista_previa()" /><span id="label_subtipo_viga_2c">-</span></label><br />
@@ -104,13 +108,13 @@ Ejemplos de secciones EN 10034:
     </div></fieldset>
   </form></div>
   <div id="gui_apoyos_general">
-  <h2>Posición de los apoyos</h2>
+  <h2>PosiciÃ³n de los apoyos</h2>
     <div id="gui_apoyos_fijos">
       <form name="txt_apoyos">
         <div class="tabla_form_2filas form_app_var">
           <div class="fila_form_2filas">
             <div class="form_num"></div>
-            <div class="form_txt"><b>Posición</b></div>
+            <div class="form_txt"><b>PosiciÃ³n</b></div>
             <div class="form_txt"><b>Altura</b></div>
           </div>
         <div class="fila_form_2filas" id="apoyos_fila_0"><div class="form_txt"><span id="etiqueta_distancia_horz_0">Apoyo 1:</span></div>
@@ -139,7 +143,7 @@ Ejemplos de secciones EN 10034:
         <div class="tabla_form_2filas form_app_var">
           <div class="fila_form_2filas">
             <div class="form_num"></div>
-            <div class="form_txt"><b>Posición</b></div>
+            <div class="form_txt"><b>PosiciÃ³n</b></div>
             <div class="form_txt"><b>Descenso</b></div>
             <div class="form_num"></div>
           </div>
@@ -156,7 +160,12 @@ Ejemplos de secciones EN 10034:
   </div>
 
 <br><br><br>
-<!-- anuncio -->
+<!--
+	<div>
+<script type="text/javascript" src="https://adbit.biz/js/show_ads.js"></script>
+<div class="adbit-display-ad" data-adspace-id="2A7B64D2AB"></div>
+	</div>
+-->
 <h2>Cargas</h2>
 
 <h3><span class="h3_cp">&#11015;</span>Cargas puntuales</h3>
@@ -165,7 +174,7 @@ Ejemplos de secciones EN 10034:
       <div class="fila_form_2filas">
         <div class="form_num"></div>
         <div class="form_txt"><b>Magnitud</b></div>
-        <div class="form_txt"><b>Posición</b></div>
+        <div class="form_txt"><b>PosiciÃ³n</b></div>
         <div class="form_num"></div>
       </div>
       <div class="fila_form_2filas">
@@ -194,7 +203,7 @@ Ejemplos de secciones EN 10034:
       <div class="fila_form_2filas">
         <div class="form_num"></div>
         <div class="form_txt"><b>Magnitud</b></div>
-        <div class="form_txt"><b>Posición</b></div>
+        <div class="form_txt"><b>PosiciÃ³n</b></div>
         <div class="form_num"></div>
       </div>
       <div class="fila_form_2filas">
@@ -223,8 +232,8 @@ Ejemplos de secciones EN 10034:
       <div class="fila_form_2filas">
         <div class="form_num"></div>
         <div class="form_txt"><b>Magnitud</b></div>
-        <div class="form_txt"><b>Posición inicio</b></div>
-        <div class="form_txt"><b>Posición fin</b></div>
+        <div class="form_txt"><b>PosiciÃ³n inicio</b></div>
+        <div class="form_txt"><b>PosiciÃ³n fin</b></div>
         <div class="form_num"></div>
       </div>
       <div class="fila_form_2filas">
@@ -260,8 +269,8 @@ Ejemplos de secciones EN 10034:
         <div class="form_num"></div>
         <div class="form_txt"><b>Magnitud inicio</b></div>
         <div class="form_txt"><b>Magnitud fin</b></div>
-        <div class="form_txt"><b>Posición inicio</b></div>
-        <div class="form_txt"><b>Posición fin</b></div>
+        <div class="form_txt"><b>PosiciÃ³n inicio</b></div>
+        <div class="form_txt"><b>PosiciÃ³n fin</b></div>
         <div class="form_num"></div>
       </div>
       <div class="fila_form_2filas">
@@ -292,6 +301,8 @@ Ejemplos de secciones EN 10034:
 <h2>Esquema de cargas y elementos</h2>
 <div id="vista_previa">
 </div>
+<div id="res_graf_descargar" class="descargar"><span class="descargar"><a href="#" onclick="download_file('xvigas_enunciado.svg', dynamic_text_vista_previa() ); return false;"><span class="disquete">&#128190;</span> Descargar</a></span><!---->
+</div>
 
 
 
@@ -301,44 +312,47 @@ Ejemplos de secciones EN 10034:
 <h2>Resultados</h2>
 <p><a class="btn_calcular" href="#" onclick="calcular(); return false;"><b>Calcular</b></a></p>
 
-  <div id="resultado">Cálculo no realizado, pulse 'Calcular' para proceder a realizarlo.
+  <div id="resultado">CÃ¡lculo no realizado, pulse 'Calcular' para proceder a realizarlo.
   </div>
   <div id="zona_resultados">
   <!-- <h3>Datos</h3>
-   <div id="res_datos"><span>Cálculo no realizado</span>
+   <div id="res_datos"><span>CÃ¡lculo no realizado</span>
   </div>-->
   <h3>Reacciones en apoyos</h3>
-  <div id="res_apoyos"><span>Cálculo no realizado</span>
+  <div id="res_apoyos"><span>CÃ¡lculo no realizado</span>
   </div>
-  <h3>Gráficos</h3>
+  <h3>GrÃ¡ficos</h3>
   <h4>Cortantes</h4>
-  <div id="res_graf_crt"><span>Cálculo no realizado</span>
+  <div id="res_graf_crt"><span>CÃ¡lculo no realizado</span>
   </div>
   <h4>Flectores</h4>
-  <div id="res_graf_flc"><span>Cálculo no realizado</span>
+  <div id="res_graf_flc"><span>CÃ¡lculo no realizado</span>
   </div>
   <h4>Giros</h4>
-  <div id="res_graf_gir"><span>Cálculo no realizado</span>
+  <div id="res_graf_gir"><span>CÃ¡lculo no realizado</span>
   </div>
   <h4>Deformada</h4>
-  <div id="res_graf_def"><span>Cálculo no realizado</span>
+  <div id="res_graf_def"><span>CÃ¡lculo no realizado</span>
+  </div>
+  <h4>Descargar diagramas</h4>
+  <div id="res_graf_descargar_resultados"><ul class="descargar"><li><a href="#" onclick="download_file('xvigas_cortantes.svg', dynamic_text_cortantes() ); return false;"><span class="disquete">&#128190;</span> Cortantes</a></li><li><a href="#" onclick="download_file('xvigas_flectores.svg', dynamic_text_flectores() ); return false;"><span class="disquete">&#128190;</span> Flectores</a></li><li><a href="#" onclick="download_file('xvigas_giros.svg', dynamic_text_giros() ); return false;"><span class="disquete">&#128190;</span> Giros</a></li><li><a href="#" onclick="download_file('xvigas_flechas.svg', dynamic_text_flechas() ); return false;"><span class="disquete">&#128190;</span> Flechas</a></li></ul>
   </div>
   <h3>Campos</h3>
-  <div id="res_campos"><span>Cálculo no realizado</span>
+  <div id="res_campos"><span>CÃ¡lculo no realizado</span>
   </div>
   <h3>Funciones</h3>
-  <div id="res_funciones"><span>Cálculo no realizado</span>
+  <div id="res_funciones"><span>CÃ¡lculo no realizado</span>
   </div>
   <h3>Valores en extremos de campos</h3>
-  <div id="res_valores"><span>Cálculo no realizado</span>
+  <div id="res_valores"><span>CÃ¡lculo no realizado</span>
   </div>
-  <h3>Valores máximos</h3>
-  <div id="res_maxmin"><span>Cálculo no realizado</span>
+  <h3>Valores mÃ¡ximos</h3>
+  <div id="res_maxmin"><span>CÃ¡lculo no realizado</span>
   </div>
-  <h3>Cálculo intermedio</h3>
-  <div id="calc_int"><span>Cálculo no realizado</span>
+  <h3>CÃ¡lculo intermedio</h3>
+  <div id="calc_int"><span>CÃ¡lculo no realizado</span>
   </div>
-  <div id="calc_ctes"><span>Cálculo no realizado</span>
+  <div id="calc_ctes"><span>CÃ¡lculo no realizado</span>
   </div>
   <h3>Consultar resultados por puntos</h3>
   <div id="dar_valores">
@@ -354,10 +368,10 @@ Ejemplos de secciones EN 10034:
             <label><input type="checkbox" name="simb" id="dar_valores_derecha" value="" />derecha</label>
           </div>
           <!--<div class="form_res">
-            <label><input type="checkbox" name="simb" id="dar_valores_inercia" value="" />Inercia. simbólica</label>
+            <label><input type="checkbox" name="simb" id="dar_valores_inercia" value="" />Inercia. simbÃ³lica</label>
           </div>
           <div class="form_res">
-            <label><input type="checkbox" name="simb" id="dar_valores_elasticidad" value="" />Elast. simbólica</label>
+            <label><input type="checkbox" name="simb" id="dar_valores_elasticidad" value="" />Elast. simbÃ³lica</label>
           </div>-->
           <div class="form_btn">
             <a class="btn nueva" href="#" onclick="dar_valor_punto();return false;"><b>Consultar</b></a><!--&#10004;-->
@@ -375,15 +389,15 @@ Ejemplos de secciones EN 10034:
     </div>-->
   </form>
   </div><!--Fin dar valores-->
-  </div><!-- Fin del trozo que debe desaparecer cuando no hay cálculo.-->
+  </div><!-- Fin del trozo que debe desaparecer cuando no hay cÃ¡lculo.-->
 
 
 <hr>
   <footer>
-   <p>XVIGAS - Web app · Licencia GPLv3 · 2015 · pwnage2apps<br>
+   <p>XVIGAS - Web app Â· Licencia GPLv3 Â· 2015 Â· pwnage2apps<br>
 Donaciones Bitcoin: 195CBoywruk4pfMDSp1Nr1yCojqf8jxZaC<br>
-   Contacto: <ul><li>Bitmessage: BM-2cT6X8N1us2jqkknP1AnjcHcCsZf5szUHY</li><li>Correo electrónico: Siento tener que escribirlo así, pero quiero evitar el correo basura. En el medio va la arroba, antes de ella va el texto "pwnage", el dígito DOS (en número, no en letras) y luego "APP" en minúsculas, y finalmente una S minúscula. Después de la arroba va lo mismo que hay antes pero añadiendo un punto, la plabra "ESY" en minúscula, y la extensión de España "ES" separada con otro punto. Si tienes dudas mira la dirección de esta página. Siento tener que ponerlo así, pero no tengo otro remedio si quiero evitar el correo basura y mantener una cierta accesibilidad.</li></ul>
-<p>Agradecimiento: <a href="http://www.hostinger.es/" target="_blank"><img src="http://www.hostinger.es/banners/es/hostinger-80x15-powered-1.gif" alt="Hosting Web" width="80" height="15" /></a></p>
+   Contacto: <ul><li>Bitmessage: BM-2cT6X8N1us2jqkknP1AnjcHcCsZf5szUHY</li><li>Correo electrÃ³nico: Siento tener que escribirlo asÃ­, pero quiero evitar el correo basura. En el medio va la arroba, antes de ella va el texto "pwnage", el dÃ­gito DOS (en nÃºmero, no en letras) y luego "APP" en minÃºsculas, y finalmente una S minÃºscula. DespuÃ©s de la arroba va lo mismo que hay antes pero aÃ±adiendo un punto, la plabra "ESY" en minÃºscula, y la extensiÃ³n de EspaÃ±a "ES" separada con otro punto. Si tienes dudas mira la direcciÃ³n de esta pÃ¡gina. Siento tener que ponerlo asÃ­, pero no tengo otro remedio si quiero evitar el correo basura y mantener una cierta accesibilidad.</li></ul>
+<!--<p>Agradecimiento: <a href="http://www.hostinger.es/" target="_blank"><img src="http://www.hostinger.es/banners/es/hostinger-80x15-powered-1.gif" alt="Hosting Web" width="80" height="15" /></a></p>-->
   </footer>
 </body>
 </html>

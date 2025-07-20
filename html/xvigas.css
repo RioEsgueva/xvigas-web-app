@@ -74,7 +74,7 @@ h1 {
   position: relative;
   top: -0.125em;
   margin-right: 0.125em;
-  background: url(xvigas_sprites.svg) -200px -35px;
+  background: url(xvigas_sprites.png) -200px -35px;
   display: inline-block;
 }
 
@@ -144,6 +144,47 @@ nav a:hover{
   color:#502130;
   text-decoration: underline;
 }
+
+
+
+
+span.descargar a, ul.descargar a{
+  text-decoration: none;
+}
+
+span.descargar{
+  display: inline;
+  background: #efe0c5;
+  margin: 0.125em;
+  margin-bottom: 2.5em;
+  padding: 0.5em;
+  font-weight: 900;
+}
+
+div.descargar{
+  margin-bottom: 2.5em;
+}
+
+ul.descargar{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.descargar li{
+  display: inline;
+  background: #efe0c5;
+  margin: 0.125em;
+  padding: 0.5em;
+  font-weight: 900;
+}
+
+.disquete {
+  font-size: 1.2em;
+  text-align: right;
+}
+
+
 
 .inicio{
   margin: 2em;
