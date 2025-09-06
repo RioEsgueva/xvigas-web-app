@@ -454,7 +454,7 @@ var tam = tam_matriz_calculo;
 //Da el campo donde cae una cota a partir de la distancia a la que se encuentra.
 function campo_distancia(dist, dcmp){
  var i = 1;
- var ncmp=dcmp.lenght - 1;
+ var ncmp=dcmp.length - 1;
  if(dist == dcmp[ncmp]){
   i = ncmp;
  }else{
@@ -1382,7 +1382,7 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
   }
   //Cargas puntuales
   for(j in dcp){
-   if(dcp[j] < dcmp[i+1]){
+   if(dcp[j] < dcmp[i+1] && dcp[j]>=0){
     tmp = mcp[j];
     crt[i][0] -= tmp;
     flc[i][1] -= tmp;
@@ -1400,7 +1400,7 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
   }
   //Momentos
   for(j in mmp){
-   if(dmp[j] < dcmp[i+1]){
+   if(dmp[j] < dcmp[i+1] && dmp[j]>=0){
     flc[i][0] -= mmp[j];
     gir[i][1] -= mmp[j];
     def[i][2] -= mmp[j]/2;
@@ -1415,6 +1415,9 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
   for(j in icc){
    if(icc[j] < dcmp[i+1]){
     tmp=icc[j];
+    if(tmp<0){
+     tmp=0;
+    }
     factor=mcc[j];//código optimizado para calcular más rápido
     crt[i][1]-=factor;
     gir[i][3]-=factor/6;
@@ -1437,6 +1440,9 @@ function funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp
    }
    if(fcc[j] < dcmp[i+1]){
     tmp=fcc[j];
+    if(tmp<0){
+     tmp=0;
+    }
     factor= -mcc[j];//código optimizado para calcular más rápido
     crt[i][1]-=factor;
     gir[i][3]-=factor/6;
@@ -1665,101 +1671,49 @@ var intermedio_txt_ctes = ""; // Texto para constantes de giro y flechas
 
 
 
+// Esta función añade distancias a la lista de campos, no ordena, solo revisa que no se repitan y estén entre el límite inferior (0 normalmente) y el superior.
+function filtrar_y_agregar_distancias(lista_distancias_actual, lista_distancias_candidatas, limite_inferior, limite_superior){
+ var i, j;
+ for(i=0;  i < lista_distancias_candidatas.length; i++){ // Se recorre la lista de distancias que se podrían añadir
+  var no_repetida = 1; // Se supone inicialmente que no está repetida
+  for(j=0; j < lista_distancias_actual.length; j++){ // Se revisa si está repetida con la lista inicial
+   //alert("probando:" + lista_distancias_candidatas[i] + " y " + lista_distancias_actual[j]);
+   if(lista_distancias_candidatas[i] == lista_distancias_actual[j]){
+    no_repetida = 0;
+   }
+  }
+  if(no_repetida){ // Si no está repe se añade a la lista
+   if(    lista_distancias_candidatas[i] < limite_superior   &&   lista_distancias_candidatas[i] > limite_inferior   ){ // Aunque antes se revisa si está entre los límites
+    lista_distancias_actual.push(lista_distancias_candidatas[i]);
+   }
+  }
+ }
+ return lista_distancias_actual; // TEMAZO: Lovechild - Liberta (Moonman Remix)
+}
 
-function campos(apoyos_d, lng, dcp, dmp, icc, fcc, icv, fcv){
- var dcmp = [0, lng];
- for(j in apoyos_d){ //c puntuales
-  var tmp = apoyos_d[j];
-  var no_repetida = 1;
-  for(i in dcmp){
-   if(dcmp[i] == tmp){
-    no_repetida = 0;
-   }
-  }
-  if(no_repetida){
-   dcmp.push(tmp);
-  }
- }
- for(j in dcp){ //cargas puntuales
-  var tmp = dcp[j];
-  var no_repetida = 1;
-  for(i in dcmp){
-   if(dcmp[i] == tmp){
-    no_repetida = 0;
-   }
-  }
-  if(no_repetida){
-   dcmp.push(tmp);
-  }
- }
- for(j in dmp){ //cargas puntuales
-  var tmp = dmp[j];
-  var no_repetida = 1;
-  for(i in dcmp){
-   if(dcmp[i] == tmp){
-    no_repetida = 0;
-   }
-  }
-  if(no_repetida){
-   dcmp.push(tmp);
-  }
- }
- for(j in icc){ //cargas puntuales
-  var tmp = icc[j];
-  var no_repetida = 1;
-  for(i in dcmp){
-   if(dcmp[i] == tmp){
-    no_repetida = 0;
-   }
-  }
-  if(no_repetida){
-   dcmp.push(tmp);
-  }
-  tmp = fcc[j];
-  no_repetida = 1;
-  for(i in dcmp){
-   if(dcmp[i] == tmp){
-    no_repetida = 0;
-   }
-  }
-  if(no_repetida){
-   dcmp.push(tmp);
-  }
- }
- for(j in icv){ //cargas puntuales
-  var tmp = icv[j];
-  var no_repetida = 1;
-  for(i in dcmp){
-   if(dcmp[i] == tmp){
-    no_repetida = 0;
-   }
-  }
-  if(no_repetida){
-   dcmp.push(tmp);
-  }
-  tmp = fcv[j];
-  no_repetida = 1;
-  for(i in dcmp){
-   if(dcmp[i] == tmp){
-    no_repetida = 0;
-   }
-  }
-  if(no_repetida){
-   dcmp.push(tmp);
-  }
- }
- dcmp.sort(function(a, b){return a-b});
-    //alert(ncmp);
- // Mostrar resultados
+//Esta función genera una lista de distancias que delimintan los campos, es decir, aquellos tramos donde las funciones tienen una misma expresión.
+function campos(apoyos_distancias, lng, dcp, dmp, icc, fcc, icv, fcv){
+ var distancias_campos = [0, lng]; // Se añaden los extremos de la viga como mínimo
+ // Ir añadiendo las listas de apoyos o cargas:
+ distancias_campos = filtrar_y_agregar_distancias(distancias_campos, apoyos_distancias, 0, lng); //apoyos
+ distancias_campos = filtrar_y_agregar_distancias(distancias_campos, dcp, 0, lng); //cargas puntuales
+ distancias_campos = filtrar_y_agregar_distancias(distancias_campos, dmp, 0, lng); //momentos puntuales
+ distancias_campos = filtrar_y_agregar_distancias(distancias_campos, icc, 0, lng); //cargas repartidas uniformes inicio
+ distancias_campos = filtrar_y_agregar_distancias(distancias_campos, fcc, 0, lng); //cargas repartidas uniformes fin
+ distancias_campos = filtrar_y_agregar_distancias(distancias_campos, icv, 0, lng); //cargas repartidas lineales inicio
+ distancias_campos = filtrar_y_agregar_distancias(distancias_campos, fcv, 0, lng); //cargas repartidas lineales fin
+ // Ordenar la lista:
+ distancias_campos.sort(function(a, b){return a-b});
+ // Mostrar resultados:
  var texto = "<table><tr><th>" + txt_res[CAMPO] + "</th><th>" + txt_res[INICIO] + "</th><th>" + txt_res[FIN] + "</th></tr>";
- for(i = 0; i < dcmp.length - 1; i ++){
-  texto = texto + "<tr><td>" + i + "</td><td>" + dcmp[i] + "</td><td>" + dcmp[i+1] + "</td></tr>";
+ for(i = 0; i < distancias_campos.length - 1; i ++){
+  texto = texto + "<tr><td>" + i + "</td><td>" + distancias_campos[i] + "</td><td>" + distancias_campos[i+1] + "</td></tr>";
  }
  texto = texto + "</table>";
  document.getElementById('res_campos').innerHTML = texto;
- //dcmp[0] = ncmp;
- dcmp_js = dcmp; // Se guarda en la variable global
- return dcmp;
+ //distancias_campos[0] = ncmp;
+ dcmp_js = distancias_campos; // Se guarda en la variable global
+ return distancias_campos;
 }
 
  // Esto no lo quito:
@@ -3107,6 +3061,137 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
  graf(lng, tipo, subtipo, apoyos_d, dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d, max_abs_c, max_abs_m, max_abs_g, max_abs_d); //
  document.getElementById('resultado').innerHTML = FRASE_CALCULO_CONCL;
  document.getElementById('zona_resultados').style.display = '';
+}
+
+
+
+/* Test unitarios, bueno... algo que intenta parecerse a ellos:    */
+
+
+function comprobar_campos_y_funciones_iguales(lista_campos_a_comprobar, lista_funciones_a_comprobar, lista_resultados_teoricos){
+ if( !comprobar_vectores_iguales(lista_campos_a_comprobar, lista_resultados_teoricos[3])){
+  //alert("fallo en campos " + i + "   TEST_apoyos_f[0]=" + TEST_resultado_calcular_2apoyos[0] + " (" + matriz_de_pruebas[i][17][3].length + ")");
+  alert("fallo en campos.");
+  return false;
+ }
+ for(i=0; i<4; i++){
+  if( !comprobar_matrices_iguales(lista_funciones_a_comprobar[i], lista_resultados_teoricos[i+4])){
+   return false;//iguales = 0;
+  }
+ }
+ if( !comprobar_vectores_iguales(lista_funciones_a_comprobar[4], lista_resultados_teoricos[8])){
+  alert("fallo en vector 0 " + lista_funciones_a_comprobar[4] + " (" + lista_resultados_teoricos[8] + ")");
+  return false;//iguales = 0;
+ }
+ if( !comprobar_vectores_iguales(lista_funciones_a_comprobar[5], lista_resultados_teoricos[9])){
+  alert("fallo en vector 1 " + lista_funciones_a_comprobar[5] + " (" + lista_resultados_teoricos[8] + ")");
+  return false;//iguales = 0;
+ }
+ return true;//
+}
+
+function comprobar_matrices_iguales(matriz_A, matriz_B){
+ if(matriz_A.length == matriz_B.length){
+  for(i in matriz_A){
+   if( !comprobar_vectores_iguales(matriz_A[i],matriz_B[i])){
+    return false;
+   }
+  }
+  return true;
+ }
+ return false;
+}
+
+function comprobar_vectores_iguales(vector_A, vector_B){
+ if(vector_A.length == vector_B.length){
+  for(i in vector_A){
+   if(vector_A[i] != vector_B[i]){
+    return false;
+   }
+  }
+  return true;
+ }
+ return false;
+}
+
+function autocomprobar(){
+ var TEST_contar_pruebas = 0;
+ var i; // TEMAZO: Jaccot vs Julius MC ‎- Wonderful (Original Mix)
+
+// calcular_2apoyos(lng, cota_inicio, cota_fin, apoyoA, apoyoB, mag_rot_izq, mag_rot_der, cgt, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_cargas, str1, str2)
+//   return [sumaA, sumaB, cgt, texto1, texto2];
+// campos(apoyos_d, lng, dcp, dmp, icc, fcc, icv, fcv)
+//   return dcmp;
+// funcion(lng, tipo, subtipo, femptr, memptr, dapp, mapp, yapp, dcmp, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, cte_gir_nueve, cte_def_nueve, cortes)
+//   return [crt, flc, gir, def, ctes_gir, ctes_def];
+
+// longitud, corte izq, corte der, apoyos_dist[lista de apoyos], apoyos_y[], mcp[campos[grados_polinomio]], dcp[], mmp[], dmp[], mcc[], icc[], fcc[], acv[], bcv[], icv[], fcv[campos[grados_polinomio]], ctes_giro[campos], ctes_flecha[campos]
+ var matriz_de_pruebas = [
+  [1,0,1,[0,1], [0,0],   [48],[0.5], [], [],  [], [], [],  [],[],[],[],   [],  [24,24,48,[0,0.5,1],  [[24,0,0],[-24,0,0]],  [[0,24,0,0],[24,-24,0,0]],  [[0,0,12,0,0],[-6,24,-12,0,0]],  [[0,0,0,4,0,0],[1,-6,12,-4,0,0]] , [-3,-3],[0,0] ]  ],
+  [1,0,1,[0,1], [0,0],   [1],[0],    [], [],  [], [], [],  [],[],[],[],   [],  [1,0,1,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [1],[1],    [], [],  [], [], [],  [],[],[],[],   [],  [0,1,1,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [1],[-1],   [], [],  [], [], [],  [],[],[],[],   [],  [0,0,0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [1],[2],    [], [],  [], [], [],  [],[],[],[],   [],  [0,0,0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
+
+  [1,0,1,[0,1], [0,0],   [96],[0.5], [], [],  [], [], [],  [],[],[],[],   [],  [48,48,96,[0,0.5,1],  [[48,0,0],[-48,0,0]],  [[0,48,0,0],[48,-48,0,0]],  [[0,0,24,0,0],[-12,48,-24,0,0]],  [[0,0,0,8,0,0],[2,-12,24,-8,0,0]] , [-6,-6],[0,0] ], ],
+  [1,0,1,[0,1], [0,0],   [],[],   [24],[0.5], [], [], [],  [],[],[],[],   [],  [24,-24,0,[0,0.5,1],  [[24,0,0],[24,0,0]],  [[0,24,0,0],[24,-24,0,0]],  [[0,0,12,0,0],[12,-24,12,0,0]],  [[0,0,0,4,0,0],[-3,12,-12,4,0,0]] , [-1,-1],[0,0] ]  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [24],[0],   [], [], [],  [],[],[],[],   [],  [24,-24,0,[0,1],  [[24,0,0]],  [[24,-24,0,0]],  [[0,-24,12,0,0]],  [[0,0,-12,4,0,0]] , [8],[0] ]  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [24],[1],   [], [], [],  [],[],[],[],   [],  [24,-24,0,[0,1],  [[24,0,0]],  [[0,24,0,0]],   [[0,0,12,0,0]],    [[0,0,0,4,0,0]] , [-4],[0] ]  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [24],[-1],  [], [], [],  [],[],[],[],   [],  [0,0,0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
+
+  [1,0,1,[0,1], [0,0],   [],[],   [24], [2],     [],[],[],  [],[],[],[],  [],  [0,0,0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [192],[0.5], [], [],    [],[],[],  [],[],[],[],  [],  [96,96,192,[0,0.5,1],  [[96,0,0],[-96,0,0]],  [[0,96,0,0],[96,-96,0,0]],  [[0,0,48,0,0],[-24,96,-48,0,0]],  [[0,0,0,16,0,0],[4,-24,48,-16,0,0]] , [-12,-12],[0,0] ], ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[0], [1],    [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[-1],[1],    [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[0], [2],    [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[], [24],[0.25],[0.75], [],[],[],[],  [],  [6,6,12,[0,0.25,0.75,1],  [[6,0,0],[12,-24,0],[-6,0,0]],  [[0,6,0,0],[-0.75,12,-12,0],[6,-6,0,0]],  [[0,0,6,0,0],[0.0625,-0.75,6,-4,0],[-1.625,6,-3,0,0]],  [[0,0,6,0,0],[0.0625,-0.75,6,-4,0],[-1.625,6,-3,0,0]] , [ -0.68750, -0.68750, -0.68750] , [0,0,0] ]  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[0.5], [2],  [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ]/*,
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [24],[-1], [0.5],  [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [24],[-1], [2],  [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ]*/
+ ];
+ for(i in matriz_de_pruebas){
+  var TEST_resultado_calcular_2apoyos = calcular_2apoyos(
+    matriz_de_pruebas[i][0], matriz_de_pruebas[i][1], matriz_de_pruebas[i][2], // Longitudes y cortes
+    matriz_de_pruebas[i][3][0], matriz_de_pruebas[i][3][1], // Distancias de apoyos
+    matriz_de_pruebas[i][4][0], matriz_de_pruebas[i][4][1], 0, // Magnitudes heredadas y carga total
+    matriz_de_pruebas[i][5], matriz_de_pruebas[i][6], // Cargas puntuales
+    matriz_de_pruebas[i][7], matriz_de_pruebas[i][8], // Momentos puntuales
+    matriz_de_pruebas[i][9], matriz_de_pruebas[i][10], matriz_de_pruebas[i][11], // Cargas repartidas uniformes
+    matriz_de_pruebas[i][12], matriz_de_pruebas[i][13], matriz_de_pruebas[i][14], matriz_de_pruebas[i][15], // Cargas repartidas linealmente variables
+    matriz_de_pruebas[i][16], txt_may[APOYO] + " 1", txt_may[APOYO] + " 2" // Texto (no comprobado)
+  );
+  var TEST_resultado_campos = campos(matriz_de_pruebas[i][3], matriz_de_pruebas[i][0], matriz_de_pruebas[i][6], matriz_de_pruebas[i][8], matriz_de_pruebas[i][10], matriz_de_pruebas[i][11], matriz_de_pruebas[i][14], matriz_de_pruebas[i][15]);
+  var TEST_resultado_funcion = funcion(//alert("prueba" + matriz_de_pruebas[i][3][0]);
+    matriz_de_pruebas[i][0], 0, 0, 0, 0,
+    matriz_de_pruebas[i][3], TEST_resultado_calcular_2apoyos, matriz_de_pruebas[i][4],
+    TEST_resultado_campos,
+    matriz_de_pruebas[i][5], matriz_de_pruebas[i][6],
+    matriz_de_pruebas[i][7], matriz_de_pruebas[i][8],
+    matriz_de_pruebas[i][9], matriz_de_pruebas[i][10], matriz_de_pruebas[i][11],
+    matriz_de_pruebas[i][12], matriz_de_pruebas[i][13], matriz_de_pruebas[i][14], matriz_de_pruebas[i][15],
+    0, 0, [0,matriz_de_pruebas[i][0]]
+  );
+if(i == 3 || i == 2){
+    alert("campos (" + TEST_resultado_campos + ") funciones q(" + TEST_resultado_funcion[0] + ") funciones f(" + TEST_resultado_funcion[0] + ") funciones g(" + TEST_resultado_funcion[0] + ") funciones f(" + TEST_resultado_funcion[0] + ") funciones 4(" + TEST_resultado_funcion[0] + ") funciones 5(" + TEST_resultado_funcion[0] + ")");
+}
+  //alert("Comprobando " + TEST_resultado_funcion.length + "__" + TEST_resultado_funcion[0].length + "__" + TEST_resultado_funcion[0][0].length + ".");
+  //alert("Comprobando " + matriz_de_pruebas[i][17].length + "__" + matriz_de_pruebas[i][17][4].length + "__" + matriz_de_pruebas[i][17][4][0].length + ".");
+  if(TEST_resultado_calcular_2apoyos[0] == matriz_de_pruebas[i][17][0]  && TEST_resultado_calcular_2apoyos[1] == matriz_de_pruebas[i][17][1] && TEST_resultado_calcular_2apoyos[2] == matriz_de_pruebas[i][17][2]){
+   if(comprobar_campos_y_funciones_iguales(TEST_resultado_campos, TEST_resultado_funcion, matriz_de_pruebas[i][17])){
+    TEST_contar_pruebas++;
+   }else{
+    alert("fallo en funciones " + i + ")");
+    //alert("fallo en funciones " + i + "   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][0]  + " (" + matriz_de_pruebas[i][17][4][0][0] + ")   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][0]  + " (" + matriz_de_pruebas[i][17][4][1][0] + ")   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][0]  + " (" + matriz_de_pruebas[i][17][4][1][0] + ")");
+    //alert("fallo en funciones " + i + "   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][0]  + " (" + matriz_de_pruebas[i][17][4][0][0] + ")   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][1]  + " (" + matriz_de_pruebas[i][17][4][0][1] + ")   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][2]  + " (" + matriz_de_pruebas[i][17][4][0][2] + ")");
+   }
+  }else{
+   alert("fallo en calcular_2apoyos " + i + "   TEST_apoyos_f[0]=" + TEST_resultado_calcular_2apoyos[0] + " (" + matriz_de_pruebas[i][17][0] + ")   TEST_apoyos_f[1]=" + TEST_resultado_calcular_2apoyos[1] + " (" + matriz_de_pruebas[i][17][1] + ")   TEST_cgt=" + TEST_resultado_calcular_2apoyos[2] + " (" + matriz_de_pruebas[i][17][2] + ")");
+  }
+ }
+ // TEMAZO: Above & Beyond pres. OceanLab - Satellite (Original Above & Beyond Mix)
+ //if(TEST_contar_pruebas == matriz_de_pruebas.length){
+  alert("Realizadas " + TEST_contar_pruebas + " comprobaciones, todas con éxito.");
+ //}
 }
 
 
