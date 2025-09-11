@@ -903,7 +903,7 @@ function dynamic_text_flectores() {
 }
 
 function dynamic_text_giros() {
- //TEMAZO: Revolution - Raul Lokura
+ //TEMAZO: Raul Lokura - Revolution
  var texto_svg_descargar = document.getElementById('res_graf_gir').innerHTML;
  texto_svg_descargar = texto_svg_descargar.replaceAll("class=\"graf_svg_viga\"", "style=\"fill: #000;stroke: none;\"");
  texto_svg_descargar = texto_svg_descargar.replaceAll("class=\"graf_svg_linea\"", "style=\"stroke: rgb(200,80,20);stroke-width: 2px;\"");
@@ -979,58 +979,27 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
  for(i=0;i<ncmp;i++){
  // Anáslisis de los valores en los extremos de los campos.
  // Si la funciones no son lineales en algunos campos, se analizan después esos casos.
-  if(izq_f[i]>maxm_m){
-   maxm_m=izq_f[i]; maxm=dcmp[i]; cmp_m_max=i;
-  }
-  if(izq_f[i]<minm_m){
-   minm_m=izq_f[i]; minm=dcmp[i]; cmp_m_min=i;
-  }
-  if(der_f[i]>maxm_m){
-   maxm_m=der_f[i]; maxm=dcmp[i+1]; cmp_m_max=i;
-  }
-  if(der_f[i]<minm_m){
-   minm_m=der_f[i]; minm=dcmp[i+1]; cmp_m_min=i;
-  }
   //CORTANTES
-  if(izq_c[i]>maxc_m){
-   maxc_m=izq_c[i]; maxc=dcmp[i]; cmp_c_max=i;
-  }
-  if(izq_c[i]<minc_m){
-   minc_m=izq_c[i]; minc=dcmp[i]; cmp_c_min=i;
-  }
-  if(der_c[i]>maxc_m){
-   maxc_m=der_c[i]; maxc=dcmp[i+1]; cmp_c_max=i;
-  }
-  if(der_c[i]<minc_m){
-   minc_m=der_c[i]; minc=dcmp[i+1]; cmp_c_min=i;
-  }
+  if(izq_c[i] > maxc_m){   maxc_m=izq_c[i]; maxc=dcmp[i];   cmp_c_max=i;  }
+  if(izq_c[i] < minc_m){   minc_m=izq_c[i]; minc=dcmp[i];   cmp_c_min=i;  }
+  if(der_c[i] > maxc_m){   maxc_m=der_c[i]; maxc=dcmp[i+1]; cmp_c_max=i;  }
+  if(der_c[i] < minc_m){   minc_m=der_c[i]; minc=dcmp[i+1]; cmp_c_min=i;  }
+  //FLECTORES
+  if(izq_f[i] > maxm_m){   maxm_m=izq_f[i]; maxm=dcmp[i];   cmp_m_max=i;  }
+  if(izq_f[i] < minm_m){   minm_m=izq_f[i]; minm=dcmp[i];   cmp_m_min=i;  }
+  if(der_f[i] > maxm_m){   maxm_m=der_f[i]; maxm=dcmp[i+1]; cmp_m_max=i;  }
+  if(der_f[i] < minm_m){   minm_m=der_f[i]; minm=dcmp[i+1]; cmp_m_min=i;  }
   //GIROS
-  if(izq_g[i] > maxg_m){
-   maxg_m=izq_g[i]; maxg=dcmp[i]; cmp_g_max=i;
-  }
-  if(izq_g[i] < ming_m){
-   ming_m=izq_g[i]; ming=dcmp[i]; cmp_g_min=i;
-  }
-  if(der_g[i] > maxg_m){
-   maxg_m=der_g[i]; maxg=dcmp[i+1]; cmp_g_max=i;
-  }
-  if(der_g[i] < ming_m){
-   ming_m=der_g[i]; ming=dcmp[i+1]; cmp_g_min=i;
-  }
+  if(izq_g[i] > maxg_m){   maxg_m=izq_g[i]; maxg=dcmp[i];   cmp_g_max=i;  }
+  if(izq_g[i] < ming_m){   ming_m=izq_g[i]; ming=dcmp[i];   cmp_g_min=i;  }
+  if(der_g[i] > maxg_m){   maxg_m=der_g[i]; maxg=dcmp[i+1]; cmp_g_max=i;  }
+  if(der_g[i] < ming_m){   ming_m=der_g[i]; ming=dcmp[i+1]; cmp_g_min=i;  }
   //FLECHAS
-  if(izq_d[i]>maxd_m){
-   maxd_m=izq_d[i]; maxd=dcmp[i]; cmp_d_max=i;
-  }
-  if(izq_d[i]<mind_m){
-   mind_m=izq_d[i]; mind=dcmp[i]; cmp_d_min=i;
-  }
-  if(der_d[i]>maxd_m){
-   maxd_m=der_d[i]; maxd=dcmp[i+1]; cmp_d_max=i;
-  }
-  if(der_d[i]<mind_m){
-   mind_m=der_d[i]; mind=dcmp[i+1]; cmp_d_min=i;
-  }
- }  // F I N   D E   B U S Q U E D A
+  if(izq_d[i] > maxd_m){   maxd_m=izq_d[i]; maxd=dcmp[i];   cmp_d_max=i;  }
+  if(izq_d[i] < mind_m){   mind_m=izq_d[i]; mind=dcmp[i];   cmp_d_min=i;  }
+  if(der_d[i] > maxd_m){   maxd_m=der_d[i]; maxd=dcmp[i+1]; cmp_d_max=i;  }
+  if(der_d[i] < mind_m){   mind_m=der_d[i]; mind=dcmp[i+1]; cmp_d_min=i;  }
+ }  // Fin de la búsqueda en campos lineales
 
 
 
@@ -1283,7 +1252,7 @@ function maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_
  var lng = dcmp[dcmp.length - 1];
  var texto = "<table><tr><th>&nbsp;</th><th>" + txt_min[CORTANTES] + "</th><th>" + txt_min[FLECTORES] + "</th><th>" + txt_min[GIROS] + "</th><th>" + txt_min[FLECHAS] + "</th></tr><tr><td>" + txt_res[POSICION] + "</td><td>" + mostrar_float(max_abs_c_dist, lng) + "</td><td>" + mostrar_float(max_abs_m_dist, lng) + "</td><td>" + mostrar_float(max_abs_g_dist, lng) + "</td><td>" + mostrar_float(max_abs_d_dist, lng) + "</td></tr><tr><td>" + txt_res[VALOR] + "</td><td>" + mostrar_float(max_abs_c,1) + "</td><td>" + mostrar_float(max_abs_m,1) + "</td><td>" + mostrar_float(max_abs_g / ei,1) + "</td><td>" + mostrar_float(max_abs_d / ei,1) + "</td></tr></table>";
  document.getElementById('res_maxmin').innerHTML = texto;
- return [max_abs_c, max_abs_c_dist, max_abs_m, max_abs_m_dist, max_abs_g, max_abs_g_dist, max_abs_d, max_abs_d_dist];
+ return [[max_abs_c, max_abs_c_dist, max_abs_m, max_abs_m_dist, max_abs_g, max_abs_g_dist, max_abs_d, max_abs_d_dist],  [[[minc_m,minc],[maxc_m,maxc]], [[minm_m,minm],[maxm_m,maxm]], [[ming_m,ming],[maxg_m,maxg]], [[mind_m,mind],[maxd_m,maxd]]]   ];
 }
 
 
@@ -3054,8 +3023,8 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
  var izq_g = resultado_val_ext[4]; var der_g = resultado_val_ext[5];
  var izq_d = resultado_val_ext[6]; var der_d = resultado_val_ext[7];
  var resultado_max_min = maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d, (elasticidad * inercia));
- var max_abs_c = resultado_max_min[0]; var max_abs_f = resultado_max_min[2];
- var max_abs_g = resultado_max_min[4]; var max_abs_d = resultado_max_min[6];
+ var max_abs_c = resultado_max_min[0][0]; var max_abs_f = resultado_max_min[0][2];
+ var max_abs_g = resultado_max_min[0][4]; var max_abs_d = resultado_max_min[0][6];
  max_crt_js = max_abs_c; max_flc_js = max_abs_f;
  max_gir_js = max_abs_g; max_def_js = max_abs_d;
  graf(lng, tipo, subtipo, apoyos_d, dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d, max_abs_c, max_abs_m, max_abs_g, max_abs_d); //
@@ -3067,50 +3036,84 @@ function calcular_proceso(mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv)
 
 /* Test unitarios, bueno... algo que intenta parecerse a ellos:    */
 
+function comprobar_variables_iguales(var_a, var_b, margen){
+ if(var_a != var_b){
+  if(margen != 0){
+   if(  Math.abs(var_a - var_b)  >  margen  ){
+    //alert("fuera de margen");
+    return false;
+   }
+  }
+ }
+ return true;
+}
 
-function comprobar_campos_y_funciones_iguales(lista_campos_a_comprobar, lista_funciones_a_comprobar, lista_resultados_teoricos){
- if( !comprobar_vectores_iguales(lista_campos_a_comprobar, lista_resultados_teoricos[3])){
-  //alert("fallo en campos " + i + "   TEST_apoyos_f[0]=" + TEST_resultado_calcular_2apoyos[0] + " (" + matriz_de_pruebas[i][17][3].length + ")");
+function comprobar_2apoyos_iguales(apoyos_resultado, apoyos_esperado, margen){
+ var i;
+ if(apoyos_resultado[0].length != apoyos_esperado[0].length){
+  return false;
+ }
+ if(apoyos_resultado[1] != apoyos_esperado[1]){ // Carga total
+  return false;
+ }
+ for(i=0; i<apoyos_esperado[0].length; i++){
+  if(comprobar_variables_iguales(apoyos_resultado[0][i], apoyos_esperado[0][i], margen) == false ){
+   return false;
+  }
+ }
+ return true;
+}
+
+function comprobar_campos_y_funciones_iguales(lista_campos_a_comprobar, lista_funciones_a_comprobar, lista_resultados_teoricos, margen){
+ if( !comprobar_vectores_iguales(lista_campos_a_comprobar, lista_resultados_teoricos[2], margen)){
   alert("fallo en campos.");
   return false;
  }
  for(i=0; i<4; i++){
-  if( !comprobar_matrices_iguales(lista_funciones_a_comprobar[i], lista_resultados_teoricos[i+4])){
+  if( !comprobar_matrices_iguales(lista_funciones_a_comprobar[i], lista_resultados_teoricos[i+3], margen)){
    return false;//iguales = 0;
   }
  }
- if( !comprobar_vectores_iguales(lista_funciones_a_comprobar[4], lista_resultados_teoricos[8])){
-  alert("fallo en vector 0 " + lista_funciones_a_comprobar[4] + " (" + lista_resultados_teoricos[8] + ")");
+ if( !comprobar_vectores_iguales(lista_funciones_a_comprobar[4], lista_resultados_teoricos[7], margen)){
+  alert("fallo en vector de constantes 0 " + lista_funciones_a_comprobar[4] + " (" + lista_resultados_teoricos[7] + ")");
   return false;//iguales = 0;
  }
- if( !comprobar_vectores_iguales(lista_funciones_a_comprobar[5], lista_resultados_teoricos[9])){
-  alert("fallo en vector 1 " + lista_funciones_a_comprobar[5] + " (" + lista_resultados_teoricos[8] + ")");
+ if( !comprobar_vectores_iguales(lista_funciones_a_comprobar[5], lista_resultados_teoricos[8], margen)){
+  alert("fallo en vector de constantes 1 " + lista_funciones_a_comprobar[5] + " (" + lista_resultados_teoricos[8] + ")");
   return false;//iguales = 0;
  }
  return true;//
 }
 
-function comprobar_matrices_iguales(matriz_A, matriz_B){
+function comprobar_matrices_iguales(matriz_A, matriz_B, margen){
  if(matriz_A.length == matriz_B.length){
   for(i in matriz_A){
-   if( !comprobar_vectores_iguales(matriz_A[i],matriz_B[i])){
+   if( !comprobar_vectores_iguales(matriz_A[i], matriz_B[i], margen)){
+    alert("vectores diferentes");
     return false;
    }
   }
   return true;
  }
+ alert("longitud de matriz mal");
  return false;
 }
 
-function comprobar_vectores_iguales(vector_A, vector_B){
+function comprobar_vectores_iguales(vector_A, vector_B, margen){
  if(vector_A.length == vector_B.length){
   for(i in vector_A){
    if(vector_A[i] != vector_B[i]){
-    return false;
+    if(margen != 0){ // Si no son iguales vamos al menos a ver si están en el margen
+     if( Math.abs(vector_A[i] - vector_B[i]) > margen  ){
+      alert("fuera de margen");
+      return false;
+     }
+    }
    }
   }
   return true;
  }
+ alert("longitud de vector mal");
  return false;
 }
 
@@ -3118,6 +3121,8 @@ function autocomprobar(){
  var TEST_contar_pruebas = 0;
  var i; // TEMAZO: Jaccot vs Julius MC ‎- Wonderful (Original Mix)
 
+// maxmin(dcmp, crt, flc, gir, def, ctes_gir, ctes_def, izq_c, der_c, izq_f, der_f, izq_g, der_g, izq_d, der_d, ei)
+//   return [max_abs_c, max_abs_c_dist, max_abs_m, max_abs_m_dist, max_abs_g, max_abs_g_dist, max_abs_d, max_abs_d_dist];
 // calcular_2apoyos(lng, cota_inicio, cota_fin, apoyoA, apoyoB, mag_rot_izq, mag_rot_der, cgt, mcp, dcp, mmp, dmp, mcc, icc, fcc, acv, bcv, icv, fcv, max_cargas, str1, str2)
 //   return [sumaA, sumaB, cgt, texto1, texto2];
 // campos(apoyos_d, lng, dcp, dmp, icc, fcc, icv, fcv)
@@ -3127,30 +3132,43 @@ function autocomprobar(){
 
 // longitud, corte izq, corte der, apoyos_dist[lista de apoyos], apoyos_y[], mcp[campos[grados_polinomio]], dcp[], mmp[], dmp[], mcc[], icc[], fcc[], acv[], bcv[], icv[], fcv[campos[grados_polinomio]], ctes_giro[campos], ctes_flecha[campos]
  var matriz_de_pruebas = [
-  [1,0,1,[0,1], [0,0],   [48],[0.5], [], [],  [], [], [],  [],[],[],[],   [],  [24,24,48,[0,0.5,1],  [[24,0,0],[-24,0,0]],  [[0,24,0,0],[24,-24,0,0]],  [[0,0,12,0,0],[-6,24,-12,0,0]],  [[0,0,0,4,0,0],[1,-6,12,-4,0,0]] , [-3,-3],[0,0] ]  ],
-  [1,0,1,[0,1], [0,0],   [1],[0],    [], [],  [], [], [],  [],[],[],[],   [],  [1,0,1,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
-  [1,0,1,[0,1], [0,0],   [1],[1],    [], [],  [], [], [],  [],[],[],[],   [],  [0,1,1,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
-  [1,0,1,[0,1], [0,0],   [1],[-1],   [], [],  [], [], [],  [],[],[],[],   [],  [0,0,0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
-  [1,0,1,[0,1], [0,0],   [1],[2],    [], [],  [], [], [],  [],[],[],[],   [],  [0,0,0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [48],[0.5], [], [],  [], [], [],  [],[],[],[],   [],  [[24,24],48,[0,0.5,1],  [[24,0,0],[-24,0,0]],  [[0,24,0,0],[24,-24,0,0]],  [[0,0,12,0,0],[-6,24,-12,0,0]],  [[0,0,0,4,0,0],[1,-6,12,-4,0,0]] , [-3,-3],[0,0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [1],[0],    [], [],  [], [], [],  [],[],[],[],   [],  [[1,0],1,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [1],[1],    [], [],  [], [], [],  [],[],[],[],   [],  [[0,1],1,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [1],[-1],   [], [],  [], [], [],  [],[],[],[],   [],  [[0,0],0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [1],[2],    [], [],  [], [], [],  [],[],[],[],   [],  [[0,0],0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  , 0],
 
-  [1,0,1,[0,1], [0,0],   [96],[0.5], [], [],  [], [], [],  [],[],[],[],   [],  [48,48,96,[0,0.5,1],  [[48,0,0],[-48,0,0]],  [[0,48,0,0],[48,-48,0,0]],  [[0,0,24,0,0],[-12,48,-24,0,0]],  [[0,0,0,8,0,0],[2,-12,24,-8,0,0]] , [-6,-6],[0,0] ], ],
-  [1,0,1,[0,1], [0,0],   [],[],   [24],[0.5], [], [], [],  [],[],[],[],   [],  [24,-24,0,[0,0.5,1],  [[24,0,0],[24,0,0]],  [[0,24,0,0],[24,-24,0,0]],  [[0,0,12,0,0],[12,-24,12,0,0]],  [[0,0,0,4,0,0],[-3,12,-12,4,0,0]] , [-1,-1],[0,0] ]  ],
-  [1,0,1,[0,1], [0,0],   [],[],   [24],[0],   [], [], [],  [],[],[],[],   [],  [24,-24,0,[0,1],  [[24,0,0]],  [[24,-24,0,0]],  [[0,-24,12,0,0]],  [[0,0,-12,4,0,0]] , [8],[0] ]  ],
-  [1,0,1,[0,1], [0,0],   [],[],   [24],[1],   [], [], [],  [],[],[],[],   [],  [24,-24,0,[0,1],  [[24,0,0]],  [[0,24,0,0]],   [[0,0,12,0,0]],    [[0,0,0,4,0,0]] , [-4],[0] ]  ],
-  [1,0,1,[0,1], [0,0],   [],[],   [24],[-1],  [], [], [],  [],[],[],[],   [],  [0,0,0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
+  [1,0,1,[0,1], [0,0],   [96],[0.5], [], [],  [], [], [],  [],[],[],[],   [],  [[48,48],96,[0,0.5,1],  [[48,0,0],[-48,0,0]],  [[0,48,0,0],[48,-48,0,0]],  [[0,0,24,0,0],[-12,48,-24,0,0]],  [[0,0,0,8,0,0],[2,-12,24,-8,0,0]] , [-6,-6],[0,0] ], , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [24],[0.5], [], [], [],  [],[],[],[],   [],  [[24,-24],0,[0,0.5,1],  [[24,0,0],[24,0,0]],  [[0,24,0,0],[24,-24,0,0]],  [[0,0,12,0,0],[12,-24,12,0,0]],  [[0,0,0,4,0,0],[-3,12,-12,4,0,0]] , [-1,-1],[0,0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [24],[0],   [], [], [],  [],[],[],[],   [],  [[24,-24],0,[0,1],  [[24,0,0]],  [[24,-24,0,0]],  [[0,-24,12,0,0]],  [[0,0,-12,4,0,0]] , [8],[0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [24],[1],   [], [], [],  [],[],[],[],   [],  [[24,-24],0,[0,1],  [[24,0,0]],  [[0,24,0,0]],   [[0,0,12,0,0]],    [[0,0,0,4,0,0]] , [-4],[0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [24],[-1],  [], [], [],  [],[],[],[],   [],  [[0,0],0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  , 0],
 
-  [1,0,1,[0,1], [0,0],   [],[],   [24], [2],     [],[],[],  [],[],[],[],  [],  [0,0,0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  ],
-  [1,0,1,[0,1], [0,0],   [192],[0.5], [], [],    [],[],[],  [],[],[],[],  [],  [96,96,192,[0,0.5,1],  [[96,0,0],[-96,0,0]],  [[0,96,0,0],[96,-96,0,0]],  [[0,0,48,0,0],[-24,96,-48,0,0]],  [[0,0,0,16,0,0],[4,-24,48,-16,0,0]] , [-12,-12],[0,0] ], ],
-  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[0], [1],    [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ],
-  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[-1],[1],    [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ],
-  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[0], [2],    [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ],
-  [1,0,1,[0,1], [0,0],   [],[],   [],[], [24],[0.25],[0.75], [],[],[],[],  [],  [6,6,12,[0,0.25,0.75,1],  [[6,0,0],[12,-24,0],[-6,0,0]],  [[0,6,0,0],[-0.75,12,-12,0],[6,-6,0,0]],  [[0,0,6,0,0],[0.0625,-0.75,6,-4,0],[-1.625,6,-3,0,0]],  [[0,0,6,0,0],[0.0625,-0.75,6,-4,0],[-1.625,6,-3,0,0]] , [ -0.68750, -0.68750, -0.68750] , [0,0,0] ]  ],
-  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[0.5], [2],  [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ]/*,
-  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [24],[-1], [0.5],  [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ],
-  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [24],[-1], [2],  [],[],[],[],  [],  [12,12,24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  ]*/
+  [1,0,1,[0,1], [0,0],   [],[],   [24], [2],     [],[],[],   [],[],[],[],  [],  [[0,0],0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [192],[0.5], [], [],    [],[],[],   [],[],[],[],  [],  [[96,96],192,[0,0.5,1],  [[96,0,0],[-96,0,0]],  [[0,96,0,0],[96,-96,0,0]],  [[0,0,48,0,0],[-24,96,-48,0,0]],  [[0,0,0,16,0,0],[4,-24,48,-16,0,0]] , [-12,-12],[0,0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[0], [1],    [],[],[],[],  [],  [[12,12],24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[-1],[1],    [],[],[],[],  [],  [[12,12],24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [24],[0], [2],    [],[],[],[],  [],  [[12,12],24,[0,1],  [[12,-24,0]],  [[0,12,-12,0]],  [[0,0,6,-4,0]],  [[0,0,0,2,-1,0]] , [-1] , [0] ]  , 0],
+
+  [1,0,1,[0,1], [0,0],   [],[],   [],[], [384],[0.25],[0.75], [],[],[],[],  [],  [[96,96],192,[0,0.25,0.75,1],  [[96,0,0],[192,-384,0],[-96,0,0]],  [[0,96,0,0],[-12,192,-192,0],[96,-96,0,0]],  [[0,0,48,0,0],[1,-12,96,-64,0],[-26,96,-48,0,0]],  [[0,0,0,16,0,0],[-0.0625,1,-6,32,-16,0],[5,-26,48,-16,0,0]] , [ -11, -11, -11] , [0,0,0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [384],[0.5], [1],  [],[],[],[],  [],  [[48,144],192,[0,0.5,1],  [[48,0,0],[240,-384,0]],  [[0,48,0,0],[-48,240,-192,0]],  [[0,0,24,0,0],[8,-48,120,-64,0]],  [[0,0,0,8,0,0],[-1,8,-24,40,-16,0]] , [-7,-7] , [0,0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [384],[0], [0.5],  [],[],[],[],  [],  [[144,48],192,[0,0.5,1],  [[144,-384,0],[-48,0,0]],  [[0,144,-192,0],[48,-48,0,0]],  [[0,0,72,-64,0],[-8,48,-24,0,0]],  [[0,0,0,24,-16,0],[1,-8,24,-8,0,0]] , [-9,-9] , [0,0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [384],[0.5], [2],  [],[],[],[],  [],  [[48,144],192,[0,0.5,1],  [[48,0,0],[240,-384,0]],  [[0,48,0,0],[-48,240,-192,0]],  [[0,0,24,0,0],[8,-48,120,-64,0]],  [[0,0,0,8,0,0],[-1,8,-24,40,-16,0]] , [-7,-7] , [0,0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [384],[-1], [0.5],  [],[],[],[],  [], [[144,48],192,[0,0.5,1],  [[144,-384,0],[-48,0,0]],  [[0,144,-192,0],[48,-48,0,0]],  [[0,0,72,-64,0],[-8,48,-24,0,0]],  [[0,0,0,24,-16,0],[1,-8,24,-8,0,0]] , [-9,-9] , [0,0] ]  , 0],
+
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [384],[-2], [-1],  [],[],[],[],  [],  [[0,0],0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [384],[1], [2],    [],[],[],[],  [],  [[0,0],0,[0,1],  [[0,0,0]],  [[0,0,0,0]],  [[0,0,0,0,0]],  [[0,0,0,0,0,0]] , [0] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],   [240],[0], [1],    [],[],[],[],  [],  [[120,120],240,[0,1], [[120,-240,0]],   [[0,120,-120,0]],  [[0,0,60,-40,0]],  [[0,0,0,20,-10,0]] , [-10] , [0] ]  , 0],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [],[],[],     [0],[360],[0],[1],  [],  [[60,120],180,[0,1],  [[60,0,-180]],    [[0,60,0,-60]],    [[0,0,30,0,-15]],  [[0,0,0,10,0,-3]] , [-7] , [0] ]  , 0.000000000001],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [],[],[],     [360],[0],[0],[1],  [],  [[120,60],180,[0,1],  [[120,-360,180]], [[0,120,-180,60]], [[0,0,60,-60,15]], [[0,0,0,20,-15,3]] , [-8] , [0] ]  , 0.000000000001],
+
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [],[],[],  [240],[600],[0], [1],  [],  [[180,240],420,[0,1], [[180,-240,-180]], [[0,180,-120,-60]], [[0,0,90,-40,-15]],  [[0,0,0,30,-10,-3]] , [-17] , [0] ]  , 0.000000000001  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [],[],[],  [600],[240],[0], [1],  [],  [[240,180],420,[0,1], [[240,-600,180]],  [[0,240,-300,60]],  [[0,0,120,-100,15]], [[0,0,0,40,-25,3]] , [-18] , [0] ]  , 0.000000000001  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [],[],[], [-360],[360],[0], [1],  [],  [[-60,60],0,[0,1],    [[-60,360,-360]],  [[0,-60,180,-120]], [[0,0,-30,60,-30]], [[0,0,0,-10,15,-6]] , [1] , [0] ]  , 0.000000000001  ],
+  [1,0,1,[0,1], [0,0],   [],[],   [],[],  [],[],[], [360],[-360],[0], [1],  [],  [[60,-60],0,[0,1],    [[60,-360,360]],   [[0,60,-180,120]],  [[0,0,30,-60,30]],  [[0,0,0,10,-15,6]] , [-1] , [0] ]  , 0.000000000001  ]/**/
  ];
- for(i in matriz_de_pruebas){
-  var TEST_resultado_calcular_2apoyos = calcular_2apoyos(
+ for(i=0; i<matriz_de_pruebas.length; i++ ){
+  var TEST_resultado_calcular_2apoyos_provisional = calcular_2apoyos(
     matriz_de_pruebas[i][0], matriz_de_pruebas[i][1], matriz_de_pruebas[i][2], // Longitudes y cortes
     matriz_de_pruebas[i][3][0], matriz_de_pruebas[i][3][1], // Distancias de apoyos
     matriz_de_pruebas[i][4][0], matriz_de_pruebas[i][4][1], 0, // Magnitudes heredadas y carga total
@@ -3160,10 +3178,11 @@ function autocomprobar(){
     matriz_de_pruebas[i][12], matriz_de_pruebas[i][13], matriz_de_pruebas[i][14], matriz_de_pruebas[i][15], // Cargas repartidas linealmente variables
     matriz_de_pruebas[i][16], txt_may[APOYO] + " 1", txt_may[APOYO] + " 2" // Texto (no comprobado)
   );
+  var TEST_resultado_calcular_2apoyos = [ [TEST_resultado_calcular_2apoyos_provisional[0],TEST_resultado_calcular_2apoyos_provisional[1]] , TEST_resultado_calcular_2apoyos_provisional[2]];
   var TEST_resultado_campos = campos(matriz_de_pruebas[i][3], matriz_de_pruebas[i][0], matriz_de_pruebas[i][6], matriz_de_pruebas[i][8], matriz_de_pruebas[i][10], matriz_de_pruebas[i][11], matriz_de_pruebas[i][14], matriz_de_pruebas[i][15]);
   var TEST_resultado_funcion = funcion(//alert("prueba" + matriz_de_pruebas[i][3][0]);
     matriz_de_pruebas[i][0], 0, 0, 0, 0,
-    matriz_de_pruebas[i][3], TEST_resultado_calcular_2apoyos, matriz_de_pruebas[i][4],
+    matriz_de_pruebas[i][3], TEST_resultado_calcular_2apoyos_provisional, matriz_de_pruebas[i][4],
     TEST_resultado_campos,
     matriz_de_pruebas[i][5], matriz_de_pruebas[i][6],
     matriz_de_pruebas[i][7], matriz_de_pruebas[i][8],
@@ -3171,13 +3190,14 @@ function autocomprobar(){
     matriz_de_pruebas[i][12], matriz_de_pruebas[i][13], matriz_de_pruebas[i][14], matriz_de_pruebas[i][15],
     0, 0, [0,matriz_de_pruebas[i][0]]
   );
-if(i == 3 || i == 2){
+/*if(i == 23 || i == 24){
     alert("campos (" + TEST_resultado_campos + ") funciones q(" + TEST_resultado_funcion[0] + ") funciones f(" + TEST_resultado_funcion[0] + ") funciones g(" + TEST_resultado_funcion[0] + ") funciones f(" + TEST_resultado_funcion[0] + ") funciones 4(" + TEST_resultado_funcion[0] + ") funciones 5(" + TEST_resultado_funcion[0] + ")");
-}
+}*/
   //alert("Comprobando " + TEST_resultado_funcion.length + "__" + TEST_resultado_funcion[0].length + "__" + TEST_resultado_funcion[0][0].length + ".");
   //alert("Comprobando " + matriz_de_pruebas[i][17].length + "__" + matriz_de_pruebas[i][17][4].length + "__" + matriz_de_pruebas[i][17][4][0].length + ".");
-  if(TEST_resultado_calcular_2apoyos[0] == matriz_de_pruebas[i][17][0]  && TEST_resultado_calcular_2apoyos[1] == matriz_de_pruebas[i][17][1] && TEST_resultado_calcular_2apoyos[2] == matriz_de_pruebas[i][17][2]){
-   if(comprobar_campos_y_funciones_iguales(TEST_resultado_campos, TEST_resultado_funcion, matriz_de_pruebas[i][17])){
+  /*if(TEST_resultado_calcular_2apoyos_provisional[0] == matriz_de_pruebas[i][17][0][0]  && TEST_resultado_calcular_2apoyos_provisional[1] == matriz_de_pruebas[i][17][0][1] && TEST_resultado_calcular_2apoyos[2] == matriz_de_pruebas[i][17][1]){*/
+  if(comprobar_2apoyos_iguales(TEST_resultado_calcular_2apoyos, matriz_de_pruebas[i][17], matriz_de_pruebas[i][18])){
+   if(comprobar_campos_y_funciones_iguales(TEST_resultado_campos, TEST_resultado_funcion, matriz_de_pruebas[i][17], matriz_de_pruebas[i][18])){
     TEST_contar_pruebas++;
    }else{
     alert("fallo en funciones " + i + ")");
@@ -3185,7 +3205,8 @@ if(i == 3 || i == 2){
     //alert("fallo en funciones " + i + "   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][0]  + " (" + matriz_de_pruebas[i][17][4][0][0] + ")   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][1]  + " (" + matriz_de_pruebas[i][17][4][0][1] + ")   TEST_resultado_funcion[0]=" + TEST_resultado_funcion[0][0][2]  + " (" + matriz_de_pruebas[i][17][4][0][2] + ")");
    }
   }else{
-   alert("fallo en calcular_2apoyos " + i + "   TEST_apoyos_f[0]=" + TEST_resultado_calcular_2apoyos[0] + " (" + matriz_de_pruebas[i][17][0] + ")   TEST_apoyos_f[1]=" + TEST_resultado_calcular_2apoyos[1] + " (" + matriz_de_pruebas[i][17][1] + ")   TEST_cgt=" + TEST_resultado_calcular_2apoyos[2] + " (" + matriz_de_pruebas[i][17][2] + ")");
+   alert("fallo en calcular_2apoyos " + i + "   TEST_apoyos_f[0]=" + TEST_resultado_calcular_2apoyos + " (" + matriz_de_pruebas[i][17] + ")");
+   //alert("fallo en calcular_2apoyos " + i + "   TEST_apoyos_f[0]=" + TEST_resultado_calcular_2apoyos[0] + " (" + matriz_de_pruebas[i][17][0][0] + ")   TEST_apoyos_f[1]=" + TEST_resultado_calcular_2apoyos[1] + " (" + matriz_de_pruebas[i][17][0][1] + ")   TEST_cgt=" + TEST_resultado_calcular_2apoyos[2] + " (" + matriz_de_pruebas[i][17][1] + ")");
   }
  }
  // TEMAZO: Above & Beyond pres. OceanLab - Satellite (Original Above & Beyond Mix)
@@ -3732,12 +3753,12 @@ function mostrar_float(num, ref){
   return "0";
  }else{
   if(Math.abs(num) < 0.01){
-   return num.toExponential(4);
+   return num.toExponential(7);//4
   }else{
    if(Math.abs(num) > 0.1){
-    return num.toPrecision(5);
+    return num.toPrecision(8);//5
    }else{
-    return num.toPrecision(6);
+    return num.toPrecision(9);//6
    }
   }
  }
